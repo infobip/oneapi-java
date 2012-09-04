@@ -1,0 +1,8 @@
+*.swp
+*.swo
+*.class
+target/*
+bin/*
+tags
+.classpath
+.project

@@ -1,0 +1,12 @@
+/.git/.*
+/.gitignore
+/./.svnbridge/.*
+/tags
+/.*\.swp
+/.*\.swo
+/.*\.class
+/.project
+/.settings/.*
+/.classpath
+/target/.*
+/tomcat_deployment_descriptor
