@@ -1,14 +1,15 @@
 package oneapi.client.impl;
 
-import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.List;
-
 import oneapi.client.HLRClient;
 import oneapi.client.impl.OneAPIBaseClientImpl;
 import oneapi.config.Configuration;
 import oneapi.exception.RequestException;
 import oneapi.listener.HLRNotificationsListener;
+import oneapi.listener.ResponseListener;
+import oneapi.model.RequestData;
+import oneapi.model.RequestData.Method;
 import oneapi.model.RoamingNotification;
 import oneapi.model.SubscribeToHLRDeliveryNotificationsRequest;
 import oneapi.model.common.DeliveryReceiptSubscription;
@@ -18,8 +19,8 @@ import oneapi.pushserver.PushServerSimulator;
 
 
 public class HLRClientImpl extends OneAPIBaseClientImpl implements HLRClient {
-	private static final String DATA_CONNECTION_PROFILE_URL_BASE = "/terminalstatus/queries";
-	private static final String DATA_CONNECTION_PROFILE_SUBSCRIPTION_URL_BASE = "/smsmessaging/hlr/subscriptions";
+	private static final String HLR_URL_BASE = "/terminalstatus/queries";
+	private static final String HLR_SUBSCRIPTION_URL_BASE = "/smsmessaging/hlr/subscriptions";
 
 	private volatile List<HLRNotificationsListener> hlrPushListenerList = null;
 	private PushServerSimulator hlrPushServerSimulator;
@@ -41,7 +42,7 @@ public class HLRClientImpl extends OneAPIBaseClientImpl implements HLRClient {
 			throw new RequestException("'notifiyURL' parmeter is mandatory using asynchronous method.");
 		}
 
-		StringBuilder urlBuilder = new StringBuilder(DATA_CONNECTION_PROFILE_URL_BASE);	
+		StringBuilder urlBuilder = new StringBuilder(HLR_URL_BASE);	
 		urlBuilder.append("/roamingStatus?address=");	
 		urlBuilder.append(encodeURLParam(address));
 		urlBuilder.append("&includeExtendedData=true");	
@@ -60,8 +61,8 @@ public class HLRClientImpl extends OneAPIBaseClientImpl implements HLRClient {
 			urlBuilder.append(encodeURLParam(callbackData));
 		}
 
-		HttpURLConnection connection = executeGet(appendMessagingBaseUrl(urlBuilder.toString()));
-		validateResponse(connection, getResponseCode(connection), RESPONSE_CODE_200_OK);	
+		RequestData requestData = new RequestData(urlBuilder.toString(), RESPONSE_CODE_200_OK, Method.GET);
+		executeMethod(requestData);
 	}
 
 	/**
@@ -81,13 +82,31 @@ public class HLRClientImpl extends OneAPIBaseClientImpl implements HLRClient {
 	 */
 	@Override
 	public Roaming queryHLR(String address) {		
-		StringBuilder urlBuilder = new StringBuilder(DATA_CONNECTION_PROFILE_URL_BASE);	
+		StringBuilder urlBuilder = new StringBuilder(HLR_URL_BASE);	
 		urlBuilder.append("/roamingStatus?address=");	
 		urlBuilder.append(encodeURLParam(address));
 		urlBuilder.append("&includeExtendedData=true");	
 
-		HttpURLConnection connection = executeGet(appendMessagingBaseUrl(urlBuilder.toString()));
-		return deserialize(connection, Roaming.class, RESPONSE_CODE_200_OK, "roaming");	
+		RequestData requestData = new RequestData(urlBuilder.toString(), RESPONSE_CODE_200_OK, Method.GET, "roaming");
+		return executeMethod(requestData, Roaming.class);
+	}
+	
+	/**
+	 * Query asynchronously the customer’s roaming status for a single network-connected mobile device and get HLR as the response
+	 * @param address (mandatory) mobile device number being queried
+	 * @param responseListener (mandatory) method to call after receiving HLR response
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public<T> void queryHLRAsync(String address, final ResponseListener<T> responseListener)
+	{
+		StringBuilder urlBuilder = new StringBuilder(HLR_URL_BASE);
+		urlBuilder.append("/roamingStatus?address=");
+		urlBuilder.append(encodeURLParam(address));
+		urlBuilder.append("&includeExtendedData=true");
+
+		RequestData requestData = new RequestData(urlBuilder.toString(), RESPONSE_CODE_200_OK, Method.GET, "roaming");
+		executeMethodAsync(requestData, (Class<T>) Roaming.class, responseListener);
 	}
 
 	/**
@@ -107,9 +126,9 @@ public class HLRClientImpl extends OneAPIBaseClientImpl implements HLRClient {
 	 */
 	@Override
 	public String subscribeToHLRDeliveryNotifications(SubscribeToHLRDeliveryNotificationsRequest subscribeToHLRDeliveryNotificationsRequest) {
-		HttpURLConnection connection = executePost(appendMessagingBaseUrl(DATA_CONNECTION_PROFILE_SUBSCRIPTION_URL_BASE), subscribeToHLRDeliveryNotificationsRequest);
-		DeliveryReceiptSubscription deliveryReceiptSubscription = deserialize(connection, DeliveryReceiptSubscription.class, RESPONSE_CODE_201_CREATED, "deliveryReceiptSubscription");
-		return GetIdFromResourceUrl(deliveryReceiptSubscription.getResourceURL()); 
+		RequestData requestData = new RequestData(HLR_SUBSCRIPTION_URL_BASE, RESPONSE_CODE_201_CREATED, Method.POST, "deliveryReceiptSubscription", subscribeToHLRDeliveryNotificationsRequest, URL_ENCODED_CONTENT_TYPE);
+		DeliveryReceiptSubscription deliveryReceiptSubscription = executeMethod(requestData, DeliveryReceiptSubscription.class);
+		return getIdFromResourceUrl(deliveryReceiptSubscription.getResourceURL()); 
 	}
 
 	/**
@@ -119,13 +138,12 @@ public class HLRClientImpl extends OneAPIBaseClientImpl implements HLRClient {
 	 */
 	@Override
 	public DeliveryReportSubscription[] getHLRDeliveryNotificationsSubscriptionsById(String subscriptionId) {
-		StringBuilder urlBuilder = new StringBuilder(DATA_CONNECTION_PROFILE_SUBSCRIPTION_URL_BASE).append("/");
+		StringBuilder urlBuilder = new StringBuilder(HLR_SUBSCRIPTION_URL_BASE).append("/");
 		urlBuilder.append(encodeURLParam(subscriptionId));
 
-		HttpURLConnection connection = executeGet(appendMessagingBaseUrl(urlBuilder.toString()));
-		return deserialize(connection, DeliveryReportSubscription[].class, RESPONSE_CODE_200_OK, "deliveryReceiptSubscriptions");
+		RequestData requestData = new RequestData(urlBuilder.toString(), RESPONSE_CODE_200_OK, Method.GET, "deliveryReceiptSubscriptions");
+		return executeMethod(requestData,  DeliveryReportSubscription[].class);
 	}
-
 
 	/**
 	 * Stop subscribing to HLR delivery notifications over OneAPI 
@@ -133,11 +151,11 @@ public class HLRClientImpl extends OneAPIBaseClientImpl implements HLRClient {
 	 */
 	@Override
 	public void removeHLRDeliveryNotificationsSubscription(String subscriptionId) {
-		StringBuilder urlBuilder = new StringBuilder(DATA_CONNECTION_PROFILE_SUBSCRIPTION_URL_BASE).append("/");
+		StringBuilder urlBuilder = new StringBuilder(HLR_SUBSCRIPTION_URL_BASE).append("/");
 		urlBuilder.append(encodeURLParam(subscriptionId));
 
-		HttpURLConnection connection = executeDelete(appendMessagingBaseUrl(urlBuilder.toString()));
-		validateResponse(connection, getResponseCode(connection), RESPONSE_CODE_204_NO_CONTENT);
+		RequestData requestData = new RequestData(urlBuilder.toString(), RESPONSE_CODE_204_NO_CONTENT, Method.DELETE);
+        executeMethod(requestData);
 	}
 
 	/**

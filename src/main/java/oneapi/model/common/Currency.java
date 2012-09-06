@@ -32,4 +32,10 @@ public class Currency {
 	public int getId(){
 		return this.id;
 	}
+
+	@Override
+	public String toString() {
+		return "Currency {id=" + id + ", currencyName=" + currencyName
+				+ ", symbol=" + symbol + "}";
+	}
 }

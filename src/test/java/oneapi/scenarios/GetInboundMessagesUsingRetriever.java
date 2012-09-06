@@ -46,11 +46,11 @@ public class GetInboundMessagesUsingRetriever {
 			// Add listener(start retriever and pull 'Inbound Messages')   
 			smsClient.getSMSMessagingClient().addPullInboundMessageListener(new InboundMessageListener() {
 				@Override
-				public void onMessageRetrieved(InboundSMSMessageList smsMessageList, Throwable error) {
+				public void onMessageRetrieved(InboundSMSMessageList inboundSMSMessageList, Throwable error) {
 					// Handle pulled 'Inbound Messages'
 					if (error == null) 
 					{
-						System.out.println(smsMessageList);
+						System.out.println(inboundSMSMessageList);
 					} else {
 						System.out.println(error.getMessage());
 					}  	

@@ -1,5 +1,7 @@
 package oneapi.model.common;
 
+import java.util.Arrays;
+
 /**
  * InboundMessageList contains the detail of the response to get a list of
  * received SMS messages
@@ -112,28 +114,14 @@ public class InboundSMSMessageList implements java.io.Serializable {
 	 * generate a textual representation of the inboundSMSMessageList instance
 	 * including nested elements and classes
 	 */
+	@Override
 	public String toString() {
-		StringBuffer buffer = new StringBuffer();
-		buffer.append("numberOfMessagesInThisBatch = ");
-		buffer.append(numberOfMessagesInThisBatch);
-		buffer.append(", resourceURL = ");
-		buffer.append(resourceURL);
-		buffer.append(", totalNumberOfPendingMessages = ");
-		buffer.append(totalNumberOfPendingMessages);
-
-		buffer.append(", inboundSMSMessage = {");
-		if (inboundSMSMessage != null) {
-			for (int i = 0; i < inboundSMSMessage.length; i++) {
-				buffer.append("[");
-				buffer.append(i);
-				buffer.append("] = {");
-				buffer.append(inboundSMSMessage[i].toString());
-				buffer.append("} ");
-			}
-		}
-		buffer.append("} ");
-
-		return buffer.toString();
-
+		return "InboundSMSMessageList {inboundSMSMessage="
+				+ Arrays.toString(inboundSMSMessage)
+				+ ", numberOfMessagesInThisBatch="
+				+ numberOfMessagesInThisBatch + ", resourceURL=" + resourceURL
+				+ ", totalNumberOfPendingMessages="
+				+ totalNumberOfPendingMessages + ", callbackData="
+				+ callbackData + "}";
 	}
 }

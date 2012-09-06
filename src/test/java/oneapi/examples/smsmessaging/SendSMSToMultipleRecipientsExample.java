@@ -12,7 +12,6 @@ public class SendSMSToMultipleRecipientsExample {
 		Configuration configuration = new Configuration("user1", "user_password1");
 		SMSClient smsClient = new SMSClient(configuration);
 
-		//Login user
         LoginResponse loginResponse = smsClient.getCustomerProfileClient().login();
         if (loginResponse.isVerified() == false)
         {
@@ -24,7 +23,7 @@ public class SendSMSToMultipleRecipientsExample {
 		address[0] = "11111111111111111111111111";
 		address[1] = "22222222222222222222222222";
 
-		SMSRequest smsRequest = new SMSRequest("Sender", "Hello", address);
+		SMSRequest smsRequest = new SMSRequest("Sender", "Hi", address);
 
 		String requestId = smsClient.getSMSMessagingClient().sendSMS(smsRequest);
 		System.out.println(requestId);

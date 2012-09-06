@@ -1,12 +1,10 @@
 package oneapi.scenarios;
 
-import java.util.Arrays;
-
 import oneapi.client.impl.SMSClient;
 import oneapi.config.Configuration;
 import oneapi.listener.DeliveryReportListener;
+import oneapi.model.DeliveryReportList;
 import oneapi.model.SMSRequest;
-import oneapi.model.common.DeliveryReport;
 import oneapi.model.common.LoginResponse;
 
 
@@ -55,10 +53,10 @@ public class SendSMS_GetDeliveryReportsUsingRetriever {
 			 // Add listener(start retriever and pull 'Delivery Reports')   
 			smsClient.getSMSMessagingClient().addPullDeliveryReportListener(new DeliveryReportListener() {
 				@Override
-				public void onDeliveryReportReceived(DeliveryReport[] deliveryReports, Throwable error) {
+				public void onDeliveryReportReceived(DeliveryReportList deliveryReportList, Throwable error) {
 					//Handle pulled 'Delivery Reports'
 					if (error == null) {
-						System.out.println(Arrays.toString(deliveryReports));
+						System.out.println(deliveryReportList);
 					} else {
 						System.out.println(error.getMessage());
 					}			

@@ -1,14 +1,13 @@
 package oneapi.client.impl;
 
-import java.net.HttpURLConnection;
-
 import javax.swing.event.EventListenerList;
-
 import oneapi.client.CustomerProfileClient;
 import oneapi.config.Configuration;
 import oneapi.listener.LoginListener;
 import oneapi.listener.LogoutListener;
 import oneapi.model.LoginRequest;
+import oneapi.model.RequestData;
+import oneapi.model.RequestData.Method;
 import oneapi.model.common.AccountBalance;
 import oneapi.model.common.CustomerProfile;
 import oneapi.model.common.LoginResponse;
@@ -30,45 +29,45 @@ public class CustomerProfileClientImpl extends OneAPIBaseClientImpl implements C
 	@Override
 	public LoginResponse login() {
 		LoginRequest loginRequest = new LoginRequest(getConfiguration().getAuthentication().getUsername(), getConfiguration().getAuthentication().getPassword());	
-		HttpURLConnection connection = executePost(appendMessagingBaseUrl(CUSTOMER_PROFILE_URL_BASE.concat("/login")), loginRequest);
-		LoginResponse response = deserialize(connection, LoginResponse.class, RESPONSE_CODE_200_OK, "login");
+		RequestData requestData = new RequestData(CUSTOMER_PROFILE_URL_BASE + "/login", RESPONSE_CODE_200_OK, Method.POST, "login", loginRequest, URL_ENCODED_CONTENT_TYPE);
+		LoginResponse response = executeMethod(requestData, LoginResponse.class);
 		fireOnLogin(response);
 		return response;
 	}
 	
 	@Override
 	public void logout() {
-		HttpURLConnection connection = executePost(appendMessagingBaseUrl(CUSTOMER_PROFILE_URL_BASE.concat("/logout")));
-		validateResponse(connection, getResponseCode(connection), RESPONSE_CODE_204_NO_CONTENT);
+		RequestData requestData = new RequestData(CUSTOMER_PROFILE_URL_BASE + "/logout", RESPONSE_CODE_204_NO_CONTENT, Method.POST);
+		executeMethod(requestData);
 		fireOnLogout();
 	}
 
 	@Override
 	public CustomerProfile getCustomerProfile() {	
-		HttpURLConnection connection = executeGet(appendMessagingBaseUrl(CUSTOMER_PROFILE_URL_BASE));
-		return deserialize(connection, CustomerProfile.class, RESPONSE_CODE_200_OK); 
+		 RequestData requestData = new RequestData(CUSTOMER_PROFILE_URL_BASE, RESPONSE_CODE_200_OK, Method.GET);
+		 return executeMethod(requestData, CustomerProfile.class);
 	}
 	
 	@Override
 	public CustomerProfile[] getCustomerProfiles() {	
-		HttpURLConnection connection = executeGet(appendMessagingBaseUrl(CUSTOMER_PROFILE_URL_BASE).concat("/list"));
-		return deserialize(connection, CustomerProfile[].class, RESPONSE_CODE_200_OK, "customerProfiles"); 
+		RequestData requestData = new RequestData(CUSTOMER_PROFILE_URL_BASE + "/list", RESPONSE_CODE_200_OK, Method.GET);
+		return executeMethod(requestData, CustomerProfile[].class);
 	}
 
 	@Override
 	public CustomerProfile getCustomerProfileByUserId(int id) {	
 		StringBuilder urlBuilder = new StringBuilder(CUSTOMER_PROFILE_URL_BASE).append("/");
 		urlBuilder.append(encodeURLParam(String.valueOf(id)));
-		
-		HttpURLConnection connection = executeGet(appendMessagingBaseUrl(urlBuilder.toString()));
-		return deserialize(connection, CustomerProfile.class, RESPONSE_CODE_200_OK); 
+
+		RequestData requestData = new RequestData(urlBuilder.toString(), RESPONSE_CODE_200_OK, Method.GET);
+		return executeMethod(requestData, CustomerProfile.class);
 	}
 	
 	@Override
     public AccountBalance getAccountBalance()
     {	
-		HttpURLConnection connection = executeGet(appendMessagingBaseUrl(CUSTOMER_PROFILE_URL_BASE.concat("/balance")));
-		return deserialize(connection, AccountBalance.class, RESPONSE_CODE_200_OK); 
+		RequestData requestData = new RequestData(CUSTOMER_PROFILE_URL_BASE + "/balance", RESPONSE_CODE_200_OK, Method.GET);
+		return executeMethod(requestData, AccountBalance.class);
     }
 	
 	//*************************CustomerProfileClientImpl private******************************************************************************************************************************************************

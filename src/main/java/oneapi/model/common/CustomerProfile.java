@@ -165,27 +165,16 @@ public class CustomerProfile {
 		this.enabled = enabled;
 	}
 
-    @Override
-    public String toString() {
-        return "CustomerProfile{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", forename='" + forename + '\'' +
-                ", surname='" + surname + '\'' +
-                ", street='" + street + '\'' +
-                ", city='" + city + '\'' +
-                ", zipCode='" + zipCode + '\'' +
-                ", telephone='" + telephone + '\'' +
-                ", gsm='" + gsm + '\'' +
-                ", fax='" + fax + '\'' +
-                ", email='" + email + '\'' +
-                ", msn='" + msn + '\'' +
-                ", skype='" + skype + '\'' +
-                ", countryId=" + countryId +
-                ", timezoneId=" + timezoneId +
-                ", primaryLanguageId=" + primaryLanguageId +
-                ", secondaryLanguageId=" + secondaryLanguageId +
-                ", enabled=" + enabled +
-                '}';
-    }
+	@Override
+	public String toString() {
+		return "CustomerProfile {id=" + id + ", username=" + username
+				+ ", forename=" + forename + ", surname=" + surname
+				+ ", street=" + street + ", city=" + city + ", zipCode="
+				+ zipCode + ", telephone=" + telephone + ", gsm=" + gsm
+				+ ", fax=" + fax + ", email=" + email + ", msn=" + msn
+				+ ", skype=" + skype + ", countryId=" + countryId
+				+ ", timezoneId=" + timezoneId + ", primaryLanguageId="
+				+ primaryLanguageId + ", secondaryLanguageId="
+				+ secondaryLanguageId + ", enabled=" + enabled + "}";
+	}
 }

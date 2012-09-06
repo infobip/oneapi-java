@@ -1,8 +1,8 @@
 package oneapi.client;
 
 import java.util.List;
-
 import oneapi.listener.HLRNotificationsListener;
+import oneapi.listener.ResponseListener;
 import oneapi.model.RoamingNotification;
 import oneapi.model.SubscribeToHLRDeliveryNotificationsRequest;
 import oneapi.model.common.DeliveryReportSubscription;
@@ -33,6 +33,13 @@ public interface HLRClient {
 	 * @return Roaming
 	 */
 	Roaming queryHLR(String address);
+
+	/**
+	 * Query asynchronously the customer’s roaming status for a single network-connected mobile device and get HLR as the response
+	 * @param address (mandatory) mobile device number being queried
+	 * @param responseListener (mandatory) method to call after receiving HLR response
+	 */
+	 <T> void queryHLRAsync(String address, ResponseListener<T> responseListener);
 
 	/**
 	 * Convert JSON to HLR Notification </summary>

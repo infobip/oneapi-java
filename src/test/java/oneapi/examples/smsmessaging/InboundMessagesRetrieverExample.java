@@ -13,7 +13,6 @@ public class InboundMessagesRetrieverExample {
 		Configuration configuration = new Configuration("user1", "user_password1");
 		SMSClient smsClient = new SMSClient(configuration);
 
-		 //Login user
         LoginResponse loginResponse = smsClient.getCustomerProfileClient().login();
         if (loginResponse.isVerified() == false)
         {
@@ -23,8 +22,8 @@ public class InboundMessagesRetrieverExample {
 		
 		smsClient.getSMSMessagingClient().addPullInboundMessageListener(new InboundMessageListener() {		
 			@Override
-			public void onMessageRetrieved(InboundSMSMessageList smsMessageList, Throwable error) {
-				System.out.println(smsMessageList);
+			public void onMessageRetrieved(InboundSMSMessageList inboundSMSMessageList, Throwable error) {
+				System.out.println(inboundSMSMessageList);
 			}
 		});
 	}

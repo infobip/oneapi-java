@@ -61,16 +61,12 @@ public class DeliveryReceiptSubscription implements Serializable {
 		
 		/** 
 		 * generate a textual representation of the CallbackReference  
-		 */
+		 */	
+		@Override
 		public String toString() {
-			StringBuffer buffer=new StringBuffer();
-			buffer.append("callbackData = ");
-			buffer.append(callbackData);
-			buffer.append(", notifyURL = ");
-			buffer.append(notifyURL);
-			return buffer.toString();
+			return "CallbackReference {callbackData=" + callbackData
+					+ ", notifyURL=" + notifyURL + "}";
 		}
-		
 	}
 	
 	/**
@@ -105,13 +101,9 @@ public class DeliveryReceiptSubscription implements Serializable {
 	/** 
 	 * generate a textual representation of the deliveryReceiptSubscription instance including nested elements and classes 
 	 */
+	@Override
 	public String toString() {
-		StringBuffer buffer=new StringBuffer();
-		buffer.append("callbackReference = {");
-		if (callbackReference!=null) buffer.append(callbackReference.toString());
-		buffer.append("}, resourceURL = ");
-		buffer.append(resourceURL);
-		return buffer.toString();
+		return "DeliveryReceiptSubscription {callbackReference="
+				+ callbackReference + ", resourceURL=" + resourceURL + "}";
 	}
-
 }

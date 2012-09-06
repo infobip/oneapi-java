@@ -63,17 +63,10 @@ public class DeliveryInfoList implements java.io.Serializable {
 			this.address=address;
 			this.deliveryStatus=deliveryStatus;
 		}
-		
-		/** 
-		 * generate a textual representation of the DeliveryInfo contents 
-		 */
+		@Override
 		public String toString() {
-			StringBuffer buffer=new StringBuffer();
-			buffer.append("address = ");
-			buffer.append(address);
-			buffer.append(", deliveryStatus = ");
-			buffer.append(deliveryStatus);
-			return buffer.toString();
+			return "DeliveryInfo {address=" + address + ", deliveryStatus="
+					+ deliveryStatus + "}";
 		}
 	}
 		
@@ -102,25 +95,13 @@ public class DeliveryInfoList implements java.io.Serializable {
 	 * set resourceURL containing a URL uniquely identifying this DeliveryInfoList request. This is called internally to set the contents according to the JSON response. 
 	 */
 	public void setResourceURL(String resourceURL) { this.resourceURL=resourceURL; }
-		
+	
 	/** 
 	 * generate a textual representation of the DeliveryInfoList instance including nested elements and classes 
 	 */
+	@Override
 	public String toString() {
-		StringBuffer buffer=new StringBuffer();
-		if (deliveryInfo!=null) {
-			buffer.append("deliveryInfo = {");
-			for ( DeliveryInfo di : deliveryInfo ) {
-				buffer.append( "{" );
-				if ( di !=null )
-					buffer.append( di.toString() );
-				buffer.append( "} " );
-			}
-			buffer.append("} ");
-		}
-		buffer.append(", resourceURL = "+resourceURL);
-		return buffer.toString();
+		return "DeliveryInfoList {deliveryInfo=" + deliveryInfo
+				+ ", resourceURL=" + resourceURL + "}";
 	}
-
-	
 }

@@ -177,21 +177,12 @@ public class InboundSMSMessage implements Serializable {
 	 * generate a textual representation of the InboundMessage including all
 	 * nested elements and classes
 	 */
+	@Override
 	public String toString() {
-		StringBuffer buffer = new StringBuffer();
-		buffer.append("dateTime = ");
-		buffer.append(dateTime);
-		buffer.append(", destinationAddress = ");
-		buffer.append(destinationAddress);
-		buffer.append(", messageId = ");
-		buffer.append(messageId);
-		buffer.append(", message = ");
-		buffer.append(message);
-		buffer.append(", resourceURL = ");
-		buffer.append(resourceURL);
-		buffer.append(", senderAddress = ");
-		buffer.append(senderAddress);
-		return buffer.toString();
+		return "InboundSMSMessage {dateTime=" + dateTime
+				+ ", destinationAddress=" + destinationAddress + ", messageId="
+				+ messageId + ", message=" + message + ", resourceURL="
+				+ resourceURL + ", senderAddress=" + senderAddress
+				+ ", moSessionId=" + moSessionId + "}";
 	}
-
 }

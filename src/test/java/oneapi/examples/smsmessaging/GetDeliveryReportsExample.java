@@ -1,12 +1,9 @@
 package oneapi.examples.smsmessaging;
 
-import java.util.Arrays;
-
 import oneapi.client.impl.SMSClient;
 import oneapi.config.Configuration;
-import oneapi.model.common.DeliveryReport;
+import oneapi.model.DeliveryReportList;
 import oneapi.model.common.LoginResponse;
-
 
 public class GetDeliveryReportsExample {
 
@@ -14,7 +11,6 @@ public class GetDeliveryReportsExample {
 		Configuration configuration = new Configuration("user1", "user_password1");
 		SMSClient smsClient = new SMSClient(configuration);
 
-		//Login user
         LoginResponse loginResponse = smsClient.getCustomerProfileClient().login();
         if (loginResponse.isVerified() == false)
         {
@@ -22,7 +18,7 @@ public class GetDeliveryReportsExample {
             return;
         }
 		
-		DeliveryReport[] deliveryReports =  smsClient.getSMSMessagingClient().getDeliveryReports();
-		System.out.println(Arrays.toString(deliveryReports));
+		DeliveryReportList deliveryReportList =  smsClient.getSMSMessagingClient().getDeliveryReports();
+		System.out.println(deliveryReportList);
 	}
 }

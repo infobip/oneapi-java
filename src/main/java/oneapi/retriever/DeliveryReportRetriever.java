@@ -4,11 +4,10 @@ import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-
 import oneapi.client.impl.SMSMessagingClientImpl;
 import oneapi.exception.RequestException;
 import oneapi.listener.DeliveryReportListener;
-import oneapi.model.common.DeliveryReport;
+import oneapi.model.DeliveryReportList;
 
 
 public class DeliveryReportRetriever {
@@ -44,23 +43,23 @@ public class DeliveryReportRetriever {
 
 			if ((dlrStatusListeners != null) && (dlrStatusListeners.size() > 0)) {
 				// use pull method to gather delivery reports 
-                DeliveryReport[] deliveryReports = null;;
+				DeliveryReportList deliveryReportList = null;;
 				Throwable error = null;
 				try {
-					deliveryReports = smsMessagingImpl.getDeliveryReports();
+					deliveryReportList = smsMessagingImpl.getDeliveryReports();
 				} catch (RequestException e) {
 					error = e.getCause();
 				}
 						
-				if ((deliveryReports != null && deliveryReports.length > 0) || (error != null)) {
-					this.fireReportRetrieved(deliveryReports, dlrStatusListeners, error);		
+				if ((deliveryReportList != null && deliveryReportList.getDeliveryReports() != null && deliveryReportList.getDeliveryReports().length > 0) || (error != null)) {
+					this.fireReportRetrieved(deliveryReportList, dlrStatusListeners, error);		
 				}
 			}
 		}
 
-		private void fireReportRetrieved(DeliveryReport[] deliveryReports, List<DeliveryReportListener> listeners, Throwable error) {
+		private void fireReportRetrieved(DeliveryReportList deliveryReportList, List<DeliveryReportListener> listeners, Throwable error) {
 			for (int i=0; i<listeners.size(); i++) {				
-				listeners.get(i).onDeliveryReportReceived(deliveryReports, error);		
+				listeners.get(i).onDeliveryReportReceived(deliveryReportList, error);		
 			}
 		}
 	}

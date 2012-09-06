@@ -1,11 +1,9 @@
 package oneapi.scenarios;
 
-import java.util.Arrays;
-
 import oneapi.client.impl.SMSClient;
 import oneapi.config.Configuration;
+import oneapi.model.DeliveryReportList;
 import oneapi.model.SMSRequest;
-import oneapi.model.common.DeliveryReport;
 import oneapi.model.common.LoginResponse;
 
 /**
@@ -54,8 +52,8 @@ public class SendSMS_GetDeliveryReports {
 			Thread.sleep(30000);
 
 			// Get 'Delivery Reports'
-			DeliveryReport[] deliveryReports = smsClient.getSMSMessagingClient().getDeliveryReports();
-			System.out.println(Arrays.toString(deliveryReports));
+			DeliveryReportList deliveryReportList = smsClient.getSMSMessagingClient().getDeliveryReports();
+			System.out.println(deliveryReportList);
 
 			// Logout sms client
 			smsClient.getCustomerProfileClient().logout();

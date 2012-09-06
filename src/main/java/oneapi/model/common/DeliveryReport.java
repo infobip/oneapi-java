@@ -43,13 +43,10 @@ public class DeliveryReport implements Serializable {
 		this.status = status;
 	}
 
-    @Override
-    public String toString() {
-        return "DeliveryReport{" +
-                "messageId='" + messageId + '\'' +
-                ", sentDate=" + sentDate +
-                ", doneDate=" + doneDate +
-                ", status='" + status + '\'' +
-                '}';
-    }
+	@Override
+	public String toString() {
+		return "DeliveryReport {messageId=" + messageId + ", sentDate="
+				+ sentDate + ", doneDate=" + doneDate + ", status=" + status
+				+ "}";
+	}
 }

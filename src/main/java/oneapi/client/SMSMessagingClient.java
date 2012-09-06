@@ -1,14 +1,13 @@
 package oneapi.client;
 
 import java.util.List;
-
 import oneapi.listener.DeliveryReportListener;
 import oneapi.listener.DeliveryStatusNotificationsListener;
 import oneapi.listener.InboundMessageListener;
 import oneapi.listener.InboundMessageNotificationsListener;
+import oneapi.listener.ResponseListener;
 import oneapi.model.*;
 import oneapi.model.common.DeliveryInfoList;
-import oneapi.model.common.DeliveryReport;
 import oneapi.model.common.DeliveryReportSubscription;
 import oneapi.model.common.InboundSMSMessageList;
 import oneapi.model.common.MoSubscription;
@@ -24,12 +23,27 @@ public interface SMSMessagingClient {
 	String sendSMS(SMSRequest sms);
 
 	/**
+     * Send an SMS asynchronously over OneAPI to one or more mobile terminals using the customized 'SMS' object
+     * @param sms (mandatory) object containing data needed to be filled in order to send the SMS
+     * @param responseListener (mandatory) method to call after receiving sent SMS response
+     */   
+    <T> void sendSMSAsync(SMSRequest sms, ResponseListener<T> responseListener);
+	
+	/**
 	 * Query the delivery status for an SMS sent to one or more mobile terminals                        
 	 * @param senderAddress (mandatory) is the address from which SMS messages are being sent. Do not URL encode this value prior to passing to this function
 	 * @param requestId (mandatory) contains the requestId returned from a previous call to the sendSMS function 
 	 * @return DeliveryInfoList
 	 */
 	DeliveryInfoList queryDeliveryStatus(String senderAddress, String requestId);
+		
+	/**
+     * Query the delivery status asynchronously over OneAPI for an SMS sent to one or more mobile terminals
+     * @param senderAddress (mandatory) is the address from which SMS messages are being sent. Do not URL encode this value prior to passing to this function
+     * @param requestId (mandatory) contains the requestId returned from a previous call to the sendSMS function
+     * @param responseListener (mandatory) method to call after receiving delivery status
+     */
+	<T> void queryDeliveryStatusAsync(String senderAddress, String requestId, ResponseListener<T> responseListener);
 	
 	 /**
      * Convert JSON to Delivery Info Notification </summary>
@@ -42,7 +56,6 @@ public interface SMSMessagingClient {
 	 * Start subscribing to delivery status notifications over OneAPI for all your sent SMS  	                          
 	 * @return String Subscription Id
 	 */
-	// TODO(TK) Return value neka bude DeliveryReportSubscription s ispunjenim subscriptionId-om
 	String subscribeToDeliveryStatusNotifications(SubscribeToDeliveryNotificationsRequest subscribeToDeliveryNotificationsRequest);
 
 	/**
@@ -85,6 +98,19 @@ public interface SMSMessagingClient {
 	 */
 	InboundSMSMessageList getInboundMessages(int maxBatchSize);
 	
+	 /**
+     * Get asynchronously SMS messages sent to your Web application over OneAPI
+     * @param responseListener (mandatory) method to call after receiving inbound messages
+     */
+    <T> void getInboundMessagesAsync(final ResponseListener<T> responseListener);
+	
+    /**
+     * Get asynchronously SMS messages sent to your Web application over OneAPI
+     * @param maxBatchSize (optional) is the maximum number of messages to get in this request
+     * @param responseListener (mandatory) method to call after receiving inbound messages
+     */
+    <T> void getInboundMessagesAsync(int maxBatchSize, ResponseListener<T> responseListener);
+    
 	/**
      * Convert JSON to Inbound SMS Message Notification
      * @param json
@@ -97,21 +123,20 @@ public interface SMSMessagingClient {
 	 * @param subscribeToInboundMessagesRequest (mandatory) contains inbound messages subscription data
 	 * @return string - Subscription Id 
 	 */
-	// TODO(TK) Istražiti odnos između clientCorrelator i subscriptionId
-     String subscribeToInboundMessagesNotifications(SubscribeToInboundMessagesRequest subscribeToInboundMessagesRequest);
+    String subscribeToInboundMessagesNotifications(SubscribeToInboundMessagesRequest subscribeToInboundMessagesRequest);
 
 	 /**
      * Retrieve inbound messages notifications subscriptions for the current user
      * @return MoSubscription[]
      */
-    MoSubscription[] getInboundMessagesSubscriptions(int page, int pageSize);
+    MoSubscription[] getInboundMessagesNotificationsSubscriptions(int page, int pageSize);
     
     
     /**
      * Retrieve inbound messages notifications subscriptions for the current user (Default values are used: page=1, pageSize=10)
      * @return MoSubscription[]
      */
-    MoSubscription[] getInboundMessagesSubscriptions();
+    MoSubscription[] getInboundMessagesNotificationsSubscriptions();
 	
 	/**
 	 * Stop subscribing to message receipt notifications for all your received SMS                       
@@ -122,30 +147,43 @@ public interface SMSMessagingClient {
 	  /**
      * Retrieve delivery reports
      * @param limit
-     * @return DeliveryReport[]
+     * @return DeliveryReportList
      */
-    DeliveryReport[] getDeliveryReports(int limit);
+	DeliveryReportList getDeliveryReports(int limit);
 	
+    /**
+     * Get delivery reports asynchronously
+     * @param limit
+     * @param responseListener (mandatory) method to call after receiving delivery reports
+     */
+    <T> void getDeliveryReportsAsync(int limit, ResponseListener<T> responseListener);
+    
 	/**
 	 * Retrieve delivery reports 
-	 * @return DeliveryReport[]
+	 * @return DeliveryReportList
 	 */
-	DeliveryReport[] getDeliveryReports();
+	DeliveryReportList getDeliveryReports();
+	
+	/**
+     * Get delivery reports asynchronously
+     * @param responseListener (mandatory) method to call after receiving delivery reports
+     */
+    <T> void getDeliveryReportsAsync(ResponseListener<T> responseListener);
 
 	 /**
      * Retrieve delivery reports by Request Id
      * @param requestId
      * @param limit
-     * @return DeliveryReport[]
+     * @return DeliveryReportList
      */
-    public DeliveryReport[] getDeliveryReportsByRequestId(String requestId, int limit);
+    DeliveryReportList getDeliveryReportsByRequestId(String requestId, int limit);
 	
 	/**
 	 * Retrieve delivery reports by Request Id
 	 * @param requestId
-	 * @return DeliveryReport[]
+	 * @return DeliveryReportList
 	 */
-    DeliveryReport[] getDeliveryReportsByRequestId(String requestId);
+    DeliveryReportList getDeliveryReportsByRequestId(String requestId);
 
 	/**
 	 * Add 'INBOUND Messages' listener

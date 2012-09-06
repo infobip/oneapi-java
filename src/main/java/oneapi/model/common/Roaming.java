@@ -162,41 +162,17 @@ public class Roaming implements java.io.Serializable {
 		this.callbackData = callbackData;
 	}
 	
-	
+
 	/** 
 	 * generate a textual representation of the Roaming instance including all nested elements and classes 
 	 */
-	public String toString() {
-		StringBuffer buffer=new StringBuffer();
-		buffer.append("address = ");
-		buffer.append(address);
-		
-		buffer.append(", currentRoaming = ");
-		buffer.append(currentRoaming);
-
-		buffer.append(", retrievalStatus = ");
-		buffer.append(retrievalStatus);
-
-		buffer.append(", servingMccMnc={");
-		
-		if (servingMccMnc!=null) {		
-			buffer.append("mcc = ");
-			buffer.append(servingMccMnc.mcc);
-			buffer.append(", mnc = ");
-			buffer.append(servingMccMnc.mnc);
-		}
-		
-		buffer.append(", extendedData={");
-		if (extendedData!=null) {		
-			buffer.append(extendedData.toString());
-		}
-		buffer.append("}");
-
-		buffer.append(", resourceURL = ");
-		buffer.append(resourceURL);
-		buffer.append("}");
-		
-		return buffer.toString();
-	}
 	
+	@Override
+	public String toString() {
+		return "Roaming {address=" + address + ", currentRoaming="
+				+ currentRoaming + ", servingMccMnc=" + servingMccMnc
+				+ ", resourceURL=" + resourceURL + ", retrievalStatus="
+				+ retrievalStatus + ", extendedData=" + extendedData
+				+ ", callbackData=" + callbackData + "}";
+	}
 }

@@ -1,9 +1,8 @@
 package oneapi.listener;
 
 import java.util.EventListener;
-
-import oneapi.model.common.DeliveryReport;
+import oneapi.model.DeliveryReportList;
 
 public interface DeliveryReportListener extends EventListener {
-	public void onDeliveryReportReceived(DeliveryReport[] deliveryReports, Throwable error);
+	public void onDeliveryReportReceived(DeliveryReportList deliveryReportList, Throwable error);
 }

@@ -3,12 +3,10 @@ package oneapi.examples.smsmessaging;
 import oneapi.client.impl.SMSClient;
 import oneapi.config.Configuration;
 import oneapi.listener.DeliveryReportListener;
+import oneapi.model.DeliveryReportList;
 import oneapi.model.SMSRequest;
-import oneapi.model.common.DeliveryReport;
 import oneapi.model.common.LoginResponse;
 
-
-import java.util.Arrays;
 
 public class DeliveryReportsRetrieverExample {
 
@@ -16,7 +14,6 @@ public class DeliveryReportsRetrieverExample {
 		Configuration configuration = new Configuration("user1", "user_password1");
         SMSClient smsClient = new SMSClient(configuration);
 
-        //Login user
         LoginResponse loginResponse = smsClient.getCustomerProfileClient().login();
         if (loginResponse.isVerified() == false)
         {
@@ -26,8 +23,8 @@ public class DeliveryReportsRetrieverExample {
         
 		smsClient.getSMSMessagingClient().addPullDeliveryReportListener(new DeliveryReportListener() {
 			@Override
-			public void onDeliveryReportReceived(DeliveryReport[] deliveryReports, Throwable error) {
-                System.out.println(Arrays.toString(deliveryReports));
+			public void onDeliveryReportReceived(DeliveryReportList deliveryReportList, Throwable error) {
+                System.out.println(deliveryReportList);
 			}
 		});
 

@@ -40,11 +40,9 @@ public class LoginResponse {
         return ibAuthCookie != null ? ibAuthCookie.hashCode() : 0;
     }
 
-    @Override
-    public String toString() {
-        return getClass().getSimpleName() + "{" +
-                "verified=" + verified +
-                ", ibAuthCookie='" + ibAuthCookie + '\'' +
-                '}';
-    }
+	@Override
+	public String toString() {
+		return "LoginResponse {verified=" + verified + ", ibAuthCookie="
+				+ ibAuthCookie + "}";
+	}
 }

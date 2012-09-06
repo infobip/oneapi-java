@@ -9,10 +9,9 @@ import oneapi.model.common.LoginResponse;
 public class SendSMSExample {
 
     public static void main(String[] args) throws Exception {
-    	 Configuration configuration = new Configuration("FILL USERNAME HERE", "FILL PASSWORD HERE");
+    	Configuration configuration = new Configuration("user1", "user_password1");
          SMSClient smsClient = new SMSClient(configuration);
 
-         //Login user
          LoginResponse loginResponse = smsClient.getCustomerProfileClient().login();
          if (loginResponse.isVerified() == false)
          {
@@ -20,7 +19,7 @@ public class SendSMSExample {
              return;
          }
          
-         String requestId = smsClient.getSMSMessagingClient().sendSMS(new SMSRequest("Sender", "TestCriteria1 Hello", "385997701356"));
+         String requestId = smsClient.getSMSMessagingClient().sendSMS(new SMSRequest("Sender", "Hi", "11111111111111111111111111"));
          System.out.println(requestId);
     }
 }

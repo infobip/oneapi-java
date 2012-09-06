@@ -56,11 +56,11 @@ public class Subscribe_WaitForInboundMessagesPush {
 			// Add listener(start push server and wait for the 'Inbound Message Notifications')    
 			smsClient.getSMSMessagingClient().addPushInboundMessageListener(new InboundMessageNotificationsListener() {
 				@Override
-				public void onMessageReceived(InboundSMSMessageList smsMessageList) {
+				public void onMessageReceived(InboundSMSMessageList inboundSMSMessageList) {
 					// Handle pushed 'Inbound Message Notification'
-					if (smsMessageList != null) 
+					if (inboundSMSMessageList != null) 
 					{
-						System.out.println(smsMessageList);
+						System.out.println(inboundSMSMessageList);
 					}  						
 				}						
 			});
