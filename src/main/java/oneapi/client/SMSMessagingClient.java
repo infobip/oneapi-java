@@ -43,7 +43,7 @@ public interface SMSMessagingClient {
      * @param requestId (mandatory) contains the requestId returned from a previous call to the sendSMS function
      * @param responseListener (mandatory) method to call after receiving delivery status
      */
-	<T> void queryDeliveryStatusAsync(String senderAddress, String requestId, ResponseListener<T> responseListener);
+	<T extends DeliveryInfoList> void queryDeliveryStatusAsync(String senderAddress, String requestId, ResponseListener<T> responseListener);
 	
 	 /**
      * Convert JSON to Delivery Info Notification </summary>
@@ -102,14 +102,14 @@ public interface SMSMessagingClient {
      * Get asynchronously SMS messages sent to your Web application over OneAPI
      * @param responseListener (mandatory) method to call after receiving inbound messages
      */
-    <T> void getInboundMessagesAsync(final ResponseListener<T> responseListener);
+    <T extends InboundSMSMessageList> void getInboundMessagesAsync(final ResponseListener<T> responseListener);
 	
     /**
      * Get asynchronously SMS messages sent to your Web application over OneAPI
      * @param maxBatchSize (optional) is the maximum number of messages to get in this request
      * @param responseListener (mandatory) method to call after receiving inbound messages
      */
-    <T> void getInboundMessagesAsync(int maxBatchSize, ResponseListener<T> responseListener);
+    <T extends InboundSMSMessageList> void getInboundMessagesAsync(int maxBatchSize, ResponseListener<T> responseListener);
     
 	/**
      * Convert JSON to Inbound SMS Message Notification
@@ -156,7 +156,7 @@ public interface SMSMessagingClient {
      * @param limit
      * @param responseListener (mandatory) method to call after receiving delivery reports
      */
-    <T> void getDeliveryReportsAsync(int limit, ResponseListener<T> responseListener);
+    <T extends DeliveryReportList> void getDeliveryReportsAsync(int limit, ResponseListener<T> responseListener);
     
 	/**
 	 * Retrieve delivery reports 
@@ -168,7 +168,7 @@ public interface SMSMessagingClient {
      * Get delivery reports asynchronously
      * @param responseListener (mandatory) method to call after receiving delivery reports
      */
-    <T> void getDeliveryReportsAsync(ResponseListener<T> responseListener);
+    <T extends DeliveryReportList> void getDeliveryReportsAsync(ResponseListener<T> responseListener);
 
 	 /**
      * Retrieve delivery reports by Request Id

@@ -39,7 +39,7 @@ public interface HLRClient {
 	 * @param address (mandatory) mobile device number being queried
 	 * @param responseListener (mandatory) method to call after receiving HLR response
 	 */
-	 <T> void queryHLRAsync(String address, ResponseListener<T> responseListener);
+	 <T extends Roaming> void queryHLRAsync(String address, ResponseListener<T> responseListener);
 
 	/**
 	 * Convert JSON to HLR Notification </summary>

@@ -110,7 +110,7 @@ public class SMSMessagingClientImpl extends OneAPIBaseClientImpl implements SMSM
      * @param responseListener (mandatory) method to call after receiving delivery status
      */
     @SuppressWarnings("unchecked")
-	public <T> void queryDeliveryStatusAsync(String senderAddress, String requestId, final ResponseListener<T> responseListener) {
+	public <T extends DeliveryInfoList> void queryDeliveryStatusAsync(String senderAddress, String requestId, final ResponseListener<T> responseListener) {
         StringBuilder urlBuilder = (new StringBuilder(SMS_MESSAGING_OUTBOUND_URL_BASE)).append("/");
         urlBuilder.append(encodeURLParam(senderAddress));
         urlBuilder.append("/requests/");
@@ -231,7 +231,7 @@ public class SMSMessagingClientImpl extends OneAPIBaseClientImpl implements SMSM
      * Get asynchronously SMS messages sent to your Web application over OneAPI
      * @param responseListener (mandatory) method to call after receiving inbound messages
      */
-    public <T> void getInboundMessagesAsync(final ResponseListener<T> responseListener)
+    public <T extends InboundSMSMessageList> void getInboundMessagesAsync(final ResponseListener<T> responseListener)
     {
     	this.getInboundMessagesAsync(100, responseListener);
     }
@@ -242,7 +242,7 @@ public class SMSMessagingClientImpl extends OneAPIBaseClientImpl implements SMSM
      * @param responseListener (mandatory) method to call after receiving inbound messages
      */
     @SuppressWarnings("unchecked")
-    public <T> void getInboundMessagesAsync(int maxBatchSize, final ResponseListener<T> responseListener)
+    public <T extends InboundSMSMessageList> void getInboundMessagesAsync(int maxBatchSize, final ResponseListener<T> responseListener)
     {
     	//Registration ID is obsolete so any string can be put: e.g. INBOUND
     	StringBuilder urlBuilder = new StringBuilder(SMS_MESSAGING_INBOUND_URL_BASE).append("/registrations/INBOUND/messages");
@@ -334,7 +334,7 @@ public class SMSMessagingClientImpl extends OneAPIBaseClientImpl implements SMSM
      * @param responseListener (mandatory) method to call after receiving delivery reports
      */
     @SuppressWarnings("unchecked")
-	public <T> void getDeliveryReportsAsync(int limit, final ResponseListener<T> responseListener)
+	public <T extends DeliveryReportList> void getDeliveryReportsAsync(int limit, final ResponseListener<T> responseListener)
     {
     	StringBuilder urlBuilder = (new StringBuilder(SMS_MESSAGING_OUTBOUND_URL_BASE)).append("/requests/deliveryReports");
         urlBuilder.append("?limit=");
@@ -356,7 +356,7 @@ public class SMSMessagingClientImpl extends OneAPIBaseClientImpl implements SMSM
      * Get delivery reports asynchronously
      * @param responseListener (mandatory) method to call after receiving delivery reports
      */
-    public <T> void getDeliveryReportsAsync(final ResponseListener<T> responseListener)
+    public <T extends DeliveryReportList> void getDeliveryReportsAsync(final ResponseListener<T> responseListener)
     {
         this.getDeliveryReportsAsync(0, responseListener);
     }

@@ -98,7 +98,7 @@ public class HLRClientImpl extends OneAPIBaseClientImpl implements HLRClient {
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public<T> void queryHLRAsync(String address, final ResponseListener<T> responseListener)
+	public<T extends Roaming> void queryHLRAsync(String address, final ResponseListener<T> responseListener)
 	{
 		StringBuilder urlBuilder = new StringBuilder(HLR_URL_BASE);
 		urlBuilder.append("/roamingStatus?address=");
