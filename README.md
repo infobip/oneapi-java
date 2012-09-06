@@ -25,13 +25,13 @@ Prepare the message:
 Send the message:
 
     // Store request id because we can later query for the delivery status with it:
-    questId = smsClient.getSMSMessagingClient().sendSMS(smsRequest);
+    String requestId = smsClient.getSMSMessagingClient().sendSMS(smsRequest);
 
 
 Later you can query for the delivery status of the message:
 
     DeliveryInfoList deliveryInfoList = smsClient.getSMSMessagingClient().queryDeliveryStatus(senderAddress, requestId);
-    deliveryStatus = deliveryInfoList.getDeliveryInfo().get(0).getDeliveryStatus();
+    String deliveryStatus = deliveryInfoList.getDeliveryInfo().get(0).getDeliveryStatus();
 
 
 Possible statuses are: **DeliveredToTerminal**, **DeliveryUncertain**, **DeliveryImpossible**, **MessageWaiting** and **DeliveredToNetwork**.
