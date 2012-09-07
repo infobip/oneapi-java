@@ -27,7 +27,7 @@ public interface SMSMessagingClient {
      * @param sms (mandatory) object containing data needed to be filled in order to send the SMS
      * @param responseListener (mandatory) method to call after receiving sent SMS response
      */   
-    <T> void sendSMSAsync(SMSRequest sms, ResponseListener<T> responseListener);
+    void sendSMSAsync(SMSRequest sms, ResponseListener<String> responseListener);
 	
 	/**
 	 * Query the delivery status for an SMS sent to one or more mobile terminals                        
@@ -43,7 +43,7 @@ public interface SMSMessagingClient {
      * @param requestId (mandatory) contains the requestId returned from a previous call to the sendSMS function
      * @param responseListener (mandatory) method to call after receiving delivery status
      */
-	<T extends DeliveryInfoList> void queryDeliveryStatusAsync(String senderAddress, String requestId, ResponseListener<T> responseListener);
+	 void queryDeliveryStatusAsync(String senderAddress, String requestId, ResponseListener<DeliveryInfoList> responseListener);
 	
 	 /**
      * Convert JSON to Delivery Info Notification </summary>
@@ -102,14 +102,14 @@ public interface SMSMessagingClient {
      * Get asynchronously SMS messages sent to your Web application over OneAPI
      * @param responseListener (mandatory) method to call after receiving inbound messages
      */
-    <T extends InboundSMSMessageList> void getInboundMessagesAsync(final ResponseListener<T> responseListener);
+    void getInboundMessagesAsync(final ResponseListener<InboundSMSMessageList> responseListener);
 	
     /**
      * Get asynchronously SMS messages sent to your Web application over OneAPI
      * @param maxBatchSize (optional) is the maximum number of messages to get in this request
      * @param responseListener (mandatory) method to call after receiving inbound messages
      */
-    <T extends InboundSMSMessageList> void getInboundMessagesAsync(int maxBatchSize, ResponseListener<T> responseListener);
+    void getInboundMessagesAsync(int maxBatchSize, ResponseListener<InboundSMSMessageList> responseListener);
     
 	/**
      * Convert JSON to Inbound SMS Message Notification
@@ -156,7 +156,7 @@ public interface SMSMessagingClient {
      * @param limit
      * @param responseListener (mandatory) method to call after receiving delivery reports
      */
-    <T extends DeliveryReportList> void getDeliveryReportsAsync(int limit, ResponseListener<T> responseListener);
+    void getDeliveryReportsAsync(int limit, ResponseListener<DeliveryReportList> responseListener);
     
 	/**
 	 * Retrieve delivery reports 
@@ -168,7 +168,7 @@ public interface SMSMessagingClient {
      * Get delivery reports asynchronously
      * @param responseListener (mandatory) method to call after receiving delivery reports
      */
-    <T extends DeliveryReportList> void getDeliveryReportsAsync(ResponseListener<T> responseListener);
+    void getDeliveryReportsAsync(ResponseListener<DeliveryReportList> responseListener);
 
 	 /**
      * Retrieve delivery reports by Request Id

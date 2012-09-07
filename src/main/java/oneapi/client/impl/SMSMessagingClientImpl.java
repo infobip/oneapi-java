@@ -64,20 +64,20 @@ public class SMSMessagingClientImpl extends OneAPIBaseClientImpl implements SMSM
      * @param sms (mandatory) object containing data needed to be filled in order to send the SMS
      * @param responseListener (mandatory) method to call after receiving sent SMS response
      */   
-    @SuppressWarnings("unchecked")
-	public <T> void sendSMSAsync(SMSRequest sms, final ResponseListener<T> responseListener) {
+   
+	public void sendSMSAsync(SMSRequest sms, final ResponseListener<String> responseListener) {
         StringBuilder urlBuilder = new StringBuilder(SMS_MESSAGING_OUTBOUND_URL_BASE).append("/");
         urlBuilder.append(encodeURLParam(sms.getSenderAddress()));
         urlBuilder.append("/requests");
  
         RequestData requestData = new RequestData(urlBuilder.toString(), RESPONSE_CODE_201_CREATED, Method.POST, "resourceReference", sms, URL_ENCODED_CONTENT_TYPE);
         
-        executeMethodAsync(requestData, (Class<T>) ResourceReference.class, (ResponseListener<T>) new ResponseListener<ResourceReference> () {
+        executeMethodAsync(requestData, ResourceReference.class, new ResponseListener<ResourceReference> () {
 			@Override
 			public void onGotResponse(ResourceReference resourceUrl, Throwable error) {
 				if (resourceUrl != null) {
 					 String requetsId = getIdFromResourceUrl(resourceUrl.getResourceURL()); 
-					 responseListener.onGotResponse((T)requetsId, null);
+					 responseListener.onGotResponse(requetsId, null);
 				} else {
 					 responseListener.onGotResponse(null, error);
 				}			
@@ -109,8 +109,7 @@ public class SMSMessagingClientImpl extends OneAPIBaseClientImpl implements SMSM
      * @param requestId (mandatory) contains the requestId returned from a previous call to the sendSMS function
      * @param responseListener (mandatory) method to call after receiving delivery status
      */
-    @SuppressWarnings("unchecked")
-	public <T extends DeliveryInfoList> void queryDeliveryStatusAsync(String senderAddress, String requestId, final ResponseListener<T> responseListener) {
+	public void queryDeliveryStatusAsync(String senderAddress, String requestId, final ResponseListener<DeliveryInfoList> responseListener) {
         StringBuilder urlBuilder = (new StringBuilder(SMS_MESSAGING_OUTBOUND_URL_BASE)).append("/");
         urlBuilder.append(encodeURLParam(senderAddress));
         urlBuilder.append("/requests/");
@@ -118,7 +117,7 @@ public class SMSMessagingClientImpl extends OneAPIBaseClientImpl implements SMSM
         urlBuilder.append("/deliveryInfos");
 
         RequestData requestData = new RequestData(urlBuilder.toString(), RESPONSE_CODE_200_OK, Method.GET, "deliveryInfoList");
-        executeMethodAsync(requestData, (Class<T>) DeliveryInfoList.class, responseListener);
+        executeMethodAsync(requestData, DeliveryInfoList.class, responseListener);
     }
 
     /**
@@ -231,7 +230,7 @@ public class SMSMessagingClientImpl extends OneAPIBaseClientImpl implements SMSM
      * Get asynchronously SMS messages sent to your Web application over OneAPI
      * @param responseListener (mandatory) method to call after receiving inbound messages
      */
-    public <T extends InboundSMSMessageList> void getInboundMessagesAsync(final ResponseListener<T> responseListener)
+    public void getInboundMessagesAsync(final ResponseListener<InboundSMSMessageList> responseListener)
     {
     	this.getInboundMessagesAsync(100, responseListener);
     }
@@ -241,8 +240,7 @@ public class SMSMessagingClientImpl extends OneAPIBaseClientImpl implements SMSM
      * @param maxBatchSize (optional) is the maximum number of messages to get in this request
      * @param responseListener (mandatory) method to call after receiving inbound messages
      */
-    @SuppressWarnings("unchecked")
-    public <T extends InboundSMSMessageList> void getInboundMessagesAsync(int maxBatchSize, final ResponseListener<T> responseListener)
+    public void getInboundMessagesAsync(int maxBatchSize, final ResponseListener<InboundSMSMessageList> responseListener)
     {
     	//Registration ID is obsolete so any string can be put: e.g. INBOUND
     	StringBuilder urlBuilder = new StringBuilder(SMS_MESSAGING_INBOUND_URL_BASE).append("/registrations/INBOUND/messages");
@@ -250,7 +248,7 @@ public class SMSMessagingClientImpl extends OneAPIBaseClientImpl implements SMSM
     	urlBuilder.append(encodeURLParam(String.valueOf(maxBatchSize)));
 
     	RequestData requestData = new RequestData(urlBuilder.toString(), RESPONSE_CODE_200_OK, Method.GET, "inboundSMSMessageList");
-    	executeMethodAsync(requestData, (Class<T>) InboundSMSMessageList.class, responseListener);
+    	executeMethodAsync(requestData, InboundSMSMessageList.class, responseListener);
     }
     
     /**
@@ -333,15 +331,14 @@ public class SMSMessagingClientImpl extends OneAPIBaseClientImpl implements SMSM
      * @param limit
      * @param responseListener (mandatory) method to call after receiving delivery reports
      */
-    @SuppressWarnings("unchecked")
-	public <T extends DeliveryReportList> void getDeliveryReportsAsync(int limit, final ResponseListener<T> responseListener)
+	public void getDeliveryReportsAsync(int limit, final ResponseListener<DeliveryReportList> responseListener)
     {
     	StringBuilder urlBuilder = (new StringBuilder(SMS_MESSAGING_OUTBOUND_URL_BASE)).append("/requests/deliveryReports");
         urlBuilder.append("?limit=");
         urlBuilder.append(encodeURLParam(String.valueOf(limit)));
 
         RequestData requestData = new RequestData(urlBuilder.toString(), RESPONSE_CODE_200_OK, Method.GET);
-        executeMethodAsync(requestData, (Class<T>) DeliveryReportList.class, responseListener);
+        executeMethodAsync(requestData, DeliveryReportList.class, responseListener);
     }
      
     /**
@@ -356,7 +353,7 @@ public class SMSMessagingClientImpl extends OneAPIBaseClientImpl implements SMSM
      * Get delivery reports asynchronously
      * @param responseListener (mandatory) method to call after receiving delivery reports
      */
-    public <T extends DeliveryReportList> void getDeliveryReportsAsync(final ResponseListener<T> responseListener)
+    public void getDeliveryReportsAsync(final ResponseListener<DeliveryReportList> responseListener)
     {
         this.getDeliveryReportsAsync(0, responseListener);
     }

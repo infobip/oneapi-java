@@ -96,9 +96,8 @@ public class HLRClientImpl extends OneAPIBaseClientImpl implements HLRClient {
 	 * @param address (mandatory) mobile device number being queried
 	 * @param responseListener (mandatory) method to call after receiving HLR response
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
-	public<T extends Roaming> void queryHLRAsync(String address, final ResponseListener<T> responseListener)
+	public void queryHLRAsync(String address, final ResponseListener<Roaming> responseListener)
 	{
 		StringBuilder urlBuilder = new StringBuilder(HLR_URL_BASE);
 		urlBuilder.append("/roamingStatus?address=");
@@ -106,7 +105,7 @@ public class HLRClientImpl extends OneAPIBaseClientImpl implements HLRClient {
 		urlBuilder.append("&includeExtendedData=true");
 
 		RequestData requestData = new RequestData(urlBuilder.toString(), RESPONSE_CODE_200_OK, Method.GET, "roaming");
-		executeMethodAsync(requestData, (Class<T>) Roaming.class, responseListener);
+		executeMethodAsync(requestData, Roaming.class, responseListener);
 	}
 
 	/**
