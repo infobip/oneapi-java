@@ -4,8 +4,6 @@ import oneapi.client.impl.SMSClient;
 import oneapi.config.Configuration;
 import oneapi.listener.HLRNotificationsListener;
 import oneapi.model.RoamingNotification;
-import oneapi.model.common.LoginResponse;
-
 
 /**
  * To run this example follow these 3 steps:
@@ -39,14 +37,6 @@ public class QueryHLR_WaitForHLRPush {
 
 			// Initialize SMSClient using the Configuration object
 			SMSClient smsClient = new SMSClient(configuration);
-			
-			// Login sms client
-			LoginResponse loginResponse = smsClient.getCustomerProfileClient().login();
-			if (loginResponse.isVerified() == false)
-			{
-				System.out.println("User is not verified!");
-				return;
-			}
 
 			// Add listener(start push server and wait for the 'HLR Notifications')
 			smsClient.getHLRClient().addPushHLRNotificationsListener(new HLRNotificationsListener() {			
@@ -65,9 +55,6 @@ public class QueryHLR_WaitForHLRPush {
 					
 			// Wait 30 seconds for 'HLR Notification' push-es before closing the server connection 
             Thread.sleep(30000);
-			
-			// Logout sms client
-			smsClient.getCustomerProfileClient().logout();
 			
 			// Remove 'HLR Notification' push listeners and stop the server
 			smsClient.getHLRClient().removePushHLRNotificationsListeners();

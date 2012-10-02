@@ -3,7 +3,6 @@ package oneapi.examples.smsmessaging;
 import oneapi.client.impl.SMSClient;
 import oneapi.config.Configuration;
 import oneapi.model.DeliveryReportList;
-import oneapi.model.common.LoginResponse;
 
 public class GetDeliveryReportsExample {
 
@@ -11,13 +10,6 @@ public class GetDeliveryReportsExample {
 		Configuration configuration = new Configuration("user1", "user_password1");
 		SMSClient smsClient = new SMSClient(configuration);
 
-        LoginResponse loginResponse = smsClient.getCustomerProfileClient().login();
-        if (loginResponse.isVerified() == false)
-        {
-            System.out.println("User is not verified!");
-            return;
-        }
-		
 		DeliveryReportList deliveryReportList =  smsClient.getSMSMessagingClient().getDeliveryReports();
 		System.out.println(deliveryReportList);
 	}

@@ -5,8 +5,6 @@ import oneapi.config.Configuration;
 import oneapi.listener.DeliveryReportListener;
 import oneapi.model.DeliveryReportList;
 import oneapi.model.SMSRequest;
-import oneapi.model.common.LoginResponse;
-
 
 /**
  * To run this example follow these 3 steps:
@@ -42,15 +40,7 @@ public class SendSMS_GetDeliveryReportsUsingRetriever {
 			// Initialize SMSClient using the Configuration object
 			SMSClient smsClient = new SMSClient(configuration);
 
-			// Login sms client
-			LoginResponse loginResponse = smsClient.getCustomerProfileClient().login();
-			if (loginResponse.isVerified() == false)
-			{
-				System.out.println("User is not verified!");
-				return;
-			}
-
-			 // Add listener(start retriever and pull 'Delivery Reports')   
+			// Add listener(start retriever and pull 'Delivery Reports')   
 			smsClient.getSMSMessagingClient().addPullDeliveryReportListener(new DeliveryReportListener() {
 				@Override
 				public void onDeliveryReportReceived(DeliveryReportList deliveryReportList, Throwable error) {
@@ -65,15 +55,12 @@ public class SendSMS_GetDeliveryReportsUsingRetriever {
 
 			// Send SMS 
 			smsClient.getSMSMessagingClient().sendSMS(new SMSRequest(senderAddress, message, recipientAddress));
-			
+
 			// Wait 30 seconds for the 'Delivery Reports' before stop the retriever  
-            Thread.sleep(30000);
+			Thread.sleep(30000);
 
 			// Remove 'Delivery Reports' pull listeners and stop the retriever
 			smsClient.getSMSMessagingClient().removePullDeliveryReportListeners();
-			
-			  // Logout sms client
-			smsClient.getCustomerProfileClient().logout();
 
 		} catch (Exception e) {  
 			System.out.println(e.getMessage());

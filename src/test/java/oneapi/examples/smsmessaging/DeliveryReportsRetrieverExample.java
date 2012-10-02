@@ -5,8 +5,6 @@ import oneapi.config.Configuration;
 import oneapi.listener.DeliveryReportListener;
 import oneapi.model.DeliveryReportList;
 import oneapi.model.SMSRequest;
-import oneapi.model.common.LoginResponse;
-
 
 public class DeliveryReportsRetrieverExample {
 
@@ -14,13 +12,6 @@ public class DeliveryReportsRetrieverExample {
 		Configuration configuration = new Configuration("user1", "user_password1");
         SMSClient smsClient = new SMSClient(configuration);
 
-        LoginResponse loginResponse = smsClient.getCustomerProfileClient().login();
-        if (loginResponse.isVerified() == false)
-        {
-            System.out.println("User is not verified!");
-            return;
-        }
-        
 		smsClient.getSMSMessagingClient().addPullDeliveryReportListener(new DeliveryReportListener() {
 			@Override
 			public void onDeliveryReportReceived(DeliveryReportList deliveryReportList, Throwable error) {

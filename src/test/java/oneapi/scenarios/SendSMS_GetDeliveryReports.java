@@ -4,7 +4,6 @@ import oneapi.client.impl.SMSClient;
 import oneapi.config.Configuration;
 import oneapi.model.DeliveryReportList;
 import oneapi.model.SMSRequest;
-import oneapi.model.common.LoginResponse;
 
 /**
  * To run this example follow these 3 steps:
@@ -37,14 +36,6 @@ public class SendSMS_GetDeliveryReports {
 			// Initialize SMSClient using the Configuration object
 			SMSClient smsClient = new SMSClient(configuration);
 			
-			// Login sms client
-			LoginResponse loginResponse = smsClient.getCustomerProfileClient().login();
-			if (loginResponse.isVerified() == false)
-			{
-				System.out.println("User is not verified!");
-				return;
-			}
-
 			// Send SMS 
 			smsClient.getSMSMessagingClient().sendSMS(new SMSRequest(senderAddress, message, recipientAddress));
 			
@@ -54,9 +45,6 @@ public class SendSMS_GetDeliveryReports {
 			// Get 'Delivery Reports'
 			DeliveryReportList deliveryReportList = smsClient.getSMSMessagingClient().getDeliveryReports();
 			System.out.println(deliveryReportList);
-
-			// Logout sms client
-			smsClient.getCustomerProfileClient().logout();
 
 		}
 		catch (Exception e)

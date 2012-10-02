@@ -6,8 +6,6 @@ import oneapi.listener.DeliveryStatusNotificationsListener;
 import oneapi.model.DeliveryInfoNotification;
 import oneapi.model.SMSRequest;
 import oneapi.model.SubscribeToDeliveryNotificationsRequest;
-import oneapi.model.common.LoginResponse;
-
 
 /**
  * To run this example follow these 3 steps:
@@ -47,14 +45,6 @@ public class SendSMS_Subscribe_WaitForDeliveryStatusPush {
 			// Initialize SMSClient using the Configuration object
 			SMSClient smsClient = new SMSClient(configuration);
 
-			// Login sms client
-			LoginResponse loginResponse = smsClient.getCustomerProfileClient().login();
-			if (loginResponse.isVerified() == false)
-			{
-				System.out.println("User is not verified!");
-				return;
-			}
-
 			// Add listener(start push server and wait for the 'Delivery Info Notifications')    
 			smsClient.getSMSMessagingClient().addPushDeliveryStatusNotificationListener(new DeliveryStatusNotificationsListener() {		
 				@Override
@@ -79,9 +69,6 @@ public class SendSMS_Subscribe_WaitForDeliveryStatusPush {
 
             // Remove 'Delivery Info Notifications' subscription
 			smsClient.getSMSMessagingClient().removeDeliveryNotificationsSubscription(subscriptionId);
-
-			// Logout sms client
-			smsClient.getCustomerProfileClient().logout();
 
 			// Remove 'Delivery Info Notifications' push listeners and stop the server
 			smsClient.getSMSMessagingClient().removePushDeliveryStatusNotificationListeners();  

@@ -4,7 +4,6 @@ import oneapi.client.impl.SMSClient;
 import oneapi.config.Configuration;
 import oneapi.listener.InboundMessageListener;
 import oneapi.model.common.InboundSMSMessageList;
-import oneapi.model.common.LoginResponse;
 
 /**
  * To run this example follow these 3 steps:
@@ -34,14 +33,6 @@ public class GetInboundMessagesUsingRetriever {
 
 			// Initialize SMSClient using the Configuration object
 			SMSClient smsClient = new SMSClient(configuration);
-			
-			// Login sms client
-			LoginResponse loginResponse = smsClient.getCustomerProfileClient().login();
-			if (loginResponse.isVerified() == false)
-			{
-				System.out.println("User is not verified!");
-				return;
-			}
 
 			// Add listener(start retriever and pull 'Inbound Messages')   
 			smsClient.getSMSMessagingClient().addPullInboundMessageListener(new InboundMessageListener() {
@@ -62,9 +53,6 @@ public class GetInboundMessagesUsingRetriever {
 			
 			// Remove 'Inbound Messages' pull listeners and stop the retriever
 			smsClient.getSMSMessagingClient().removePullInboundMessageListeners();
-			
-			 // Logout sms client
-			smsClient.getCustomerProfileClient().logout();
 			
 		} catch (Exception e) {  
 			System.out.println(e.getMessage());

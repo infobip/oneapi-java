@@ -4,7 +4,6 @@ import oneapi.client.impl.SMSClient;
 import oneapi.config.Configuration;
 import oneapi.exception.RequestException;
 import oneapi.model.common.InboundSMSMessageList;
-import oneapi.model.common.LoginResponse;
 
 /**
  * To run this example follow these 3 steps:
@@ -32,22 +31,11 @@ public class GetInboundMessages {
 			// Initialize SMSClient using the Configuration object
 			SMSClient smsClient = new SMSClient(configuration);
 
-			// Login sms client
-			LoginResponse loginResponse = smsClient.getCustomerProfileClient().login();
-			if (loginResponse.isVerified() == false)
-			{
-				System.out.println("User is not verified!");
-				return;
-			}
-
 			// example:retrieve-inbound-messages
 			InboundSMSMessageList inboundSMSMessageList =  smsClient.getSMSMessagingClient().getInboundMessages();
 			// ---------------------------------------------------------------------------------------------------- 
 			System.out.println(inboundSMSMessageList);
-
-			// Logout sms client
-			smsClient.getCustomerProfileClient().logout();
-
+			
 		} catch (RequestException e) {  
 			System.out.println(e.getMessage());
 		}

@@ -5,8 +5,6 @@ import oneapi.config.Configuration;
 import oneapi.listener.InboundMessageNotificationsListener;
 import oneapi.model.SubscribeToInboundMessagesRequest;
 import oneapi.model.common.InboundSMSMessageList;
-import oneapi.model.common.LoginResponse;
-
 
 /**
  * To run this example follow these 3 steps:
@@ -45,14 +43,6 @@ public class Subscribe_WaitForInboundMessagesPush {
 			// Initialize SMSClient using the Configuration object
 			SMSClient smsClient = new SMSClient(configuration);
 			
-			 // Login sms client
-			LoginResponse loginResponse = smsClient.getCustomerProfileClient().login();
-			if (loginResponse.isVerified() == false)
-			{
-				System.out.println("User is not verified!");
-				return;
-			}
-
 			// Add listener(start push server and wait for the 'Inbound Message Notifications')    
 			smsClient.getSMSMessagingClient().addPushInboundMessageListener(new InboundMessageNotificationsListener() {
 				@Override
@@ -74,9 +64,6 @@ public class Subscribe_WaitForInboundMessagesPush {
             // Remove 'Inbound Message Notifications' subscription
             smsClient.getSMSMessagingClient().removeInboundMessagesSubscription(subscriptionId);
 			
-            // Logout sms client
-			smsClient.getCustomerProfileClient().logout();
-
 			// Remove 'Inbound Message Notifications' push listeners and stop the server
             smsClient.getSMSMessagingClient().removePushInboundMessageListeners();   
 

@@ -3,7 +3,6 @@ package oneapi.examples.customerprofile;
 import oneapi.client.impl.SMSClient;
 import oneapi.config.Configuration;
 
-
 public class LogoutExample {
 
     public static void main(String[] args) throws Exception {

@@ -3,9 +3,7 @@ package oneapi.scenarios;
 import oneapi.client.impl.SMSClient;
 import oneapi.config.Configuration;
 import oneapi.exception.RequestException;
-import oneapi.model.common.LoginResponse;
 import oneapi.model.common.Roaming;
-
 
 /**
  * To run this example follow these 3 steps:
@@ -32,22 +30,13 @@ public class QueryHLR {
 			// example:data-connection-client
 			Configuration configuration = new Configuration(username, password);
 			SMSClient smsClient = new SMSClient(configuration);
-			LoginResponse loginResponse = smsClient.getCustomerProfileClient().login();
 			// ----------------------------------------------------------------------------------------------------
-			if (loginResponse.isVerified() == false)
-			{
-				System.out.println("User is not verified!");
-				return;
-			}
 
 			// example:retrieve-roaming-status
 		    Roaming roaming = smsClient.getHLRClient().queryHLR(address);
 		    // ----------------------------------------------------------------------------------------------------
 		    System.out.println(roaming);
-			
-		    // Logout sms client
-			smsClient.getCustomerProfileClient().logout();
-			
+					
 		}
 		catch (RequestException e)
 		{
