@@ -8,11 +8,11 @@ import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 public class Authentication {
 	
 	public enum AuthType {
-		IBSSO, OAUTH;
+		BASIC, IBSSO, OAUTH;
 	};
 	
 	//Default Authentication Type
-	private AuthType type = AuthType.IBSSO;	
+	private AuthType type = AuthType.BASIC;	
 	//BASIC Authentication parameters
 	private String username = "";
 	private String password = "";
@@ -26,7 +26,7 @@ public class Authentication {
 	}
 	
 	/**
-	 * Initialize 'BASIC' Authentication (to use 'IBSSO' Authentication you need to call 'Login' method after client initialization)
+	 * Initialize 'BASIC' Authentication (to use 'IBSSO' Authentication you need to call 'CustomerProfileClient.login()' method after client initialization)
 	 * @param username
 	 * @param password
 	 */

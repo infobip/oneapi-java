@@ -50,6 +50,7 @@ public class Configuration  {
 	public Configuration(String username, String password) {  
 		this.authentication.setUsername(username);
 		this.authentication.setPassword(password);
+		this.authentication.setType(Authentication.AuthType.BASIC);
 	}
 
 	/**
@@ -58,6 +59,7 @@ public class Configuration  {
 	 */
 	public Configuration(String accessToken) {  
 		this.authentication.setAccessToken(accessToken);
+		this.authentication.setType(Authentication.AuthType.OAUTH);
 	}
 	
 	/**

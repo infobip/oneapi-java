@@ -4,9 +4,11 @@ import oneapi.client.impl.OneAPIBaseClientImpl;
 import oneapi.config.Configuration;
 import oneapi.exception.RequestException;
 import oneapi.listener.ResponseListener;
+import oneapi.model.Authentication;
 import oneapi.model.Authentication.AuthType;
 import oneapi.model.RequestData;
 import oneapi.model.common.RequestError;
+import org.apache.commons.codec.binary.Base64;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -191,10 +193,13 @@ public class OneAPIBaseClientImpl {
 			String apiUrl = appendMessagingBaseUrl(requestData.getResourcePath());
 
 			//setup connection with custom authorization
-			if (configuration.getAuthentication().getType().equals(AuthType.OAUTH)) {
-				connection = setupConnectionWithCustomAuthorization(apiUrl, "OAuth", configuration.getAuthentication().getAccessToken());
-			} else if (configuration.getAuthentication().getType().equals(AuthType.IBSSO)) {
-				String ibssoToken = configuration.getAuthentication().getIbssoToken();
+			Authentication authentication = configuration.getAuthentication();
+			if (authentication.getType().equals(AuthType.BASIC)) {
+				connection = setupConnectionWithCustomAuthorization(apiUrl, "Basic", new String(Base64.encodeBase64((authentication.getUsername()+":"+authentication.getPassword()).getBytes("UTF-8")), "UTF-8"));
+			} else if (authentication.getType().equals(AuthType.OAUTH)) {
+				connection = setupConnectionWithCustomAuthorization(apiUrl, "OAuth", authentication.getAccessToken());
+			} else if (authentication.getType().equals(AuthType.IBSSO)) {
+				String ibssoToken = authentication.getIbssoToken();
 				connection = setupConnectionWithCustomAuthorization(apiUrl, "IBSSO", ibssoToken);
 			}
 
@@ -251,23 +256,26 @@ public class OneAPIBaseClientImpl {
 		if (!requestData.getContentType().isEmpty()) {
 			requestBuilder.addHeader("Content-Type", requestData.getContentType());
 		}
-		
-		//Set Authorization header
-		if (configuration.getAuthentication().getType().equals(AuthType.OAUTH)) {
-			String accessToken = configuration.getAuthentication().getAccessToken();
-			requestBuilder.addHeader("Authorization", "OAuth  " + accessToken);
-			if (LOGGER.isDebugEnabled()) {
-				LOGGER.debug("Authorization type OAuth using " + accessToken);
-			}
-		} else if (configuration.getAuthentication().getType().equals(AuthType.IBSSO)) {
-			String ibssoToken = configuration.getAuthentication().getIbssoToken();
-			requestBuilder.addHeader("Authorization", "IBSSO  " + ibssoToken);
-			if (LOGGER.isDebugEnabled()) {
-				LOGGER.debug("Authorization type IBSSO using " + ibssoToken);
-			}
-		}
-
+	
 		try {
+			//Set Authorization header
+			Authentication authentication = configuration.getAuthentication();			
+			if (authentication.getType().equals(AuthType.OAUTH)) {
+				requestBuilder.addHeader("Authorization", "Basic " + new String(Base64.encodeBase64((authentication.getUsername()+":"+authentication.getPassword()).getBytes("UTF-8")), "UTF-8"));
+			} else if (authentication.getType().equals(AuthType.OAUTH)) {
+				String accessToken = authentication.getAccessToken();
+				requestBuilder.addHeader("Authorization", "OAuth " + authentication.getAccessToken());
+				if (LOGGER.isDebugEnabled()) {
+					LOGGER.debug("Authorization type OAuth using " + accessToken);
+				}
+			} else if (authentication.getType().equals(AuthType.IBSSO)) {
+				String ibssoToken = authentication.getIbssoToken();
+				requestBuilder.addHeader("Authorization", "IBSSO " + ibssoToken);
+				if (LOGGER.isDebugEnabled()) {
+					LOGGER.debug("Authorization type IBSSO using " + ibssoToken);
+				}
+			}
+		
 			//Set Request Body
 			if (requestData.getFormParams() != null) {
 				if (requestData.getContentType().equals(URL_ENCODED_CONTENT_TYPE)) {
