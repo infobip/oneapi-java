@@ -10,11 +10,6 @@ First initialize the messaging client using your username and password:
     SMSClient smsClient = new SMSClient(configuration);
 
 
-Then login with the client:
-
-    LoginResponse loginResponse = smsClient.getCustomerProfileClient().login();
-
-
 An exception will be thrown if your username and/or password are incorrect.
 
 Prepare the message:
@@ -58,7 +53,6 @@ Initialize and login the data connection client:
 
     Configuration configuration = new Configuration(username, password);
     SMSClient smsClient = new SMSClient(configuration);
-    LoginResponse loginResponse = smsClient.getCustomerProfileClient().login();
 
 
 Retrieve the roaming status (HLR):
