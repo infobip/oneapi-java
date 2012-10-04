@@ -1,6 +1,7 @@
 package oneapi.client.impl;
 
-import javax.swing.event.EventListenerList;
+import java.util.ArrayList;
+import java.util.List;
 import oneapi.client.CustomerProfileClient;
 import oneapi.config.Configuration;
 import oneapi.listener.LoginListener;
@@ -15,8 +16,8 @@ import oneapi.model.common.LoginResponse;
 public class CustomerProfileClientImpl extends OneAPIBaseClientImpl implements CustomerProfileClient {
 	private static final String CUSTOMER_PROFILE_URL_BASE = "/customerProfile";
 	
-	private EventListenerList loginListenersList = null;
-	private EventListenerList logoutListenerList = null;
+	private List<LoginListener> loginListenersList = null;
+	private List<LogoutListener> logoutListenerList = null;
 
 	//*************************CustomerProfileClientImpl initialization***********************************************************************************************************************************************
 	public CustomerProfileClientImpl(Configuration configuration, LoginListener loginListner, LogoutListener logoutListener) {
@@ -78,9 +79,9 @@ public class CustomerProfileClientImpl extends OneAPIBaseClientImpl implements C
 	private void addLoginListener(LoginListener listener) {
 		if (listener == null) return;
 		if (this.loginListenersList == null) {
-			this.loginListenersList = new EventListenerList();
+			this.loginListenersList = new ArrayList<LoginListener>();
 		}
-		this.loginListenersList.add(LoginListener.class, listener);
+		this.loginListenersList.add(listener);
 	}
 
 	/**
@@ -90,9 +91,9 @@ public class CustomerProfileClientImpl extends OneAPIBaseClientImpl implements C
 	private void addLogoutListener(LogoutListener listener) {
 		if (listener == null) return;
 		if (this.logoutListenerList == null) {
-			this.logoutListenerList = new EventListenerList();
+			this.logoutListenerList = new ArrayList<LogoutListener>();
 		}
-		this.logoutListenerList.add(LogoutListener.class, listener);
+		this.logoutListenerList.add(listener);
 	}
 
 	/**
@@ -101,13 +102,9 @@ public class CustomerProfileClientImpl extends OneAPIBaseClientImpl implements C
 	 */
 	private void fireOnLogin(LoginResponse response) {
 		if (loginListenersList != null) {
-			// Each listener occupies two elements - the first is the listener class
-			// and the second is the listener instance
-			for (int i=0; i<loginListenersList.getListenerCount(); i+=2) {
-				if (loginListenersList.getListenerList()[i]==LoginListener.class) {
-					((LoginListener)loginListenersList.getListenerList()[i+1]).onLogin(response);
-				}
-			}
+			for (LoginListener listener : loginListenersList) {
+				listener.onLogin(response);
+			}	
 		}
 	}
 
@@ -116,13 +113,9 @@ public class CustomerProfileClientImpl extends OneAPIBaseClientImpl implements C
 	 */
 	private void fireOnLogout() {
 		if (logoutListenerList != null) {
-			// Each listener occupies two elements - the first is the listener class
-			// and the second is the listener instance
-			for (int i=0; i<logoutListenerList.getListenerCount(); i+=2) {
-				if (logoutListenerList.getListenerList()[i]==LogoutListener.class) {
-					((LogoutListener)logoutListenerList.getListenerList()[i+1]).onLogout();
-				}
-			}
+			for (LogoutListener listener : logoutListenerList) {
+				listener.onLogout();
+			}	
 		}
 	}
 }
