@@ -3,6 +3,7 @@ package oneapi.client.impl;
 import oneapi.client.CustomerProfileClient;
 import oneapi.client.HLRClient;
 import oneapi.client.SMSMessagingClient;
+import oneapi.client.USSDClient;
 import oneapi.config.Configuration;
 import oneapi.listener.LoginListener;
 import oneapi.listener.LogoutListener;
@@ -17,6 +18,7 @@ public class SMSClient {
     private CustomerProfileClient customerProfileClient = null;
     private SMSMessagingClient smsMessagingClient = null;
     private HLRClient hlrClient = null;
+    private USSDClient ussdClient = null;
     private LoginListener loginListener = null;
     private LogoutListener logoutListener = null;
     private Configuration configuration = null;
@@ -39,6 +41,7 @@ public class SMSClient {
         customerProfileClient = new CustomerProfileClientImpl(configuration, loginListener, logoutListener);
         smsMessagingClient = new SMSMessagingClientImpl(configuration);   
         hlrClient = new HLRClientImpl(configuration);
+        ussdClient = new USSDClientImpl(configuration);
     }
 
     //*************************SMSClient public***********************************************************************************************************************************************
@@ -57,8 +60,8 @@ public class SMSClient {
     public SMSMessagingClient getSMSMessagingClient() {
         return smsMessagingClient;
     }
-    
-   /**
+     
+    /**
      * Get HLR client
      * @return HLRClient
      */
@@ -66,6 +69,13 @@ public class SMSClient {
         return hlrClient;
     }
     
+    /**
+     * Get USSD client
+     * @return USSDClient
+     */
+    public USSDClient getUSSDClient() {
+        return ussdClient;
+    }
    
 	//*************************SMSClient private***********************************************************************************************************************************************
     private void setLoginListener() {

@@ -184,13 +184,7 @@ public interface SMSMessagingClient {
 	 * @return DeliveryReportList
 	 */
     DeliveryReportList getDeliveryReportsByRequestId(String requestId);
-
-    /**
-     * Send an USSD over OneAPI to one  mobile terminal using the customized 'USSDRequest' object
-     * @param ussdRequest (mandatory) object containing data needed to be filled in order to send the USSD
-     */
-    void sendUSSD(USSDRequest ussdRequest);
-    
+ 
 	/**
 	 * Add 'INBOUND Messages' listener
 	 * 

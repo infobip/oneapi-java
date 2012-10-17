@@ -387,18 +387,6 @@ public class SMSMessagingClientImpl extends OneAPIBaseClientImpl implements SMSM
     }
     
     /**
-     * Send an USSD over OneAPI to one  mobile terminal using the customized 'USSDRequest' object
-     * @param ussdRequest (mandatory) object containing data needed to be filled in order to send the USSD
-     */
-    @Override
-    public void sendUSSD(USSDRequest ussdRequest){
-        RequestData requestData = new RequestData("/ussd/outbound", RESPONSE_CODE_200_OK, Method.POST);
-        requestData.setFormParams(ussdRequest);
-        requestData.setContentType(URL_ENCODED_CONTENT_TYPE);
-        executeMethod(requestData);      
-    }
-
-    /**
      * Add OneAPI PULL 'Delivery Reports' listener
      * @param listener - (new DeliveryReportListener)
      */

@@ -10,6 +10,6 @@ public class SendUSSDExample {
 		Configuration configuration = new Configuration("user1", "user_password1");
 		SMSClient smsClient = new SMSClient(configuration);
 
-		smsClient.getSMSMessagingClient().sendUSSD(new USSDRequest("11111111111111111111111111", "Hi"));
+		smsClient.getUSSDClient().sendUSSD(new USSDRequest("11111111111111111111111111", "Hi"));
 	}
 }
