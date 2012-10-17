@@ -3,7 +3,7 @@ package oneapi.model;
 public class USSDRequest {
 	private String address = null;
 	private String message = null;
-	private boolean stopSession = false;
+	private Boolean stopSession = null;
 
 	public USSDRequest() {
 	}
@@ -34,11 +34,11 @@ public class USSDRequest {
 		this.message = message;
 	}
 	
-	public boolean isStopSession() {
+	public Boolean isStopSession() {
 		return stopSession;
 	}
 	
-	public void setStopSession(boolean stopSession) {
+	public void setStopSession(Boolean stopSession) {
 		this.stopSession = stopSession;
 	}	
 }

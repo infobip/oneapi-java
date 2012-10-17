@@ -5,6 +5,7 @@ import oneapi.config.Configuration;
 import oneapi.model.RequestData;
 import oneapi.model.USSDRequest;
 import oneapi.model.RequestData.Method;
+import oneapi.model.common.InboundSMSMessage;
 
 public class USSDClientImpl extends OneAPIBaseClientImpl implements USSDClient {
 
@@ -15,14 +16,29 @@ public class USSDClientImpl extends OneAPIBaseClientImpl implements USSDClient {
 	}
 
 	/**
-	 * Send an USSD over OneAPI to one  mobile terminal using the customized 'USSDRequest' object
-	 * @param ussdRequest (mandatory) object containing data needed to be filled in order to send the USSD
+	 * Send an USSD over OneAPI to one mobile terminal '
+	 * @param address
+	 * @param message
+	 * @return InboundSMSMessage
 	 */
 	@Override
-	public void sendUSSD(USSDRequest ussdRequest) {
+	public InboundSMSMessage sendMessage(String address, String message) {
 		RequestData requestData = new RequestData(USSD_URL_BASE, RESPONSE_CODE_200_OK, Method.POST);
-		requestData.setFormParams(ussdRequest);
+		requestData.setFormParams(new USSDRequest(address, message));
 		requestData.setContentType(URL_ENCODED_CONTENT_TYPE);
-		executeMethod(requestData);      
+		return executeMethod(requestData, InboundSMSMessage.class);
+	}
+
+	/**
+	 * Stop USSD session
+	 * @param address
+	 * @param message
+	 */
+	@Override
+	public void stopSession(String address, String message) {
+		RequestData requestData = new RequestData(USSD_URL_BASE, RESPONSE_CODE_200_OK, Method.POST);
+		requestData.setFormParams(new USSDRequest(address, message, true));
+		requestData.setContentType(URL_ENCODED_CONTENT_TYPE);
+	    executeMethod(requestData);
 	}
 }
