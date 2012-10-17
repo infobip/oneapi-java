@@ -8,6 +8,8 @@ import oneapi.model.RequestData.Method;
 
 public class USSDClientImpl extends OneAPIBaseClientImpl implements USSDClient {
 
+	private static final String USSD_URL_BASE = "/ussd/outbound";
+	
 	public USSDClientImpl(Configuration configuration) {
 		super(configuration);
 	}
@@ -18,7 +20,7 @@ public class USSDClientImpl extends OneAPIBaseClientImpl implements USSDClient {
 	 */
 	@Override
 	public void sendUSSD(USSDRequest ussdRequest) {
-		RequestData requestData = new RequestData("/ussd/outbound", RESPONSE_CODE_200_OK, Method.POST);
+		RequestData requestData = new RequestData(USSD_URL_BASE, RESPONSE_CODE_200_OK, Method.POST);
 		requestData.setFormParams(ussdRequest);
 		requestData.setContentType(URL_ENCODED_CONTENT_TYPE);
 		executeMethod(requestData);      
