@@ -6,3 +6,4 @@ bin/*
 tags
 .classpath
 .project
+.settings/*
