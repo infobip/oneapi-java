@@ -44,7 +44,7 @@ public class SMSMessagingClientImpl extends OneAPIBaseClientImpl implements SMSM
 
     //*************************SMSMessagingClientImpl public******************************************************************************************************************************************************
     /**
-     * Send an SMS over OneAPI to one or more mobile terminals using the customized 'SMS' object
+     * Send an SMS over OneAPI to one or more mobile terminals using the customized 'SMSRequest' object
      * @param smsRequest (mandatory) object containing data needed to be filled in order to send the SMS
      * @return String Request Id
      */
@@ -60,17 +60,17 @@ public class SMSMessagingClientImpl extends OneAPIBaseClientImpl implements SMSM
     }
     
     /**
-     * Send an SMS asynchronously over OneAPI to one or more mobile terminals using the customized 'SMS' object
-     * @param sms (mandatory) object containing data needed to be filled in order to send the SMS
+     * Send an SMS asynchronously over OneAPI to one or more mobile terminals using the customized 'SMSRequest' object
+     * @param smsRequest (mandatory) object containing data needed to be filled in order to send the SMS
      * @param responseListener (mandatory) method to call after receiving sent SMS response
      */   
    
-	public void sendSMSAsync(SMSRequest sms, final ResponseListener<String> responseListener) {
+	public void sendSMSAsync(SMSRequest smsRequest, final ResponseListener<String> responseListener) {
         StringBuilder urlBuilder = new StringBuilder(SMS_MESSAGING_OUTBOUND_URL_BASE).append("/");
-        urlBuilder.append(encodeURLParam(sms.getSenderAddress()));
+        urlBuilder.append(encodeURLParam(smsRequest.getSenderAddress()));
         urlBuilder.append("/requests");
  
-        RequestData requestData = new RequestData(urlBuilder.toString(), RESPONSE_CODE_201_CREATED, Method.POST, "resourceReference", sms, URL_ENCODED_CONTENT_TYPE);
+        RequestData requestData = new RequestData(urlBuilder.toString(), RESPONSE_CODE_201_CREATED, Method.POST, "resourceReference", smsRequest, URL_ENCODED_CONTENT_TYPE);
         
         executeMethodAsync(requestData, ResourceReference.class, new ResponseListener<ResourceReference> () {
 			@Override
@@ -384,6 +384,18 @@ public class SMSMessagingClientImpl extends OneAPIBaseClientImpl implements SMSM
     @Override
     public DeliveryReportList getDeliveryReportsByRequestId(String requestId) {
     	return getDeliveryReportsByRequestId(requestId, 0);
+    }
+    
+    /**
+     * Send an USSD over OneAPI to one  mobile terminal using the customized 'USSDRequest' object
+     * @param ussdRequest (mandatory) object containing data needed to be filled in order to send the USSD
+     */
+    @Override
+    public void sendUSSD(USSDRequest ussdRequest){
+        RequestData requestData = new RequestData("/ussd/outbound", RESPONSE_CODE_200_OK, Method.POST);
+        requestData.setFormParams(ussdRequest);
+        requestData.setContentType(URL_ENCODED_CONTENT_TYPE);
+        executeMethod(requestData);      
     }
 
     /**

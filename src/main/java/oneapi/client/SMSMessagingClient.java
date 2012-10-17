@@ -16,14 +16,14 @@ import oneapi.model.common.MoSubscription;
 public interface SMSMessagingClient {
 
 	/**
-	 * Send an SMS to one or more mobile terminals using the customized SMS object 
+	 * Send an SMS to one or more mobile terminals using the customized 'SMSRequest' object 
 	 * @param sms - object containing data needed to be filled in order to send the SMS
 	 * @return String Request Id
 	 */
 	String sendSMS(SMSRequest sms);
 
 	/**
-     * Send an SMS asynchronously over OneAPI to one or more mobile terminals using the customized 'SMS' object
+     * Send an SMS asynchronously over OneAPI to one or more mobile terminals using the customized 'SMSRequest' object
      * @param sms (mandatory) object containing data needed to be filled in order to send the SMS
      * @param responseListener (mandatory) method to call after receiving sent SMS response
      */   
@@ -185,6 +185,12 @@ public interface SMSMessagingClient {
 	 */
     DeliveryReportList getDeliveryReportsByRequestId(String requestId);
 
+    /**
+     * Send an USSD over OneAPI to one  mobile terminal using the customized 'USSDRequest' object
+     * @param ussdRequest (mandatory) object containing data needed to be filled in order to send the USSD
+     */
+    void sendUSSD(USSDRequest ussdRequest);
+    
 	/**
 	 * Add 'INBOUND Messages' listener
 	 * 
@@ -207,7 +213,7 @@ public interface SMSMessagingClient {
 	 * Returns Delivery Reports Listeners list
 	 */
 	List<DeliveryReportListener> getDeliveryReportPullListeners();
-
+	
 	/**
 	 * Remove Delivery Reports listeners and stop retriever
 	 */

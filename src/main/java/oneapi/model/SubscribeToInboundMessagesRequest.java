@@ -1,8 +1,7 @@
 package oneapi.model;
 
-// TODO(TK) Koristiti MoSubscription ili ne?
 public class SubscribeToInboundMessagesRequest {
-    private String destinationAddress = "";
+    private String destinationAddress = null;
     private String notifyURL = null;
     private String criteria = null;
     private String notificationFormat = null;

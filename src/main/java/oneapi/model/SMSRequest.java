@@ -1,9 +1,9 @@
 package oneapi.model;
 
 public class SMSRequest {
-	private String senderAddress = "";
+	private String senderAddress = null;
 	private String[] address = null;
-	private String message = "";
+	private String message = null;
 	private String clientCorrelator = null; 
 	private String notifyURL = null;
 	private String senderName = null;

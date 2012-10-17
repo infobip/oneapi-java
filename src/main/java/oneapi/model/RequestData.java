@@ -22,31 +22,7 @@ public class RequestData {
 		this.requiredStatus = requiredStatus;
 		this.requestMethod = requestMethod;
 	}
-
-//	public RequestData(String resourcePath, int requiredStatus, Method requestMethod, Object formParams)
-//	{
-//		this(resourcePath, requiredStatus, requestMethod);
-//		this.formParams = formParams;
-//	}
-//
-//	public RequestData(String resourcePath, int requiredStatus, Method requestMethod, String rootElement)
-//	{
-//		this(resourcePath, requiredStatus, requestMethod);
-//		this.rootElement = rootElement;
-//	}
-//
-//	public RequestData(String resourcePath, int requiredStatus, Method requestMethod, String rootElement, Object formParams)
-//	{
-//		this(resourcePath, requiredStatus, requestMethod, rootElement);
-//		this.formParams = formParams;
-//	}
-	
-//	public RequestData(String resourcePath, int requiredStatus, Method requestMethod, String rootElement, Object formParams)
-//	{
-//		this(resourcePath, requiredStatus, requestMethod, rootElement);
-//		this.formParams = formParams;
-//	}
-	
+		
 	public RequestData(String resourcePath, int requiredStatus, Method requestMethod, String rootElement)
 	{
 		this(resourcePath, requiredStatus, requestMethod);

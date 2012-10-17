@@ -1,8 +1,8 @@
 package oneapi.model;
 
 public class LoginRequest {
-	private String username;
-	private String password;
+	private String username = null;
+	private String password = null;
 	
 	
 	public LoginRequest() {

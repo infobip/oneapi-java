@@ -39,7 +39,7 @@ public class HLRClientImpl extends OneAPIBaseClientImpl implements HLRClient {
 	@Override 
 	public void queryHLR(String address, String notifyURL, String clientCorrelator, String callbackData) {	
 		if (notifyURL == null || notifyURL.isEmpty()) {
-			throw new RequestException("'notifiyURL' parmeter is mandatory using asynchronous method.");
+			throw new RequestException("'notifiyURL' parmeter is mandatory.");
 		}
 
 		StringBuilder urlBuilder = new StringBuilder(HLR_URL_BASE);	
