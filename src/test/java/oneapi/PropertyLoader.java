@@ -14,7 +14,7 @@ public class PropertyLoader {
 		Properties properties = new Properties();
 
 		try {
-			properties.load(new FileInputStream("examples.properties"));
+			properties.load(new FileInputStream(propertyFile));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

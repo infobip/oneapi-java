@@ -1,8 +1,6 @@
 package oneapi.client;
 
 import oneapi.model.common.InboundSMSMessage;
-import oneapi.model.USSDRequest;
-import oneapi.model.common.InboundSMSMessage;
 
 public interface USSDClient {
 
