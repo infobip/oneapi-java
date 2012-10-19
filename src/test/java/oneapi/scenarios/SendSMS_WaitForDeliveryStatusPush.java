@@ -1,5 +1,8 @@
 package oneapi.scenarios;
 
+import org.apache.log4j.BasicConfigurator;
+
+import oneapi.PropertyLoader;
 import oneapi.client.impl.SMSClient;
 import oneapi.config.Configuration;
 import oneapi.listener.DeliveryStatusNotificationsListener;
@@ -12,9 +15,9 @@ import oneapi.model.SMSRequest;
  *  1.) Download 'OneApi Java library' - available at github.com/parseco
  *
  *  2.) Open 'scenarios.SendSMS_WaitForDeliveryStatusPush' class to edit where you should populate the following fields: 
- *		'senderAddress'     'notifyUrl'   'username'
- *		'message'           'criteria'    'password'        
- *		'recipientAddress'   
+ *		'SENDER		  '     'NOTIFY_URL'   'USERNAME'
+ *		'MESSAGE'           'PASSWORD'        
+ *		'DESTINATION'   
  *
  *  3.) Run the example class by right click it and select 'Run As -> Java Application' 
  *
@@ -26,53 +29,56 @@ import oneapi.model.SMSRequest;
 
 public class SendSMS_WaitForDeliveryStatusPush {
 
-	private static String username = "FILL USERNAME HERE !!!";
-	private static String password = "FILL PASSWORD HERE !!!";
-	private static String senderAddress = "";
-	private static String message = "";
-	private static String recipientAddress = "";
-	private static String notifyUrl = ""; //e.g. "http://127.0.0.1:3000/" 3000=Default port for 'Delivery Info Notifications' server simulator
-	
-	public static void main(String[] args) {
+	// ----------------------------------------------------------------------------------------------------
+	// TODO: Fill you own values here or create/change the example.properties file:
+	// ----------------------------------------------------------------------------------------------------
 
-		try 
-		{
-			// Initialize Configuration object 
-			Configuration configuration = new Configuration(username, password);
+	private static final String USERNAME = PropertyLoader.loadProperty("example.properties", "username");
+	private static final String PASSWORD = PropertyLoader.loadProperty("example.properties", "password");
+	private static String SENDER = PropertyLoader.loadProperty("example.properties", "sender");
+	private static final String DESTINATION = PropertyLoader.loadProperty("example.properties", "destination");
+	private static final String MESSAGE = "Hello"; 
+	private static final String NOTIFY_URL = "http://127.0.0.1:3000/"; // 3000=Default port for 'Delivery Info Notifications' server simulator
 
-			// Initialize SMSClient using the Configuration object
-			SMSClient smsClient = new SMSClient(configuration);
+	public static void main(String[] args) throws Exception {
 
-			// Add listener(start push server and wait for the 'Delivery Info Notifications')    
-			smsClient.getSMSMessagingClient().addPushDeliveryStatusNotificationListener(new DeliveryStatusNotificationsListener() {		
-				@Override
-				public void onDeliveryStatusNotificationReceived(DeliveryInfoNotification deliveryInfoNotification) {
-					// Handle pushed 'Delivery Info Notification'
-					if (deliveryInfoNotification != null) 
-					{
-						String deliveryStatus = deliveryInfoNotification.getDeliveryInfo().getDeliveryStatus();
-						System.out.println(deliveryStatus);
-					}  
-				}
-			});
-
-			 // example:prepare-message-with-notify-url
-            SMSRequest smsRequest = new SMSRequest(senderAddress, message, recipientAddress);
-            // The url where the delivery notification will be pushed:
-            smsRequest.setNotifyURL(notifyUrl); 
-            // ----------------------------------------------------------------------------------------------------
-			
-			// Send SMS 
-			smsClient.getSMSMessagingClient().sendSMS(smsRequest);      
+		// Configure logger
+		BasicConfigurator.configure();
 		
-			 // Wait 30 seconds for 'Delivery Info Notification' push-es before closing the server connection 
-            Thread.sleep(30000);
+		
+		// Initialize Configuration object 
+		Configuration configuration = new Configuration(USERNAME, PASSWORD);
 
-			// Remove 'Delivery Info Notifications' push listeners and stop the server
-			smsClient.getSMSMessagingClient().removePushDeliveryStatusNotificationListeners();  
+		// Initialize SMSClient using the Configuration object
+		SMSClient smsClient = new SMSClient(configuration);
 
-		} catch (Exception e) {  
-			System.out.println(e.getMessage());
-		}
+		// Add listener(start push server and wait for the 'Delivery Info Notifications')    
+		smsClient.getSMSMessagingClient().addPushDeliveryStatusNotificationListener(new DeliveryStatusNotificationsListener() {		
+			@Override
+			public void onDeliveryStatusNotificationReceived(DeliveryInfoNotification deliveryInfoNotification) {
+				// Handle pushed 'Delivery Info Notification'
+				if (deliveryInfoNotification != null) 
+				{
+					String deliveryStatus = deliveryInfoNotification.getDeliveryInfo().getDeliveryStatus();
+					System.out.println(deliveryStatus);
+				}  
+			}
+		});
+
+		// example:prepare-message-with-notify-url
+		SMSRequest smsRequest = new SMSRequest(SENDER, MESSAGE, DESTINATION);
+		// The url where the delivery notification will MESSAGE pushed:
+		smsRequest.setNotifyURL(NOTIFY_URL); 
+		// ----------------------------------------------------------------------------------------------------
+
+		// Send SMS 
+		smsClient.getSMSMessagingClient().sendSMS(smsRequest);      
+
+		// Wait 30 seconds for 'Delivery Info Notification' push-es before closing the server connection 
+		Thread.sleep(30000);
+
+		// Remove 'Delivery Info Notifications' push listeners and stop the server
+		smsClient.getSMSMessagingClient().removePushDeliveryStatusNotificationListeners();  
+
 	}
 }

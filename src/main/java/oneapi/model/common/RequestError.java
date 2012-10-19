@@ -1,17 +1,13 @@
 package oneapi.model.common;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * contains an error response returned from the OneAPI server
  */
 public class RequestError implements java.io.Serializable {
 	private static final long serialVersionUID = -4594109872052136844L;
-	protected static final Logger LOG = LoggerFactory.getLogger(RequestError.class);
-	
+		
 	/**
 	 * internally used to indicate the type of exception being stored is a ServiceException
 	 */
@@ -121,20 +117,6 @@ public class RequestError implements java.io.Serializable {
 	 * default constructor
 	 */
 	public RequestError() {
-	}
-	
-	/** 
-	 * generate JSON representation of the RequestError including all nested elements and classes 
-	 */
-	public String toJson() {
-		ObjectMapper mapper = new ObjectMapper();
-		String ret = null;
-		try {
-			ret = "{\"requestError\":" + mapper.writeValueAsString(this) + "}";
-		} catch (Exception e) {
-			LOG.error( "Error mapping json " + e.getMessage(), e );
-		}
-		return ret;
 	}
 	
 	/** 

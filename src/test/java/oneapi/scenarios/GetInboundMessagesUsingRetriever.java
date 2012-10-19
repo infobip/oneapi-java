@@ -1,5 +1,8 @@
 package oneapi.scenarios;
 
+import org.apache.log4j.BasicConfigurator;
+
+import oneapi.PropertyLoader;
 import oneapi.client.impl.SMSClient;
 import oneapi.config.Configuration;
 import oneapi.listener.InboundMessageListener;
@@ -11,8 +14,8 @@ import oneapi.model.common.InboundSMSMessageList;
  *  1.) Download 'OneApi Java library' - available at www.github.com/parseco
  *
  *  2.) Open 'scenarios.GetInboundMessagesUsingRetriever' class to edit where you should populate the following fields: 
- *		'username'
- *		'password'
+ *		'USERNAME'
+ *		'PASSWORD'
  *
  *  3.) Run the example class by right click it and select 'Run As -> Java Application' 
  *
@@ -22,40 +25,44 @@ import oneapi.model.common.InboundSMSMessageList;
 
 public class GetInboundMessagesUsingRetriever {
 
-	private static String username = "FILL USERNAME HERE !!!";
-	private static String password = "FILL PASSWORD HERE !!!";
+	// ----------------------------------------------------------------------------------------------------
+	// TODO: Fill you own values here or create/change the example.properties file:
+	// ----------------------------------------------------------------------------------------------------
 
-	public static void main(String[] args) {
-		
-		try {
-			// Initialize Configuration object 
-			Configuration configuration = new Configuration(username, password);
+	private static final String USERNAME = PropertyLoader.loadProperty("example.properties", "username");
+	private static final String PASSWORD = PropertyLoader.loadProperty("example.properties", "password");
 
-			// Initialize SMSClient using the Configuration object
-			SMSClient smsClient = new SMSClient(configuration);
+	public static void main(String[] args) throws Exception {
 
-			// Add listener(start retriever and pull 'Inbound Messages')   
-			smsClient.getSMSMessagingClient().addPullInboundMessageListener(new InboundMessageListener() {
-				@Override
-				public void onMessageRetrieved(InboundSMSMessageList inboundSMSMessageList, Throwable error) {
-					// Handle pulled 'Inbound Messages'
-					if (error == null) 
-					{
-						System.out.println(inboundSMSMessageList);
-					} else {
-						System.out.println(error.getMessage());
-					}  	
-				}	
-			});
+		// Configure logger
+		BasicConfigurator.configure();
 
-			// Wait 30 seconds for the 'Inbound Messages' before stop the retriever
-			Thread.sleep(30000);
-			
-			// Remove 'Inbound Messages' pull listeners and stop the retriever
-			smsClient.getSMSMessagingClient().removePullInboundMessageListeners();
-			
-		} catch (Exception e) {  
-			System.out.println(e.getMessage());
-		}
+
+		// Initialize Configuration object 
+		Configuration configuration = new Configuration(USERNAME, PASSWORD);
+
+		// Initialize SMSClient using the Configuration object
+		SMSClient smsClient = new SMSClient(configuration);
+
+		// Add listener(start retriever and pull 'Inbound Messages')   
+		smsClient.getSMSMessagingClient().addPullInboundMessageListener(new InboundMessageListener() {
+			@Override
+			public void onMessageRetrieved(InboundSMSMessageList inboundSMSMessageList, Throwable error) {
+				// Handle pulled 'Inbound Messages'
+				if (error == null) 
+				{
+					System.out.println(inboundSMSMessageList);
+				} else {
+					System.out.println(error.getMessage());
+				}  	
+			}	
+		});
+
+		// Wait 30 seconds for the 'Inbound Messages' before stop the retriever
+		Thread.sleep(30000);
+
+		// Remove 'Inbound Messages' pull listeners and stop the retriever
+		smsClient.getSMSMessagingClient().removePullInboundMessageListeners();
+
 	}
 }

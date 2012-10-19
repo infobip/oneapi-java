@@ -1,5 +1,8 @@
 package oneapi.scenarios;
 
+import org.apache.log4j.BasicConfigurator;
+
+import oneapi.PropertyLoader;
 import oneapi.client.impl.SMSClient;
 import oneapi.config.Configuration;
 import oneapi.listener.HLRNotificationsListener;
@@ -11,8 +14,8 @@ import oneapi.model.RoamingNotification;
  *  1.) Download 'OneApi Java library' - available at github.com/parseco
  *
  *  2.) Open 'scenarios.QueryHLR_WaitForHLRPush' class to edit where you should populate the following fields: 
- *		'address'   'username'    
- *		'notifyUrl' 'password'         
+ *		'DESTINATION'   'USERNAME'    
+ *		'NOTIFY_URL' 'PASSWORD'         
  *		
  *  3.) Run the example class by right click it and select 'Run As -> Java Application' 
  *
@@ -22,48 +25,48 @@ import oneapi.model.RoamingNotification;
  **/
 
 public class QueryHLR_WaitForHLRPush {
-	
-	private static String username = "FILL USERNAME HERE !!!";
-	private static String password = "FILL PASSWORD HERE !!!";    
-	private static String address = "";
-	private static String notifyUrl = ""; //e.g. "http://127.0.0.1:3002/" 3002=Default port for 'HLR Notifications' server simulator
 
-	public static void main(String[] args) {
-		
-		try
-		{
-			// Initialize Configuration object 
-			Configuration configuration = new Configuration(username, password);
+	// ----------------------------------------------------------------------------------------------------
+	// TODO: Fill you own values here or create/change the example.properties file:
+	// ----------------------------------------------------------------------------------------------------
 
-			// Initialize SMSClient using the Configuration object
-			SMSClient smsClient = new SMSClient(configuration);
+	private static final String USERNAME = PropertyLoader.loadProperty("example.properties", "username");
+	private static final String PASSWORD = PropertyLoader.loadProperty("example.properties", "password");
+	private static String DESTINATION = PropertyLoader.loadProperty("example.properties", "destination");;
+	private static String NOTIFY_URL = "http://127.0.0.1:3002/"; // 3002=Default port for 'HLR Notifications' server simulator
 
-			// Add listener(start push server and wait for the 'HLR Notifications')
-			smsClient.getHLRClient().addPushHLRNotificationsListener(new HLRNotificationsListener() {			
-				@Override
-				public void OnHLRReceived(RoamingNotification roamingNotification) {
-					// Handle pushed 'HLR Notification'
-					if (roamingNotification != null) {
-						System.out.println(roamingNotification);
-					}
+	public static void main(String[] args) throws Exception {
+
+		// Configure logger
+		BasicConfigurator.configure();
+
+
+		// Initialize Configuration object 
+		Configuration configuration = new Configuration(USERNAME, PASSWORD);
+
+		// Initialize SMSClient using the Configuration object
+		SMSClient smsClient = new SMSClient(configuration);
+
+		// Add listener(start push server and wait for the 'HLR Notifications')
+		smsClient.getHLRClient().addPushHLRNotificationsListener(new HLRNotificationsListener() {			
+			@Override
+			public void OnHLRReceived(RoamingNotification roamingNotification) {
+				// Handle pushed 'HLR Notification'
+				if (roamingNotification != null) {
+					System.out.println(roamingNotification);
 				}
-			});
+			}
+		});
 
-			// example:retrieve-roaming-status-with-notify-url
-			smsClient.getHLRClient().queryHLR(address, notifyUrl);
-			// ----------------------------------------------------------------------------------------------------
-					
-			// Wait 30 seconds for 'HLR Notification' push-es before closing the server connection 
-            Thread.sleep(30000);
-			
-			// Remove 'HLR Notification' push listeners and stop the server
-			smsClient.getHLRClient().removePushHLRNotificationsListeners();
-			
-		}
-		catch (Exception e)
-		{
-			System.out.println(e.getMessage());	
-		}  
+		// example:retrieve-roaming-status-with-notify-url
+		smsClient.getHLRClient().queryHLR(DESTINATION, NOTIFY_URL);
+		// ----------------------------------------------------------------------------------------------------
+
+		// Wait 30 seconds for 'HLR Notification' push-es before closing the server connection 
+		Thread.sleep(30000);
+
+		// Remove 'HLR Notification' push listeners and stop the server
+		smsClient.getHLRClient().removePushHLRNotificationsListeners();
 	}
 }
 

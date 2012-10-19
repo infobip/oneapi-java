@@ -1,8 +1,10 @@
 package oneapi.scenarios;
 
+import org.apache.log4j.BasicConfigurator;
+
+import oneapi.PropertyLoader;
 import oneapi.client.impl.SMSClient;
 import oneapi.config.Configuration;
-import oneapi.exception.RequestException;
 import oneapi.model.common.InboundSMSMessageList;
 
 /**
@@ -11,33 +13,36 @@ import oneapi.model.common.InboundSMSMessageList;
  *  1.) Download 'OneApi Java library' - available at github.com/parseco
  *
  *  2.) Open 'scenarios.GetInboundMessages' class to edit where you should populate the following fields: 
- *		'username'
- *		'password'
+ *		'USERNAME'
+ *		'PASSWORD'
  *
  *  3.) Run the example class by right click it and select 'Run As -> Java Application' 
  **/
 
 public class GetInboundMessages {
 
-	private static String username = "FILL USERNAME HERE !!!";
-	private static String password = "FILL PASSWORD HERE !!!";
+	// ----------------------------------------------------------------------------------------------------
+	// TODO: Fill you own values here or create/change the example.properties file:
+	// ----------------------------------------------------------------------------------------------------
+
+	private static final String USERNAME = PropertyLoader.loadProperty("example.properties", "username");
+	private static final String PASSWORD = PropertyLoader.loadProperty("example.properties", "password");
 
 	public static void main(String[] args) {
 
-		try {		
-			// Initialize Configuration object 
-			Configuration configuration = new Configuration(username, password);
+		// Configure logger
+		BasicConfigurator.configure();
 
-			// Initialize SMSClient using the Configuration object
-			SMSClient smsClient = new SMSClient(configuration);
 
-			// example:retrieve-inbound-messages
-			InboundSMSMessageList inboundSMSMessageList =  smsClient.getSMSMessagingClient().getInboundMessages();
-			// ---------------------------------------------------------------------------------------------------- 
-			System.out.println(inboundSMSMessageList);
-			
-		} catch (RequestException e) {  
-			System.out.println(e.getMessage());
-		}
+		// Initialize Configuration object 
+		Configuration configuration = new Configuration(USERNAME, PASSWORD);
+
+		// Initialize SMSClient using the Configuration object
+		SMSClient smsClient = new SMSClient(configuration);
+
+		// example:retrieve-inbound-messages
+		InboundSMSMessageList inboundSMSMessageList =  smsClient.getSMSMessagingClient().getInboundMessages();
+		// ---------------------------------------------------------------------------------------------------- 
+		System.out.println(inboundSMSMessageList);
 	}
 }

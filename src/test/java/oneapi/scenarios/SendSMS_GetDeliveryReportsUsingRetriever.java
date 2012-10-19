@@ -1,5 +1,8 @@
 package oneapi.scenarios;
 
+import org.apache.log4j.BasicConfigurator;
+
+import oneapi.PropertyLoader;
 import oneapi.client.impl.SMSClient;
 import oneapi.config.Configuration;
 import oneapi.listener.DeliveryReportListener;
@@ -12,9 +15,9 @@ import oneapi.model.SMSRequest;
  *  1.) Download 'OneApi Java library' - available at github.com/parseco
  *
  *  2.) Open 'scenarios.SendSMS_GetDeliveryReportsUsingRetriever' class to edit where you should populate the following fields: 
- *		'senderAddress' 'username' 
- *	    'message'       'password'
- *		'recipientAddress'	
+ *		'SENDER'  	  'USERNAME' 
+ *	    'MESSAGE'	  'PASSWORD'
+ *		'DESTINATION'	
  *
  *  3.) Run the example class by right click it and select 'Run As -> Java Application' 
  *
@@ -24,46 +27,49 @@ import oneapi.model.SMSRequest;
 
 public class SendSMS_GetDeliveryReportsUsingRetriever {
 
-	private static String username = "FILL USERNAME HERE !!!";
-	private static String password = "FILL PASSWORD HERE !!!";
-	private static String senderAddress = "";
-	private static String message = "";
-	private static String recipientAddress = "";
+	// ----------------------------------------------------------------------------------------------------
+	// TODO: Fill you own values here or create/change the example.properties file:
+	// ----------------------------------------------------------------------------------------------------
 
-	public static void main(String[] args) {
+	private static final String USERNAME = PropertyLoader.loadProperty("example.properties", "username");
+	private static final String PASSWORD = PropertyLoader.loadProperty("example.properties", "password");
+	private static String SENDER = PropertyLoader.loadProperty("example.properties", "sender");
+	private static final String DESTINATION = PropertyLoader.loadProperty("example.properties", "destination");
+	private static final String MESSAGE = "Hello"; 
 
-		try 
-		{		
-			// Initialize Configuration object 
-			Configuration configuration = new Configuration(username, password);
+	public static void main(String[] args) throws Exception {
 
-			// Initialize SMSClient using the Configuration object
-			SMSClient smsClient = new SMSClient(configuration);
+		// Configure logger
+		BasicConfigurator.configure();
 
-			// Add listener(start retriever and pull 'Delivery Reports')   
-			smsClient.getSMSMessagingClient().addPullDeliveryReportListener(new DeliveryReportListener() {
-				@Override
-				public void onDeliveryReportReceived(DeliveryReportList deliveryReportList, Throwable error) {
-					//Handle pulled 'Delivery Reports'
-					if (error == null) {
-						System.out.println(deliveryReportList);
-					} else {
-						System.out.println(error.getMessage());
-					}			
-				}
-			});
 
-			// Send SMS 
-			smsClient.getSMSMessagingClient().sendSMS(new SMSRequest(senderAddress, message, recipientAddress));
+		// Initialize Configuration object 
+		Configuration configuration = new Configuration(USERNAME, PASSWORD);
 
-			// Wait 30 seconds for the 'Delivery Reports' before stop the retriever  
-			Thread.sleep(30000);
+		// Initialize SMSClient using the Configuration object
+		SMSClient smsClient = new SMSClient(configuration);
 
-			// Remove 'Delivery Reports' pull listeners and stop the retriever
-			smsClient.getSMSMessagingClient().removePullDeliveryReportListeners();
+		// Add listener(start retriever and pull 'Delivery Reports')   
+		smsClient.getSMSMessagingClient().addPullDeliveryReportListener(new DeliveryReportListener() {
+			@Override
+			public void onDeliveryReportReceived(DeliveryReportList deliveryReportList, Throwable error) {
+				//Handle pulled 'Delivery Reports'
+				if (error == null) {
+					System.out.println(deliveryReportList);
+				} else {
+					System.out.println(error.getMessage());
+				}			
+			}
+		});
 
-		} catch (Exception e) {  
-			System.out.println(e.getMessage());
-		}
+		// Send SMS 
+		smsClient.getSMSMessagingClient().sendSMS(new SMSRequest(SENDER, MESSAGE, DESTINATION));
+
+		// Wait 30 seconds for the 'Delivery Reports' before stop the retriever  
+		Thread.sleep(30000);
+
+		// Remove 'Delivery Reports' pull listeners and stop the retriever
+		smsClient.getSMSMessagingClient().removePullDeliveryReportListeners();
+
 	}
 }

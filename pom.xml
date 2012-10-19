@@ -6,8 +6,8 @@
     <name>OneAPI Java Client</name>
     <description>OneAPI Java Client</description>
 
-    <groupId>org.oneapi.client</groupId>
-    <artifactId>oneapi-java-client</artifactId>
+    <groupId>oneapi</groupId>
+    <artifactId>oneapi-java</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
     <properties>
@@ -114,12 +114,12 @@
             <version>1.6.1</version>
             <scope>compile</scope>
         </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
-            <version>1.6.1</version>
-            <scope>compile</scope>
-        </dependency>
+       <dependency>  
+    	   <groupId>org.slf4j</groupId>  
+   		   <artifactId>slf4j-log4j12</artifactId>  
+           <version>1.7.2</version> 
+            <scope>compile</scope> 
+		</dependency>
         <dependency>
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-mapper-asl</artifactId>

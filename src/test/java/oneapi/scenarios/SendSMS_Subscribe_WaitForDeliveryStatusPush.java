@@ -1,5 +1,8 @@
 package oneapi.scenarios;
 
+import org.apache.log4j.BasicConfigurator;
+
+import oneapi.PropertyLoader;
 import oneapi.client.impl.SMSClient;
 import oneapi.config.Configuration;
 import oneapi.listener.DeliveryStatusNotificationsListener;
@@ -13,9 +16,9 @@ import oneapi.model.SubscribeToDeliveryNotificationsRequest;
  *  1.) Download 'OneApi Java library' - available at github.com/parseco
  *
  *  2.) Open 'scenarios.SendSMS_Subscribe_WaitForDeliveryStatusPush' class to edit where you should populate the following fields: 
- *		'senderAddress'     'notifyUrl'   'username'
- *		'message'           'criteria'    'password'        
- *		'recipientAddress'   
+ *		'SENDER'     'NOTIFY_URL'   'USERNAME'
+ *		'MESSAGE'    'CRITERIA'     'PASSWORD'        
+ *		'DESTINATION'   
  *
  *  3.) Run the example class by right click it and select 'Run As -> Java Application' 
  *
@@ -27,54 +30,57 @@ import oneapi.model.SubscribeToDeliveryNotificationsRequest;
 
 public class SendSMS_Subscribe_WaitForDeliveryStatusPush {
 
-	private static String username = "FILL USERNAME HERE !!!";
-	private static String password = "FILL PASSWORD HERE !!!";
-	private static String senderAddress = "";
-	private static String message = "";
-	private static String recipientAddress = "";
-	private static String notifyUrl = ""; //e.g. "http://127.0.0.1:3000/" 3000=Default port for 'Delivery Info Notifications' server simulator
-	private static String criteria = "";
+	// ----------------------------------------------------------------------------------------------------
+	// TODO: Fill you own values here or create/change the example.properties file:
+	// ----------------------------------------------------------------------------------------------------
 
-	public static void main(String[] args) {
+	private static final String USERNAME = PropertyLoader.loadProperty("example.properties", "username");
+	private static final String PASSWORD = PropertyLoader.loadProperty("example.properties", "password");
+	private static String SENDER = PropertyLoader.loadProperty("example.properties", "sender");
+	private static final String DESTINATION = PropertyLoader.loadProperty("example.properties", "destination");
+	private static final String MESSAGE = "Hello"; 
+	private static String NOTIFY_URL = "http://127.0.0.1:3000/"; // 3000=Default port for 'Delivery Info Notifications' server simulator
+	private static String CRITERIA = "SomeCriteria";
 
-		try 
-		{
-			// Initialize Configuration object 
-			Configuration configuration = new Configuration(username, password);
+	public static void main(String[] args) throws Exception {
 
-			// Initialize SMSClient using the Configuration object
-			SMSClient smsClient = new SMSClient(configuration);
+		// Configure logger
+		BasicConfigurator.configure();
 
-			// Add listener(start push server and wait for the 'Delivery Info Notifications')    
-			smsClient.getSMSMessagingClient().addPushDeliveryStatusNotificationListener(new DeliveryStatusNotificationsListener() {		
-				@Override
-				public void onDeliveryStatusNotificationReceived(DeliveryInfoNotification deliveryInfoNotification) {
-					// Handle pushed 'Delivery Info Notification'
-					if (deliveryInfoNotification != null) 
-					{
-						String deliveryStatus = deliveryInfoNotification.getDeliveryInfo().getDeliveryStatus();
-						System.out.println(deliveryStatus);
-					}  
-				}
-			});
 
-			// Store 'Delivery Info Notifications' subscription id because we can later remove subscription with it:
-			String subscriptionId = smsClient.getSMSMessagingClient().subscribeToDeliveryStatusNotifications(new SubscribeToDeliveryNotificationsRequest(senderAddress, notifyUrl, criteria, "", ""));
-			
-			// Send SMS 
-			smsClient.getSMSMessagingClient().sendSMS(new SMSRequest(senderAddress, criteria + message, recipientAddress));      
-		
-			// Wait 30 seconds for 'Delivery Info Notification' push-es before removing subscription and closing the server connection 
-            Thread.sleep(30000);
+		// Initialize Configuration object 
+		Configuration configuration = new Configuration(USERNAME, PASSWORD);
 
-            // Remove 'Delivery Info Notifications' subscription
-			smsClient.getSMSMessagingClient().removeDeliveryNotificationsSubscription(subscriptionId);
+		// Initialize SMSClient using the Configuration object
+		SMSClient smsClient = new SMSClient(configuration);
 
-			// Remove 'Delivery Info Notifications' push listeners and stop the server
-			smsClient.getSMSMessagingClient().removePushDeliveryStatusNotificationListeners();  
+		// Add listener(start push server and wait for the 'Delivery Info Notifications')    
+		smsClient.getSMSMessagingClient().addPushDeliveryStatusNotificationListener(new DeliveryStatusNotificationsListener() {		
+			@Override
+			public void onDeliveryStatusNotificationReceived(DeliveryInfoNotification deliveryInfoNotification) {
+				// Handle pushed 'Delivery Info Notification'
+				if (deliveryInfoNotification != null) 
+				{
+					String deliveryStatus = deliveryInfoNotification.getDeliveryInfo().getDeliveryStatus();
+					System.out.println(deliveryStatus);
+				}  
+			}
+		});
 
-		} catch (Exception e) {  
-			System.out.println(e.getMessage());
-		}
+		// Store 'Delivery Info Notifications' subscription id because we can later remove subscription with it:
+		String subscriptionId = smsClient.getSMSMessagingClient().subscribeToDeliveryStatusNotifications(new SubscribeToDeliveryNotificationsRequest(SENDER, NOTIFY_URL, CRITERIA, "", ""));
+
+		// Send SMS 
+		smsClient.getSMSMessagingClient().sendSMS(new SMSRequest(SENDER, CRITERIA + MESSAGE, DESTINATION));      
+
+		// Wait 30 seconds for 'Delivery Info Notification' push-es before removing subscription and closing the server connection 
+		Thread.sleep(30000);
+
+		// Remove 'Delivery Info Notifications' subscription
+		smsClient.getSMSMessagingClient().removeDeliveryNotificationsSubscription(subscriptionId);
+
+		// Remove 'Delivery Info Notifications' push listeners and stop the server
+		smsClient.getSMSMessagingClient().removePushDeliveryStatusNotificationListeners();  
+
 	}
 }

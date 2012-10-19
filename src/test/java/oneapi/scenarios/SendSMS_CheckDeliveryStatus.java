@@ -1,5 +1,8 @@
 package oneapi.scenarios;
 
+import org.apache.log4j.BasicConfigurator;
+
+import oneapi.PropertyLoader;
 import oneapi.client.impl.SMSClient;
 import oneapi.config.Configuration;
 import oneapi.model.SMSRequest;
@@ -11,52 +14,53 @@ import oneapi.model.common.DeliveryInfoList;
  *  1.) Download 'OneApi C# library' - available at github.com/parseco
  *
  *  2.) Open 'scenarios.SendSMS_CheckDeliveryStatus' class to edit where you should populate the following fields: 
- *		'senderAddress'    'username'
- *		'message'          'password' 
- *		'recipientAddress'	
+ *		'SENDER'    'USERNAME'
+ *		'MESSAGE'   'PASSWORD' 
+ *		'DESTINATION'	
  *
  *  3.) Run the example class by right click it and select 'Run As -> Java Application'     
  **/
 
 public class SendSMS_CheckDeliveryStatus {
-	
-	private static String username = "FILL USERNAME HERE !!!";
-	private static String password = "FILL PASSWORD HERE !!!";
-	private static String senderAddress = "";
-	private static String message = "";
-	private static String recipientAddress = "";
 
-	public static void main(String[] args) {
+	// ----------------------------------------------------------------------------------------------------
+	// TODO: Fill you own values here or create/change the example.properties file:
+	// ----------------------------------------------------------------------------------------------------
 
-		try
-		{
-			// example:initialize-sms-client
-			Configuration configuration = new Configuration(username, password);
-			SMSClient smsClient = new SMSClient(configuration);
-			// ----------------------------------------------------------------------------------------------------
-			
-			// example:prepare-message-without-notify-url
-			SMSRequest smsRequest = new SMSRequest(senderAddress, message, recipientAddress);
-			// ----------------------------------------------------------------------------------------------------
+	private static final String USERNAME = PropertyLoader.loadProperty("example.properties", "username");
+	private static final String PASSWORD = PropertyLoader.loadProperty("example.properties", "password");
+	private static String SENDER = PropertyLoader.loadProperty("example.properties", "sender");
+	private static final String DESTINATION = PropertyLoader.loadProperty("example.properties", "destination");
+	private static final String MESSAGE = "Hello"; 
 
-			// example:send-message
-			// Store request id because we can later query for the delivery status with it:
-			String requestId = smsClient.getSMSMessagingClient().sendSMS(smsRequest);
-			// ----------------------------------------------------------------------------------------------------
+	public static void main(String[] args) throws Exception {
 		
-			// Few seconds later we can check for the sending status   
-			Thread.sleep(10000);
+		// Configure logger
+		BasicConfigurator.configure();
+		
+		
+		// example:initialize-sms-client
+		Configuration configuration = new Configuration(USERNAME, PASSWORD);
+		SMSClient smsClient = new SMSClient(configuration);
+		// ----------------------------------------------------------------------------------------------------
 
-			// example:query-for-delivery-status
-			DeliveryInfoList deliveryInfoList = smsClient.getSMSMessagingClient().queryDeliveryStatus(senderAddress, requestId);
-			String deliveryStatus = deliveryInfoList.getDeliveryInfo().get(0).getDeliveryStatus();
-			// ----------------------------------------------------------------------------------------------------
-			System.out.println(deliveryStatus);
-				
-		}
-		catch (Exception e)
-		{
-			System.out.println(e.getMessage());
-		}   
+		// example:prepare-message-without-notify-url
+		SMSRequest smsRequest = new SMSRequest(SENDER, MESSAGE, DESTINATION);
+		// ----------------------------------------------------------------------------------------------------
+
+		// example:send-message
+		// Store request id because we can later query for the delivery status with it:
+		String requestId = smsClient.getSMSMessagingClient().sendSMS(smsRequest);
+		// ----------------------------------------------------------------------------------------------------
+
+		// Few seconds later we can check for the sending status   
+		Thread.sleep(10000);
+
+		// example:query-for-delivery-status
+		DeliveryInfoList deliveryInfoList = smsClient.getSMSMessagingClient().queryDeliveryStatus(SENDER, requestId);
+		String deliveryStatus = deliveryInfoList.getDeliveryInfo().get(0).getDeliveryStatus();
+		// ----------------------------------------------------------------------------------------------------
+		System.out.println(deliveryStatus);
+		
 	}
 }
