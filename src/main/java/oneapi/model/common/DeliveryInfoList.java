@@ -29,6 +29,11 @@ public class DeliveryInfoList implements java.io.Serializable {
 		 */
 		private String deliveryStatus=null;
 		
+		
+		private String messageId = null;
+		
+		private String clientCorrelator;
+		
 		/**
 		 * return the address of the recipient (normally MSISDN)
 		 */
@@ -59,10 +64,26 @@ public class DeliveryInfoList implements java.io.Serializable {
 		 * @param address
 		 * @param deliveryStatus
 		 */
-		public DeliveryInfo(String address, String deliveryStatus) {
+		public DeliveryInfo(String address, String deliveryStatus, String messageId, String clientCorrelator ) {
 			this.address=address;
 			this.deliveryStatus=deliveryStatus;
+			this.messageId = messageId;
+			this.clientCorrelator = clientCorrelator;
 		}
+		
+		public String getMessageId() {
+			return messageId;
+		}
+		public void setMessageId(String messageId) {
+			this.messageId = messageId;
+		}
+		public String getClientCorrelator() {
+			return clientCorrelator;
+		}
+		public void setClientCorrelator(String clientCorrelator) {
+			this.clientCorrelator = clientCorrelator;
+		}
+		
 		@Override
 		public String toString() {
 			return "DeliveryInfo {address=" + address + ", deliveryStatus="
