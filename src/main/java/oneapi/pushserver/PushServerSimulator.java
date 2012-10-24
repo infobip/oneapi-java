@@ -115,7 +115,7 @@ public class PushServerSimulator {
 	}
 
 	private void processRequestData(String json) {
-		if (!json.trim().isEmpty())
+		if (json.trim().length() != 0)
 		{
 			if (smsMessagingImpl != null)
 			{

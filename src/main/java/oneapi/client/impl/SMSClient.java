@@ -82,7 +82,7 @@ public class SMSClient {
         loginListener = new LoginListener() {
             @Override
             public void onLogin(LoginResponse response) {
-                if ((response != null) && (!response.getIbAuthCookie().isEmpty())) {
+                if ((response != null) && (response.getIbAuthCookie().length() != 0)) {
                     configuration.getAuthentication().setType(AuthType.IBSSO);
                     configuration.getAuthentication().setIbssoToken(response.getIbAuthCookie());
                 }

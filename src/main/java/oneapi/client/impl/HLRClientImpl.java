@@ -38,7 +38,7 @@ public class HLRClientImpl extends OneAPIBaseClientImpl implements HLRClient {
 	 */
 	@Override 
 	public void queryHLR(String address, String notifyURL, String clientCorrelator, String callbackData) {	
-		if (notifyURL == null || notifyURL.isEmpty()) {
+		if (notifyURL == null || notifyURL.length() == 0) {
 			throw new RequestException("'notifiyURL' parmeter is mandatory.");
 		}
 

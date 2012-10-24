@@ -211,7 +211,7 @@ public class OneAPIBaseClientImpl {
 			}
 
 			//Set Content Type
-			if ((requestData.getContentType() != null) && (!requestData.getContentType().isEmpty())) {
+			if ((requestData.getContentType() != null) && (requestData.getContentType().length() != 0)) {
 				connection.setRequestProperty("Content-Type", requestData.getContentType());
 			}
 			connection.setRequestProperty("accept", "*/*");
@@ -260,7 +260,7 @@ public class OneAPIBaseClientImpl {
 		.addHeader("User-Agent", "OneApi-Java-".concat(SMSClient.VERSION));
 
 		//Set content type
-		if (!requestData.getContentType().isEmpty()) {
+		if (requestData.getContentType().length() != 0) {
 			requestBuilder.addHeader("Content-Type", requestData.getContentType());
 		}
 	
@@ -577,7 +577,7 @@ public class OneAPIBaseClientImpl {
 			}
 		}
 
-		if (contentEncoding.isEmpty()) {
+		if (contentEncoding.length() == 0) {
 			contentEncoding = CHARSET;
 		}
 
