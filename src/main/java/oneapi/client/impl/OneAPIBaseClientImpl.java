@@ -1,22 +1,11 @@
 package oneapi.client.impl;
 
-import oneapi.client.impl.OneAPIBaseClientImpl;
-import oneapi.config.Configuration;
-import oneapi.exception.RequestException;
-import oneapi.listener.ResponseListener;
-import oneapi.model.Authentication;
-import oneapi.model.Authentication.AuthType;
-import oneapi.model.RequestData;
-import oneapi.model.common.RequestError;
-import org.apache.commons.codec.binary.Base64;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import com.ning.http.client.AsyncCompletionHandler;
-import com.ning.http.client.AsyncHttpClient;
-import com.ning.http.client.RequestBuilder;
-import com.ning.http.client.Response;
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -24,6 +13,24 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import oneapi.config.Configuration;
+import oneapi.exception.RequestException;
+import oneapi.listener.ResponseListener;
+import oneapi.model.Authentication;
+import oneapi.model.Authentication.AuthType;
+import oneapi.model.RequestData;
+import oneapi.model.common.RequestError;
+
+import org.apache.commons.codec.binary.Base64;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ning.http.client.AsyncCompletionHandler;
+import com.ning.http.client.AsyncHttpClient;
+import com.ning.http.client.RequestBuilder;
+import com.ning.http.client.Response;
 
 /**
  * Client base class containing common methods and properties
@@ -138,7 +145,7 @@ public class OneAPIBaseClientImpl {
 	protected <T> T convertJSONToObject(byte[] jsonBytes, Class<T> clazz, String rootElement) {
 		try {
 			if(null != rootElement && "" != rootElement) {
-				return getObjectMapper().readValue(getObjectMapper().reader().readTree(new ByteArrayInputStream(jsonBytes)).get(rootElement), clazz);
+				return getObjectMapper().readValue(new ByteArrayInputStream(jsonBytes), clazz);
 			} else {
 				return getObjectMapper().readValue(jsonBytes, clazz);
 			}

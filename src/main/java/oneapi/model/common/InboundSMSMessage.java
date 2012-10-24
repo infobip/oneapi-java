@@ -2,7 +2,8 @@ package oneapi.model.common;
 
 import java.io.Serializable;
 import java.util.Date;
-import org.codehaus.jackson.annotate.JsonIgnore;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * InboundMessage contains the main message information for an SMS message (not

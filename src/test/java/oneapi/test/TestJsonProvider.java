@@ -2,7 +2,8 @@ package oneapi.test;
 
 import java.util.HashMap;
 import java.util.Map;
-import org.codehaus.jackson.map.ObjectMapper;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class TestJsonProvider {
 

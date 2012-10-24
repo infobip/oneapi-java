@@ -2,7 +2,7 @@ package oneapi.model.common;
 
 import java.util.List;
 
-import org.codehaus.jackson.map.annotate.JsonSerialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 /**
  * Contains the detail of a request to obtain delivery information for SMS messages sent via the OneAPI server

@@ -5,11 +5,13 @@ import java.io.File;
 import oneapi.exception.ConfigurationException;
 import oneapi.model.Authentication;
 
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.annotate.JsonSerialize;
-import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize.Inclusion;
 
 @JsonSerialize(include = Inclusion.NON_NULL)
 public class Configuration  {
@@ -94,7 +96,7 @@ public class Configuration  {
 	public void load() {
 		try {
 			ObjectMapper mapper = new ObjectMapper();
-			mapper.configure(org.codehaus.jackson.JsonParser.Feature.ALLOW_COMMENTS, true);
+			mapper.configure(JsonParser.Feature.ALLOW_COMMENTS, true);
 
 			String configFileName = System.getProperty(CONFIG_FILE_SYSTEM_PROPERTY, DEFAULT_CONFIG_FILE);	
 			Configuration tmpConfig = mapper.readValue(new File(configFileName), Configuration.class);

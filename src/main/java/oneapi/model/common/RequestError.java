@@ -1,6 +1,6 @@
 package oneapi.model.common;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * contains an error response returned from the OneAPI server

@@ -1,8 +1,10 @@
 package oneapi.model;
 
 import java.util.Arrays;
-import org.codehaus.jackson.annotate.JsonProperty;
+
 import oneapi.model.common.DeliveryReport;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class DeliveryReportList {
 	
