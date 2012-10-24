@@ -1,12 +1,10 @@
 package oneapi.model.common;
 
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * reference to a resource created by the OneAPI server - in the form of a generated URL
  */
 
-@XmlRootElement
 public class ResourceReference {
 	/**
 	 * contains a URL uniquely identifying a successful request to the OneAPI server
