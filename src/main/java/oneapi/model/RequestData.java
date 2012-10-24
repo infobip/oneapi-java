@@ -3,7 +3,6 @@ package oneapi.model;
 public class RequestData {
 
 	private String resourcePath = "";
-	private int requiredStatus;
 	private Method requestMethod;
 	private String rootElement = "";
 	private Object formParams = null;
@@ -16,28 +15,27 @@ public class RequestData {
 		POST, GET, DELETE;
 	};
 
-	public RequestData(String resourcePath, int requiredStatus, Method requestMethod)
+	public RequestData(String resourcePath, Method requestMethod)
 	{
 		this.resourcePath = resourcePath;
-		this.requiredStatus = requiredStatus;
 		this.requestMethod = requestMethod;
 	}
 		
-	public RequestData(String resourcePath, int requiredStatus, Method requestMethod, String rootElement)
+	public RequestData(String resourcePath, Method requestMethod, String rootElement)
 	{
-		this(resourcePath, requiredStatus, requestMethod);
+		this(resourcePath, requestMethod);
 		this.rootElement = rootElement;
 	}
 	
-	public RequestData(String resourcePath, int requiredStatus, Method requestMethod, String rootElement, Object formParams)
+	public RequestData(String resourcePath, Method requestMethod, String rootElement, Object formParams)
 	{
-		this(resourcePath, requiredStatus, requestMethod, rootElement);
+		this(resourcePath, requestMethod, rootElement);
 		this.formParams = formParams;
 	}
 	
-	public RequestData(String resourcePath, int requiredStatus, Method requestMethod, String rootElement, Object formParams, String contentType)
+	public RequestData(String resourcePath, Method requestMethod, String rootElement, Object formParams, String contentType)
 	{
-		this(resourcePath, requiredStatus, requestMethod, rootElement, formParams);
+		this(resourcePath, requestMethod, rootElement, formParams);
 		this.contentType = contentType;
 	}
 
@@ -47,14 +45,6 @@ public class RequestData {
 
 	public void setResourcePath(String resourcePath) {
 		this.resourcePath = resourcePath;
-	}
-
-	public int getRequiredStatus() {
-		return requiredStatus;
-	}
-
-	public void setRequiredStatus(int requiredStatus) {
-		this.requiredStatus = requiredStatus;
 	}
 
 	public Method getRequestMethod() {

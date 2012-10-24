@@ -54,7 +54,7 @@ public class SMSMessagingClientImpl extends OneAPIBaseClientImpl implements SMSM
         urlBuilder.append(encodeURLParam(smsRequest.getSenderAddress()));
         urlBuilder.append("/requests");
         
-        RequestData requestData = new RequestData(urlBuilder.toString(), RESPONSE_CODE_201_CREATED, Method.POST, "resourceReference", smsRequest, URL_ENCODED_CONTENT_TYPE);
+        RequestData requestData = new RequestData(urlBuilder.toString(), Method.POST, "resourceReference", smsRequest, URL_ENCODED_CONTENT_TYPE);
         ResourceReference resourceReference = executeMethod(requestData, ResourceReference.class);
         return getIdFromResourceUrl(resourceReference.getResourceURL()); 
     }
@@ -70,7 +70,7 @@ public class SMSMessagingClientImpl extends OneAPIBaseClientImpl implements SMSM
         urlBuilder.append(encodeURLParam(smsRequest.getSenderAddress()));
         urlBuilder.append("/requests");
  
-        RequestData requestData = new RequestData(urlBuilder.toString(), RESPONSE_CODE_201_CREATED, Method.POST, "resourceReference", smsRequest, URL_ENCODED_CONTENT_TYPE);
+        RequestData requestData = new RequestData(urlBuilder.toString(), Method.POST, "resourceReference", smsRequest, URL_ENCODED_CONTENT_TYPE);
         
         executeMethodAsync(requestData, ResourceReference.class, new ResponseListener<ResourceReference> () {
 			@Override
@@ -99,7 +99,7 @@ public class SMSMessagingClientImpl extends OneAPIBaseClientImpl implements SMSM
         urlBuilder.append(encodeURLParam(requestId));
         urlBuilder.append("/deliveryInfos");
 
-        RequestData requestData = new RequestData(urlBuilder.toString(), RESPONSE_CODE_200_OK, Method.GET, "deliveryInfoList");
+        RequestData requestData = new RequestData(urlBuilder.toString(), Method.GET, "deliveryInfoList");
         return executeMethod(requestData, DeliveryInfoList.class);
     }
     
@@ -116,7 +116,7 @@ public class SMSMessagingClientImpl extends OneAPIBaseClientImpl implements SMSM
         urlBuilder.append(encodeURLParam(requestId));
         urlBuilder.append("/deliveryInfos");
 
-        RequestData requestData = new RequestData(urlBuilder.toString(), RESPONSE_CODE_200_OK, Method.GET, "deliveryInfoList");
+        RequestData requestData = new RequestData(urlBuilder.toString(), Method.GET, "deliveryInfoList");
         executeMethodAsync(requestData, DeliveryInfoList.class, responseListener);
     }
 
@@ -144,7 +144,7 @@ public class SMSMessagingClientImpl extends OneAPIBaseClientImpl implements SMSM
         }
         urlBuilder.append("subscriptions");
 
-        RequestData requestData = new RequestData(urlBuilder.toString(), RESPONSE_CODE_201_CREATED, Method.POST, "deliveryReceiptSubscription", subscribeToDeliveryNotificationsRequest, URL_ENCODED_CONTENT_TYPE);
+        RequestData requestData = new RequestData(urlBuilder.toString(), Method.POST, "deliveryReceiptSubscription", subscribeToDeliveryNotificationsRequest, URL_ENCODED_CONTENT_TYPE);
         DeliveryReceiptSubscription deliveryReceiptSubscription = executeMethod(requestData, DeliveryReceiptSubscription.class);
         return getIdFromResourceUrl(deliveryReceiptSubscription.getResourceURL()); 
     }
@@ -160,7 +160,7 @@ public class SMSMessagingClientImpl extends OneAPIBaseClientImpl implements SMSM
         urlBuilder.append(encodeURLParam(senderAddress));
         urlBuilder.append("/subscriptions");
 
-        RequestData requestData = new RequestData(urlBuilder.toString(), RESPONSE_CODE_200_OK, Method.GET, "deliveryReceiptSubscriptions");
+        RequestData requestData = new RequestData(urlBuilder.toString(), Method.GET, "deliveryReceiptSubscriptions");
         return executeMethod(requestData, DeliveryReportSubscription[].class);
     }
 
@@ -174,7 +174,7 @@ public class SMSMessagingClientImpl extends OneAPIBaseClientImpl implements SMSM
         StringBuilder urlBuilder = new StringBuilder(SMS_MESSAGING_OUTBOUND_URL_BASE).append("/subscriptions/");
         urlBuilder.append(encodeURLParam(subscriptionId));
 
-        RequestData requestData = new RequestData(urlBuilder.toString(), RESPONSE_CODE_200_OK, Method.GET, "deliveryReceiptSubscription");
+        RequestData requestData = new RequestData(urlBuilder.toString(), Method.GET, "deliveryReceiptSubscription");
         return executeMethod(requestData, DeliveryReportSubscription.class);
     }
 
@@ -184,7 +184,7 @@ public class SMSMessagingClientImpl extends OneAPIBaseClientImpl implements SMSM
      */
     @Override
     public DeliveryReportSubscription[] getDeliveryNotificationsSubscriptions() {
-    	RequestData requestData = new RequestData(SMS_MESSAGING_OUTBOUND_URL_BASE + "/subscriptions", RESPONSE_CODE_200_OK, Method.GET, "deliveryReceiptSubscriptions");
+    	RequestData requestData = new RequestData(SMS_MESSAGING_OUTBOUND_URL_BASE + "/subscriptions", Method.GET, "deliveryReceiptSubscriptions");
         return executeMethod(requestData, DeliveryReportSubscription[].class);
     }
 
@@ -197,7 +197,7 @@ public class SMSMessagingClientImpl extends OneAPIBaseClientImpl implements SMSM
         StringBuilder urlBuilder = new StringBuilder(SMS_MESSAGING_OUTBOUND_URL_BASE).append("/subscriptions/");
         urlBuilder.append(encodeURLParam(subscriptionId));
 
-        RequestData requestData = new RequestData(urlBuilder.toString(), RESPONSE_CODE_204_NO_CONTENT, Method.DELETE);
+        RequestData requestData = new RequestData(urlBuilder.toString(), Method.DELETE);
         executeMethod(requestData);
     }
 
@@ -222,7 +222,7 @@ public class SMSMessagingClientImpl extends OneAPIBaseClientImpl implements SMSM
     	urlBuilder.append("?maxBatchSize=");
     	urlBuilder.append(encodeURLParam(String.valueOf(maxBatchSize)));
 
-    	RequestData requestData = new RequestData(urlBuilder.toString(), RESPONSE_CODE_200_OK, Method.GET, "inboundSMSMessageList");
+    	RequestData requestData = new RequestData(urlBuilder.toString(), Method.GET, "inboundSMSMessageList");
     	return executeMethod(requestData, InboundSMSMessageList.class);
     }
 
@@ -247,7 +247,7 @@ public class SMSMessagingClientImpl extends OneAPIBaseClientImpl implements SMSM
     	urlBuilder.append("?maxBatchSize=");
     	urlBuilder.append(encodeURLParam(String.valueOf(maxBatchSize)));
 
-    	RequestData requestData = new RequestData(urlBuilder.toString(), RESPONSE_CODE_200_OK, Method.GET, "inboundSMSMessageList");
+    	RequestData requestData = new RequestData(urlBuilder.toString(), Method.GET, "inboundSMSMessageList");
     	executeMethodAsync(requestData, InboundSMSMessageList.class, responseListener);
     }
     
@@ -268,7 +268,7 @@ public class SMSMessagingClientImpl extends OneAPIBaseClientImpl implements SMSM
      */
     @Override
     public String subscribeToInboundMessagesNotifications(SubscribeToInboundMessagesRequest subscribeToInboundMessagesRequest) {
-    	RequestData requestData = new RequestData(SMS_MESSAGING_INBOUND_URL_BASE + "/subscriptions", RESPONSE_CODE_201_CREATED, Method.POST, "resourceReference", subscribeToInboundMessagesRequest, URL_ENCODED_CONTENT_TYPE);
+    	RequestData requestData = new RequestData(SMS_MESSAGING_INBOUND_URL_BASE + "/subscriptions", Method.POST, "resourceReference", subscribeToInboundMessagesRequest, URL_ENCODED_CONTENT_TYPE);
     	ResourceReference resourceReference = executeMethod(requestData, ResourceReference.class);
         return getIdFromResourceUrl(resourceReference.getResourceURL()); 
     }
@@ -285,7 +285,7 @@ public class SMSMessagingClientImpl extends OneAPIBaseClientImpl implements SMSM
     	urlBuilder.append("&pageSize="); 
     	urlBuilder.append(encodeURLParam(String.valueOf(pageSize)));
 
-    	RequestData requestData = new RequestData(urlBuilder.toString(), RESPONSE_CODE_200_OK, Method.GET, "subscriptions");
+    	RequestData requestData = new RequestData(urlBuilder.toString(), Method.GET, "subscriptions");
     	return executeMethod(requestData, MoSubscription[].class);	
     }
     
@@ -307,7 +307,7 @@ public class SMSMessagingClientImpl extends OneAPIBaseClientImpl implements SMSM
         StringBuilder urlBuilder = new StringBuilder(SMS_MESSAGING_INBOUND_URL_BASE).append("/subscriptions/");
         urlBuilder.append(encodeURLParam(subscriptionId));
 
-        RequestData requestData = new RequestData(urlBuilder.toString(), RESPONSE_CODE_204_NO_CONTENT, Method.DELETE);
+        RequestData requestData = new RequestData(urlBuilder.toString(), Method.DELETE);
         executeMethod(requestData); 
     }
   
@@ -322,7 +322,7 @@ public class SMSMessagingClientImpl extends OneAPIBaseClientImpl implements SMSM
     	urlBuilder.append("?limit=");
     	urlBuilder.append(encodeURLParam(String.valueOf(limit)));
     	
-    	RequestData requestData = new RequestData(urlBuilder.toString(), RESPONSE_CODE_200_OK, Method.GET);
+    	RequestData requestData = new RequestData(urlBuilder.toString(), Method.GET);
     	return executeMethod(requestData, DeliveryReportList.class);	
     }
     
@@ -337,7 +337,7 @@ public class SMSMessagingClientImpl extends OneAPIBaseClientImpl implements SMSM
         urlBuilder.append("?limit=");
         urlBuilder.append(encodeURLParam(String.valueOf(limit)));
 
-        RequestData requestData = new RequestData(urlBuilder.toString(), RESPONSE_CODE_200_OK, Method.GET);
+        RequestData requestData = new RequestData(urlBuilder.toString(), Method.GET);
         executeMethodAsync(requestData, DeliveryReportList.class, responseListener);
     }
      
@@ -372,7 +372,7 @@ public class SMSMessagingClientImpl extends OneAPIBaseClientImpl implements SMSM
     	urlBuilder.append("?limit=");
     	urlBuilder.append(encodeURLParam(String.valueOf(limit)));
     	
-    	RequestData requestData = new RequestData(urlBuilder.toString(), RESPONSE_CODE_200_OK, Method.GET);
+    	RequestData requestData = new RequestData(urlBuilder.toString(), Method.GET);
         return executeMethod(requestData, DeliveryReportList.class);
     }
     

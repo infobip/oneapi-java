@@ -30,7 +30,7 @@ public class CustomerProfileClientImpl extends OneAPIBaseClientImpl implements C
 	@Override
 	public LoginResponse login() {
 		LoginRequest loginRequest = new LoginRequest(getConfiguration().getAuthentication().getUsername(), getConfiguration().getAuthentication().getPassword());	
-		RequestData requestData = new RequestData(CUSTOMER_PROFILE_URL_BASE + "/login", RESPONSE_CODE_200_OK, Method.POST, "login", loginRequest, URL_ENCODED_CONTENT_TYPE);
+		RequestData requestData = new RequestData(CUSTOMER_PROFILE_URL_BASE + "/login", Method.POST, "login", loginRequest, URL_ENCODED_CONTENT_TYPE);
 		LoginResponse response = executeMethod(requestData, LoginResponse.class);
 		fireOnLogin(response);
 		return response;
@@ -38,20 +38,20 @@ public class CustomerProfileClientImpl extends OneAPIBaseClientImpl implements C
 	
 	@Override
 	public void logout() {
-		RequestData requestData = new RequestData(CUSTOMER_PROFILE_URL_BASE + "/logout", RESPONSE_CODE_204_NO_CONTENT, Method.POST);
+		RequestData requestData = new RequestData(CUSTOMER_PROFILE_URL_BASE + "/logout", Method.POST);
 		executeMethod(requestData);
 		fireOnLogout();
 	}
 
 	@Override
 	public CustomerProfile getCustomerProfile() {	
-		 RequestData requestData = new RequestData(CUSTOMER_PROFILE_URL_BASE, RESPONSE_CODE_200_OK, Method.GET);
+		 RequestData requestData = new RequestData(CUSTOMER_PROFILE_URL_BASE, Method.GET);
 		 return executeMethod(requestData, CustomerProfile.class);
 	}
 	
 	@Override
 	public CustomerProfile[] getCustomerProfiles() {	
-		RequestData requestData = new RequestData(CUSTOMER_PROFILE_URL_BASE + "/list", RESPONSE_CODE_200_OK, Method.GET);
+		RequestData requestData = new RequestData(CUSTOMER_PROFILE_URL_BASE + "/list", Method.GET);
 		return executeMethod(requestData, CustomerProfile[].class);
 	}
 
@@ -60,14 +60,14 @@ public class CustomerProfileClientImpl extends OneAPIBaseClientImpl implements C
 		StringBuilder urlBuilder = new StringBuilder(CUSTOMER_PROFILE_URL_BASE).append("/");
 		urlBuilder.append(encodeURLParam(String.valueOf(id)));
 
-		RequestData requestData = new RequestData(urlBuilder.toString(), RESPONSE_CODE_200_OK, Method.GET);
+		RequestData requestData = new RequestData(urlBuilder.toString(), Method.GET);
 		return executeMethod(requestData, CustomerProfile.class);
 	}
 	
 	@Override
     public AccountBalance getAccountBalance()
     {	
-		RequestData requestData = new RequestData(CUSTOMER_PROFILE_URL_BASE + "/balance", RESPONSE_CODE_200_OK, Method.GET);
+		RequestData requestData = new RequestData(CUSTOMER_PROFILE_URL_BASE + "/balance", Method.GET);
 		return executeMethod(requestData, AccountBalance.class);
     }
 	

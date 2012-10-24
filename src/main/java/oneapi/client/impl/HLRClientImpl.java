@@ -62,7 +62,7 @@ public class HLRClientImpl extends OneAPIBaseClientImpl implements HLRClient {
 			urlBuilder.append(encodeURLParam(callbackData));
 		}
 
-		RequestData requestData = new RequestData(urlBuilder.toString(), RESPONSE_CODE_200_OK, Method.GET);
+		RequestData requestData = new RequestData(urlBuilder.toString(), Method.GET);
 		executeMethod(requestData);
 	}
 
@@ -88,7 +88,7 @@ public class HLRClientImpl extends OneAPIBaseClientImpl implements HLRClient {
 		urlBuilder.append(encodeURLParam(address));
 		urlBuilder.append("&includeExtendedData=true");	
 
-		RequestData requestData = new RequestData(urlBuilder.toString(), RESPONSE_CODE_200_OK, Method.GET, "roaming");
+		RequestData requestData = new RequestData(urlBuilder.toString(), Method.GET, "roaming");
 		RoamingResponse result = executeMethod(requestData, RoamingResponse.class);
 		
 		return result.getRoaming();
@@ -107,7 +107,7 @@ public class HLRClientImpl extends OneAPIBaseClientImpl implements HLRClient {
 		urlBuilder.append(encodeURLParam(address));
 		urlBuilder.append("&includeExtendedData=true");
 
-		RequestData requestData = new RequestData(urlBuilder.toString(), RESPONSE_CODE_200_OK, Method.GET, "roaming");
+		RequestData requestData = new RequestData(urlBuilder.toString(), Method.GET, "roaming");
 		executeMethodAsync(requestData, Roaming.class, responseListener);
 	}
 
@@ -128,7 +128,7 @@ public class HLRClientImpl extends OneAPIBaseClientImpl implements HLRClient {
 	 */
 	@Override
 	public String subscribeToHLRDeliveryNotifications(SubscribeToHLRDeliveryNotificationsRequest subscribeToHLRDeliveryNotificationsRequest) {
-		RequestData requestData = new RequestData(HLR_SUBSCRIPTION_URL_BASE, RESPONSE_CODE_201_CREATED, Method.POST, "deliveryReceiptSubscription", subscribeToHLRDeliveryNotificationsRequest, URL_ENCODED_CONTENT_TYPE);
+		RequestData requestData = new RequestData(HLR_SUBSCRIPTION_URL_BASE, Method.POST, "deliveryReceiptSubscription", subscribeToHLRDeliveryNotificationsRequest, URL_ENCODED_CONTENT_TYPE);
 		DeliveryReceiptSubscription deliveryReceiptSubscription = executeMethod(requestData, DeliveryReceiptSubscription.class);
 		return getIdFromResourceUrl(deliveryReceiptSubscription.getResourceURL()); 
 	}
@@ -143,7 +143,7 @@ public class HLRClientImpl extends OneAPIBaseClientImpl implements HLRClient {
 		StringBuilder urlBuilder = new StringBuilder(HLR_SUBSCRIPTION_URL_BASE).append("/");
 		urlBuilder.append(encodeURLParam(subscriptionId));
 
-		RequestData requestData = new RequestData(urlBuilder.toString(), RESPONSE_CODE_200_OK, Method.GET, "deliveryReceiptSubscriptions");
+		RequestData requestData = new RequestData(urlBuilder.toString(), Method.GET, "deliveryReceiptSubscriptions");
 		return executeMethod(requestData,  DeliveryReportSubscription[].class);
 	}
 
@@ -156,7 +156,7 @@ public class HLRClientImpl extends OneAPIBaseClientImpl implements HLRClient {
 		StringBuilder urlBuilder = new StringBuilder(HLR_SUBSCRIPTION_URL_BASE).append("/");
 		urlBuilder.append(encodeURLParam(subscriptionId));
 
-		RequestData requestData = new RequestData(urlBuilder.toString(), RESPONSE_CODE_204_NO_CONTENT, Method.DELETE);
+		RequestData requestData = new RequestData(urlBuilder.toString(), Method.DELETE);
         executeMethod(requestData);
 	}
 

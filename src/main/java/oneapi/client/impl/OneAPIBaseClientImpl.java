@@ -102,7 +102,7 @@ public class OneAPIBaseClientImpl {
 	 */
 	protected <T> T executeMethod(RequestData requestData, Class<T> clazz) {
 		HttpURLConnection connection = sendOneAPIRequest(requestData);
-		return deserialize(connection, clazz, requestData.getRequiredStatus(), requestData.getRootElement());
+		return deserialize(connection, clazz, requestData.getRootElement());
 	}
 
 	/**
@@ -112,7 +112,7 @@ public class OneAPIBaseClientImpl {
 	protected void executeMethod(RequestData requestData)
 	{
 		HttpURLConnection connection = sendOneAPIRequest(requestData);
-		validateResponse(connection, requestData.getRequiredStatus());
+		validateResponse(connection);
 	}
 
 	/**
@@ -299,7 +299,7 @@ public class OneAPIBaseClientImpl {
 				@Override
 				public Response onCompleted(Response response) {
 					try {
-						T jsonObject = deserialize(response, clazz, requestData.getRequiredStatus(), requestData.getRootElement());
+						T jsonObject = deserialize(response, clazz, requestData.getRootElement());
 						responseListener.onGotResponse(jsonObject, null);
 					} catch (Exception e) {
 						responseListener.onGotResponse(null, e);
@@ -353,11 +353,11 @@ public class OneAPIBaseClientImpl {
 	 * @return T 
 	 * @throws RequestException
 	 */
-	private <T> T deserialize(HttpURLConnection connection, Class<T> clazz, int requiredStatus, String rootElement) {
+	private <T> T deserialize(HttpURLConnection connection, Class<T> clazz, String rootElement) {
 		int responseCode = getResponseCode(connection);
 		String contentEncoding = getContentEncoding(connection.getContentType());
 
-		if (responseCode == requiredStatus) {	
+		if (200 <= responseCode && responseCode < 300) {	
 			try {   	
 				return deserializeStream(connection.getInputStream(), contentEncoding, clazz, rootElement);
 
@@ -380,11 +380,11 @@ public class OneAPIBaseClientImpl {
 	 * @return T
 	 * @throws IOException
 	 */
-	private <T> T deserialize(Response response, Class<T> clazz, int requiredStatus, String rootElement) throws IOException {
+	private <T> T deserialize(Response response, Class<T> clazz, String rootElement) throws IOException {
 		int responseCode = response.getStatusCode();
 		InputStream inputStream = response.getResponseBodyAsStream();
 
-		if (responseCode == requiredStatus)  {
+		if (200 <= responseCode && responseCode < 300)  {
 			T jsonObject =  deserializeStream(inputStream, CHARSET, clazz, rootElement);
 			return jsonObject;
 		}
@@ -463,10 +463,10 @@ public class OneAPIBaseClientImpl {
 	 * @param connection
 	 * @param requiredStatus
 	 */
-	private void validateResponse(HttpURLConnection connection, int requiredStatus) {
+	private void validateResponse(HttpURLConnection connection) {
 		int responseCode = getResponseCode(connection);
 
-		if (responseCode != requiredStatus) {
+		if (200 <= responseCode && responseCode < 300) {
 			String contentEncoding = getContentEncoding(connection.getContentType());	
 			throw readRequestException(connection.getErrorStream(), responseCode, contentEncoding);	
 		}
