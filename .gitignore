@@ -7,4 +7,4 @@ tags
 .classpath
 .project
 .settings/*
-examples.properties
+example*.properties
