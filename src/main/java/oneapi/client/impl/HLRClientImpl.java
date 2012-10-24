@@ -2,8 +2,8 @@ package oneapi.client.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import oneapi.client.HLRClient;
-import oneapi.client.impl.OneAPIBaseClientImpl;
 import oneapi.config.Configuration;
 import oneapi.exception.RequestException;
 import oneapi.listener.HLRNotificationsListener;
@@ -15,6 +15,7 @@ import oneapi.model.SubscribeToHLRDeliveryNotificationsRequest;
 import oneapi.model.common.DeliveryReceiptSubscription;
 import oneapi.model.common.DeliveryReportSubscription;
 import oneapi.model.common.Roaming;
+import oneapi.model.common.RoamingResponse;
 import oneapi.pushserver.PushServerSimulator;
 
 
@@ -88,7 +89,9 @@ public class HLRClientImpl extends OneAPIBaseClientImpl implements HLRClient {
 		urlBuilder.append("&includeExtendedData=true");	
 
 		RequestData requestData = new RequestData(urlBuilder.toString(), RESPONSE_CODE_200_OK, Method.GET, "roaming");
-		return executeMethod(requestData, Roaming.class);
+		RoamingResponse result = executeMethod(requestData, RoamingResponse.class);
+		
+		return result.getRoaming();
 	}
 	
 	/**
