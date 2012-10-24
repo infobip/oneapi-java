@@ -145,6 +145,9 @@ public class OneAPIBaseClientImpl {
 	protected <T> T convertJSONToObject(byte[] jsonBytes, Class<T> clazz, String rootElement) {
 		try {
 			if(null != rootElement && "" != rootElement) {
+				
+				System.out.println(new String(jsonBytes));
+				
 				return getObjectMapper().readValue(new ByteArrayInputStream(jsonBytes), clazz);
 			} else {
 				return getObjectMapper().readValue(jsonBytes, clazz);

@@ -6,6 +6,7 @@ import oneapi.PropertyLoader;
 import oneapi.client.impl.SMSClient;
 import oneapi.config.Configuration;
 import oneapi.model.SMSRequest;
+import oneapi.model.SendMessageResult;
 import oneapi.model.common.DeliveryInfoList;
 
 /**
@@ -50,14 +51,14 @@ public class SendSMS_CheckDeliveryStatus {
 
 		// example:send-message
 		// Store request id because we can later query for the delivery status with it:
-		String requestId = smsClient.getSMSMessagingClient().sendSMS(smsRequest);
+		SendMessageResult response = smsClient.getSMSMessagingClient().sendSMS(smsRequest);
 		// ----------------------------------------------------------------------------------------------------
 
 		// Few seconds later we can check for the sending status   
 		Thread.sleep(10000);
 
 		// example:query-for-delivery-status
-		DeliveryInfoList deliveryInfoList = smsClient.getSMSMessagingClient().queryDeliveryStatus(SENDER, requestId);
+		DeliveryInfoList deliveryInfoList = smsClient.getSMSMessagingClient().queryDeliveryStatus(SENDER, response.getClientCorrelator());
 		String deliveryStatus = deliveryInfoList.getDeliveryInfo().get(0).getDeliveryStatus();
 		// ----------------------------------------------------------------------------------------------------
 		System.out.println(deliveryStatus);

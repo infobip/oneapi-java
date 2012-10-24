@@ -20,7 +20,7 @@ public interface SMSMessagingClient {
 	 * @param sms - object containing data needed to be filled in order to send the SMS
 	 * @return String Request Id
 	 */
-	String sendSMS(SMSRequest sms);
+	SendMessageResult sendSMS(SMSRequest sms);
 
 	/**
      * Send an SMS asynchronously over OneAPI to one or more mobile terminals using the customized 'SMSRequest' object

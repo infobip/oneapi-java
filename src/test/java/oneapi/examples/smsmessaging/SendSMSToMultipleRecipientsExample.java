@@ -3,6 +3,7 @@ package oneapi.examples.smsmessaging;
 import oneapi.client.impl.SMSClient;
 import oneapi.config.Configuration;
 import oneapi.model.SMSRequest;
+import oneapi.model.SendMessageResult;
 
 public class SendSMSToMultipleRecipientsExample {
 
@@ -16,7 +17,7 @@ public class SendSMSToMultipleRecipientsExample {
 
 		SMSRequest smsRequest = new SMSRequest("Sender", "Hi", address);
 
-		String requestId = smsClient.getSMSMessagingClient().sendSMS(smsRequest);
-		System.out.println(requestId);
+		SendMessageResult response = smsClient.getSMSMessagingClient().sendSMS(smsRequest);
+		System.out.println(response);
 	}
 }

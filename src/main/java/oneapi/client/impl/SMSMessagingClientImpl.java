@@ -2,16 +2,22 @@ package oneapi.client.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import oneapi.client.SMSMessagingClient;
-import oneapi.client.impl.OneAPIBaseClientImpl;
 import oneapi.config.Configuration;
 import oneapi.listener.DeliveryReportListener;
 import oneapi.listener.DeliveryStatusNotificationsListener;
 import oneapi.listener.InboundMessageListener;
 import oneapi.listener.InboundMessageNotificationsListener;
 import oneapi.listener.ResponseListener;
-import oneapi.model.*;
+import oneapi.model.DeliveryInfoNotification;
+import oneapi.model.DeliveryReportList;
+import oneapi.model.RequestData;
 import oneapi.model.RequestData.Method;
+import oneapi.model.SMSRequest;
+import oneapi.model.SendMessageResult;
+import oneapi.model.SubscribeToDeliveryNotificationsRequest;
+import oneapi.model.SubscribeToInboundMessagesRequest;
 import oneapi.model.common.DeliveryInfoList;
 import oneapi.model.common.DeliveryReceiptSubscription;
 import oneapi.model.common.DeliveryReportSubscription;
@@ -49,14 +55,13 @@ public class SMSMessagingClientImpl extends OneAPIBaseClientImpl implements SMSM
      * @return String Request Id
      */
     @Override
-    public String sendSMS(SMSRequest smsRequest){
+    public SendMessageResult sendSMS(SMSRequest smsRequest){
         StringBuilder urlBuilder = new StringBuilder(SMS_MESSAGING_OUTBOUND_URL_BASE).append("/");
         urlBuilder.append(encodeURLParam(smsRequest.getSenderAddress()));
         urlBuilder.append("/requests");
         
         RequestData requestData = new RequestData(urlBuilder.toString(), Method.POST, "resourceReference", smsRequest, URL_ENCODED_CONTENT_TYPE);
-        ResourceReference resourceReference = executeMethod(requestData, ResourceReference.class);
-        return getIdFromResourceUrl(resourceReference.getResourceURL()); 
+        return executeMethod(requestData, SendMessageResult.class);
     }
     
     /**

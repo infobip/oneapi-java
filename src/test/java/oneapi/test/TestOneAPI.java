@@ -67,7 +67,7 @@ public class TestOneAPI {
     	server.setResponse(getResourceReferenceJson());
     	
     	ResourceReferenceWrapper resourceReferenceWrapper = getResourceReferenceWrapper();
-    	String response = null;
+    	SendMessageResult response = null;
 		try {
 			response = client.getSMSMessagingClient().sendSMS(new SMSRequest(SENDER_ADDRESS, MESSAGE_TEXT, RECIPIENT_ADDRESS));
 		} catch (RequestException e) {
@@ -88,7 +88,7 @@ public class TestOneAPI {
 
     	SMSRequest sms = composeSms();
     	
-    	String response = null;
+    	SendMessageResult response = null;
 		try {
 			response = client.getSMSMessagingClient().sendSMS(sms);
 		} catch (RequestException e) {

@@ -5,6 +5,7 @@ import oneapi.config.Configuration;
 import oneapi.listener.DeliveryReportListener;
 import oneapi.model.DeliveryReportList;
 import oneapi.model.SMSRequest;
+import oneapi.model.SendMessageResult;
 
 public class DeliveryReportsRetrieverExample {
 
@@ -25,7 +26,7 @@ public class DeliveryReportsRetrieverExample {
     }
 
     private static void sendSms(SMSClient smsClient, String sender, String message, String destination) {
-        String requestId = smsClient.getSMSMessagingClient().sendSMS(new SMSRequest(sender, message, destination));
-        System.out.println(requestId);
+        SendMessageResult response = smsClient.getSMSMessagingClient().sendSMS(new SMSRequest(sender, message, destination));
+        System.out.println(response);
     }
 }
