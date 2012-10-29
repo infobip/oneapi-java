@@ -1,4 +1,4 @@
-package oneapi.scenarios;
+package oneapi.examples.smsmessaging;
 
 import org.apache.log4j.BasicConfigurator;
 
@@ -13,7 +13,7 @@ import oneapi.model.common.InboundSMSMessageList;
  *
  *  1.) Download 'OneApi Java library' - available at www.github.com/parseco
  *
- *  2.) Open 'scenarios.GetInboundMessagesUsingRetriever' class to edit where you should populate the following fields: 
+ *  2.) Open 'examples.GetInboundMessagesUsingRetriever' class to edit where you should populate the following fields: 
  *		'USERNAME'
  *		'PASSWORD'
  *

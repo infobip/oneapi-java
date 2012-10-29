@@ -1,4 +1,4 @@
-package oneapi.scenarios;
+package oneapi.examples.smsmessaging;
 
 import oneapi.client.impl.SMSClient;
 import oneapi.config.Configuration;
@@ -9,7 +9,7 @@ import oneapi.model.common.InboundSMSMessageList;
  *
  *  1.) Download 'OneApi Java library' - available at github.com/parseco
  *
- *  2.) Open 'scenarios.ConvertJsonToInboundSMSMessageNotificationExample' class    
+ *  2.) Open 'examples.ConvertJsonToInboundSMSMessageNotificationExample' class    
  *		
  *  3.) Run the example class by right click it and select 'Run As -> Java Application' 
  **/

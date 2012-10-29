@@ -1,4 +1,4 @@
-package oneapi.scenarios;
+package oneapi.examples.smsmessaging;
 
 import org.apache.log4j.BasicConfigurator;
 
@@ -12,9 +12,9 @@ import oneapi.model.common.DeliveryInfoList;
 /**
  * To run this example follow these 3 steps:
  *
- *  1.) Download 'OneApi C# library' - available at github.com/parseco
+ *  1.) Download 'OneApi Java library' - available at github.com/parseco
  *
- *  2.) Open 'scenarios.SendSMS_CheckDeliveryStatus' class to edit where you should populate the following fields: 
+ *  2.) Open 'examples.SendSMS_QueryDeliveryStatus' class to edit where you should populate the following fields: 
  *		'SENDER'    'USERNAME'
  *		'MESSAGE'   'PASSWORD' 
  *		'DESTINATION'	
@@ -22,7 +22,7 @@ import oneapi.model.common.DeliveryInfoList;
  *  3.) Run the example class by right click it and select 'Run As -> Java Application'     
  **/
 
-public class SendSMS_CheckDeliveryStatus {
+public class SendSMS_QueryDeliveryStatus {
 
 	// ----------------------------------------------------------------------------------------------------
 	// TODO: Fill you own values here or create/change the example.properties file:

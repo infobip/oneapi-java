@@ -1,4 +1,4 @@
-package oneapi.scenarios;
+package oneapi.examples.smsmessaging;
 
 import org.apache.log4j.BasicConfigurator;
 
@@ -14,7 +14,7 @@ import oneapi.model.common.InboundSMSMessageList;
  *
  *  1.) Download 'OneApi Java library' - available at github.com/parseco
  *
- *  2.) Open 'scenarios.Subscribe_WaitForInboundMessagesPush' class to edit where you should populate the following fields: 
+ *  2.) Open 'examples.Subscribe_WaitForInboundMessagesPush' class to edit where you should populate the following fields: 
  *		'DESTINATION'    	'NOTIFICATION_FORMAT'
  *		'USERNAME'          'NOTIFY_URL'           
  *		'PASSWORD'          'CRITERIA' 

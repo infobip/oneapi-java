@@ -1,4 +1,4 @@
-package oneapi.scenarios;
+package oneapi.examples.smsmessaging;
 
 import org.apache.log4j.BasicConfigurator;
 
@@ -15,7 +15,7 @@ import oneapi.model.SubscribeToDeliveryNotificationsRequest;
  *
  *  1.) Download 'OneApi Java library' - available at github.com/parseco
  *
- *  2.) Open 'scenarios.SendSMS_Subscribe_WaitForDeliveryStatusPush' class to edit where you should populate the following fields: 
+ *  2.) Open 'examples.SendSMS_Subscribe_WaitForDeliveryStatusPush' class to edit where you should populate the following fields: 
  *		'SENDER'     'NOTIFY_URL'   'USERNAME'
  *		'MESSAGE'    'CRITERIA'     'PASSWORD'        
  *		'DESTINATION'   
