@@ -4,6 +4,7 @@ import oneapi.client.impl.SMSClient;
 import oneapi.config.Configuration;
 import oneapi.listener.ResponseListener;
 import oneapi.model.SMSRequest;
+import oneapi.model.SendMessageResult;
 
 public class SendSMSAsyncExample {
 
@@ -12,12 +13,12 @@ public class SendSMSAsyncExample {
 		Configuration configuration = new Configuration("user1", "user_password1");
 		SMSClient smsClient = new SMSClient(configuration);
 
-		smsClient.getSMSMessagingClient().sendSMSAsync(new SMSRequest("Sender", "Hi", "11111111111111111111111111"), new ResponseListener<String>() {
+		smsClient.getSMSMessagingClient().sendSMSAsync(new SMSRequest("Sender", "Hi", "11111111111111111111111111"), new ResponseListener<SendMessageResult>() {
 
 			@Override
-			public void onGotResponse(String requestd, Throwable error) {
+			public void onGotResponse(SendMessageResult sendMessageResult, Throwable error) {
 				if (error == null) {
-					System.out.println(requestd);
+					System.out.println(sendMessageResult);
 				} else {
 					System.out.println(error.getMessage());
 				}

@@ -74,21 +74,24 @@ public class DeliveryInfoList implements java.io.Serializable {
 		public String getMessageId() {
 			return messageId;
 		}
+		
 		public void setMessageId(String messageId) {
 			this.messageId = messageId;
 		}
+		
 		public String getClientCorrelator() {
 			return clientCorrelator;
 		}
+		
 		public void setClientCorrelator(String clientCorrelator) {
 			this.clientCorrelator = clientCorrelator;
 		}
-		
 		@Override
 		public String toString() {
 			return "DeliveryInfo {address=" + address + ", deliveryStatus="
-					+ deliveryStatus + "}";
-		}
+					+ deliveryStatus + ", messageId=" + messageId
+					+ ", clientCorrelator=" + clientCorrelator + "}";
+		}	
 	}
 		
 	/** 

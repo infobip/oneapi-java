@@ -13,7 +13,6 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Map.Entry;
-
 import oneapi.config.Configuration;
 import oneapi.exception.RequestException;
 import oneapi.listener.ResponseListener;
@@ -21,11 +20,11 @@ import oneapi.model.Authentication;
 import oneapi.model.Authentication.AuthType;
 import oneapi.model.RequestData;
 import oneapi.model.common.RequestError;
-
 import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ning.http.client.AsyncCompletionHandler;
 import com.ning.http.client.AsyncHttpClient;
@@ -41,12 +40,6 @@ public class OneAPIBaseClientImpl {
 	protected static final Logger LOGGER = LoggerFactory.getLogger(OneAPIBaseClientImpl.class);
 
 	protected static final String CHARSET = "UTF-8";
-
-	protected static final int RESPONSE_CODE_200_OK = 200;
-
-	protected static final int RESPONSE_CODE_201_CREATED = 201;
-
-	protected static final int RESPONSE_CODE_204_NO_CONTENT = 204;
 
 	protected static final String URL_ENCODED_CONTENT_TYPE = "application/x-www-form-urlencoded";
 
@@ -90,6 +83,7 @@ public class OneAPIBaseClientImpl {
 	private ObjectMapper getObjectMapper() {
 		if (objectMapper == null) {
 			objectMapper = new ObjectMapper();
+			objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		}
 		return objectMapper;
 	}
@@ -145,10 +139,8 @@ public class OneAPIBaseClientImpl {
 	protected <T> T convertJSONToObject(byte[] jsonBytes, Class<T> clazz, String rootElement) {
 		try {
 			if(null != rootElement && "" != rootElement) {
-				
-				System.out.println(new String(jsonBytes));
-				
-				return getObjectMapper().readValue(new ByteArrayInputStream(jsonBytes), clazz);
+				JsonNode node = getObjectMapper().reader().readTree(new ByteArrayInputStream(jsonBytes)).get(rootElement);
+				return getObjectMapper().readValue(node.toString(), clazz);
 			} else {
 				return getObjectMapper().readValue(jsonBytes, clazz);
 			}
@@ -270,8 +262,12 @@ public class OneAPIBaseClientImpl {
 		try {
 			//Set Authorization header
 			Authentication authentication = configuration.getAuthentication();			
-			if (authentication.getType().equals(AuthType.OAUTH)) {
-				requestBuilder.addHeader("Authorization", "Basic " + new String(Base64.encodeBase64((authentication.getUsername()+":"+authentication.getPassword()).getBytes("UTF-8")), "UTF-8"));
+			if (authentication.getType().equals(AuthType.BASIC)) {
+				String basicCredentials =  new String(Base64.encodeBase64((authentication.getUsername()+":"+authentication.getPassword()).getBytes("UTF-8")), "UTF-8");
+				requestBuilder.addHeader("Authorization", "Basic " + basicCredentials);
+				if (LOGGER.isDebugEnabled()) {
+					LOGGER.debug("Authorization type Basic using " + basicCredentials);
+				}
 			} else if (authentication.getType().equals(AuthType.OAUTH)) {
 				String accessToken = authentication.getAccessToken();
 				requestBuilder.addHeader("Authorization", "OAuth " + authentication.getAccessToken());

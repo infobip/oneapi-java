@@ -43,4 +43,11 @@ public class SendMessageResultItem {
 		this.destinationAddress = destinationAddress;
 	}
 
+	@Override
+	public String toString() {
+		return "SendMessageResultItem {messageStatus=" + messageStatus
+				+ ", messageId=" + messageId + ", senderAddress="
+				+ senderAddress + ", destinationAddress=" + destinationAddress
+				+ "}";
+	}
 }

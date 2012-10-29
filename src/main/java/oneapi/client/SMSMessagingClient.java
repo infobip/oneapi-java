@@ -27,7 +27,7 @@ public interface SMSMessagingClient {
      * @param sms (mandatory) object containing data needed to be filled in order to send the SMS
      * @param responseListener (mandatory) method to call after receiving sent SMS response
      */   
-    void sendSMSAsync(SMSRequest sms, ResponseListener<String> responseListener);
+    void sendSMSAsync(SMSRequest smsRequest, final ResponseListener<SendMessageResult> responseListener);
 	
 	/**
 	 * Query the delivery status for an SMS sent to one or more mobile terminals                        

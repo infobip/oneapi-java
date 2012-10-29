@@ -1,5 +1,7 @@
 package oneapi.model;
 
+import java.util.Arrays;
+
 import oneapi.model.common.ResourceReference;
 
 public class SendMessageResult {
@@ -36,4 +38,10 @@ public class SendMessageResult {
 		this.resourceReference = resourceReference;
 	}
 
+	@Override
+	public String toString() {
+		return "SendMessageResult {clientCorrelator=" + clientCorrelator
+				+ ", sendMessageResults=" + Arrays.toString(sendMessageResults)
+				+ ", resourceReference=" + resourceReference + "}";
+	}	
 }

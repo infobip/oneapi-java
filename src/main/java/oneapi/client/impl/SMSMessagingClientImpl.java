@@ -60,7 +60,7 @@ public class SMSMessagingClientImpl extends OneAPIBaseClientImpl implements SMSM
         urlBuilder.append(encodeURLParam(smsRequest.getSenderAddress()));
         urlBuilder.append("/requests");
         
-        RequestData requestData = new RequestData(urlBuilder.toString(), Method.POST, "resourceReference", smsRequest, URL_ENCODED_CONTENT_TYPE);
+        RequestData requestData = new RequestData(urlBuilder.toString(), Method.POST, null, smsRequest, URL_ENCODED_CONTENT_TYPE);
         return executeMethod(requestData, SendMessageResult.class);
     }
     
@@ -70,24 +70,13 @@ public class SMSMessagingClientImpl extends OneAPIBaseClientImpl implements SMSM
      * @param responseListener (mandatory) method to call after receiving sent SMS response
      */   
    
-	public void sendSMSAsync(SMSRequest smsRequest, final ResponseListener<String> responseListener) {
+	public void sendSMSAsync(SMSRequest smsRequest, final ResponseListener<SendMessageResult> responseListener) {
         StringBuilder urlBuilder = new StringBuilder(SMS_MESSAGING_OUTBOUND_URL_BASE).append("/");
         urlBuilder.append(encodeURLParam(smsRequest.getSenderAddress()));
         urlBuilder.append("/requests");
  
-        RequestData requestData = new RequestData(urlBuilder.toString(), Method.POST, "resourceReference", smsRequest, URL_ENCODED_CONTENT_TYPE);
-        
-        executeMethodAsync(requestData, ResourceReference.class, new ResponseListener<ResourceReference> () {
-			@Override
-			public void onGotResponse(ResourceReference resourceUrl, Throwable error) {
-				if (resourceUrl != null) {
-					 String requetsId = getIdFromResourceUrl(resourceUrl.getResourceURL()); 
-					 responseListener.onGotResponse(requetsId, null);
-				} else {
-					 responseListener.onGotResponse(null, error);
-				}			
-			}    	
-        });
+        RequestData requestData = new RequestData(urlBuilder.toString(), Method.POST, null, smsRequest, URL_ENCODED_CONTENT_TYPE);        
+        executeMethodAsync(requestData, SendMessageResult.class, responseListener);
     }
 
     /**

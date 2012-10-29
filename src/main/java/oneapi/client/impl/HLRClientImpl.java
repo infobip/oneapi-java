@@ -15,9 +15,7 @@ import oneapi.model.SubscribeToHLRDeliveryNotificationsRequest;
 import oneapi.model.common.DeliveryReceiptSubscription;
 import oneapi.model.common.DeliveryReportSubscription;
 import oneapi.model.common.Roaming;
-import oneapi.model.common.RoamingResponse;
 import oneapi.pushserver.PushServerSimulator;
-
 
 public class HLRClientImpl extends OneAPIBaseClientImpl implements HLRClient {
 	private static final String HLR_URL_BASE = "/terminalstatus/queries";
@@ -89,9 +87,7 @@ public class HLRClientImpl extends OneAPIBaseClientImpl implements HLRClient {
 		urlBuilder.append("&includeExtendedData=true");	
 
 		RequestData requestData = new RequestData(urlBuilder.toString(), Method.GET, "roaming");
-		RoamingResponse result = executeMethod(requestData, RoamingResponse.class);
-		
-		return result.getRoaming();
+		return executeMethod(requestData, Roaming.class);
 	}
 	
 	/**
