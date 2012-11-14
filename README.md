@@ -6,7 +6,7 @@ Basic messaging example
 
 First initialize the messaging client using your username and password:
 
-    Configuration configuration = new Configuration(username, password);
+    Configuration configuration = new Configuration(USERNAME, PASSWORD);
     SMSClient smsClient = new SMSClient(configuration);
 
 
@@ -14,18 +14,18 @@ An exception will be thrown if your username and/or password are incorrect.
 
 Prepare the message:
 
-    SMSRequest smsRequest = new SMSRequest(senderAddress, message, recipientAddress);
+    SMSRequest smsRequest = new SMSRequest(SENDER, MESSAGE, DESTINATION);
 
 
 Send the message:
 
     // Store request id because we can later query for the delivery status with it:
-    String requestId = smsClient.getSMSMessagingClient().sendSMS(smsRequest);
+    SendMessageResult sendMessageResult = smsClient.getSMSMessagingClient().sendSMS(smsRequest);
 
 
 Later you can query for the delivery status of the message:
 
-    DeliveryInfoList deliveryInfoList = smsClient.getSMSMessagingClient().queryDeliveryStatus(senderAddress, requestId);
+    DeliveryInfoList deliveryInfoList = smsClient.getSMSMessagingClient().queryDeliveryStatus(SENDER, sendMessageResult.getClientCorrelator());
     String deliveryStatus = deliveryInfoList.getDeliveryInfo().get(0).getDeliveryStatus();
 
 
@@ -36,9 +36,9 @@ Messaging with notification push example
 
 Same as with the standard messaging example, but when preparing your message:
 
-    SMSRequest smsRequest = new SMSRequest(senderAddress, message, recipientAddress);
-    // The url where the delivery notification will be pushed:
-    smsRequest.setNotifyURL(notifyUrl);
+    SMSRequest smsRequest = new SMSRequest(SENDER, MESSAGE, DESTINATION);
+    // The url where the delivery notification will MESSAGE pushed:
+    smsRequest.setNotifyURL(NOTIFY_URL);
 
 
 When the delivery notification is pushed to your server as a HTTP POST request, you must process the body of the message with the following code:
@@ -51,13 +51,13 @@ HLR example
 
 Initialize and login the data connection client:
 
-    Configuration configuration = new Configuration(username, password);
+    Configuration configuration = new Configuration(USERNAME, PASSWORD);
     SMSClient smsClient = new SMSClient(configuration);
 
 
 Retrieve the roaming status (HLR):
 
-    Roaming roaming = smsClient.getHLRClient().queryHLR(address);
+    Roaming roaming = smsClient.getHLRClient().queryHLR(DESTINATION);
 
 
 HLR with notification push example
@@ -65,7 +65,7 @@ HLR with notification push example
 
 Similar to the previous example, but this time you must set the notification url where the result will be pushed:
 
-    smsClient.getHLRClient().queryHLR(address, notifyUrl);
+    smsClient.getHLRClient().queryHLR(DESTINATION, NOTIFY_URL);
 
 
 When the roaming status notification is pushed to your server as a HTTP POST request, you must process the body of the message with the following code:
