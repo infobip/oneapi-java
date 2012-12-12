@@ -356,7 +356,7 @@ public class OneAPIBaseClientImpl {
 		int responseCode = getResponseCode(connection);
 		String contentEncoding = getContentEncoding(connection.getContentType());
 
-		if (200 <= responseCode && responseCode < 300) {	
+		if (responseCode >= 200 && responseCode < 300) {	
 			try {   	
 				return deserializeStream(connection.getInputStream(), contentEncoding, clazz, rootElement);
 
@@ -383,7 +383,7 @@ public class OneAPIBaseClientImpl {
 		int responseCode = response.getStatusCode();
 		InputStream inputStream = response.getResponseBodyAsStream();
 
-		if (200 <= responseCode && responseCode < 300)  {
+		if (responseCode >= 200 && responseCode < 300) {	
 			T jsonObject =  deserializeStream(inputStream, CHARSET, clazz, rootElement);
 			return jsonObject;
 		}
@@ -465,7 +465,7 @@ public class OneAPIBaseClientImpl {
 	private void validateResponse(HttpURLConnection connection) {
 		int responseCode = getResponseCode(connection);
 
-		if (200 <= responseCode && responseCode < 300) {
+		if (!(responseCode >= 200 && responseCode < 300)) {
 			String contentEncoding = getContentEncoding(connection.getContentType());	
 			throw readRequestException(connection.getErrorStream(), responseCode, contentEncoding);	
 		}
