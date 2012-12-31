@@ -1,5 +1,12 @@
 package oneapi.client.impl;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ning.http.client.AsyncCompletionHandler;
+import com.ning.http.client.AsyncHttpClient;
+import com.ning.http.client.RequestBuilder;
+import com.ning.http.client.Response;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -23,13 +30,6 @@ import oneapi.model.common.RequestError;
 import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ning.http.client.AsyncCompletionHandler;
-import com.ning.http.client.AsyncHttpClient;
-import com.ning.http.client.RequestBuilder;
-import com.ning.http.client.Response;
 
 /**
  * Client base class containing common methods and properties
@@ -441,15 +441,9 @@ public class OneAPIBaseClientImpl {
 			RequestError errorResponse = convertJSONToObject(bytes, RequestError.class, "requestError");
 
 			if (errorResponse != null) {
-				if (errorResponse.getPolicyException() != null) {
-					errorText = errorResponse.getPolicyException().getText();
-					messageId = errorResponse.getPolicyException().getMessageId();
-				} else if (errorResponse.getServiceException() != null) {
-					errorText = errorResponse.getServiceException().getText();
-					messageId = errorResponse.getServiceException().getMessageId();
-				}
-			}
-
+                errorText = errorResponse.getException().getText();
+                messageId = errorResponse.getException().getMessageId();
+            }
 		} catch (Exception e) {	
 			return new RequestException(e, responseCode);
 		}

@@ -6,16 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * contains an error response returned from the OneAPI server
  */
 public class RequestError implements java.io.Serializable {
-	private static final long serialVersionUID = -4594109872052136844L;
-		
-	/**
-	 * internally used to indicate the type of exception being stored is a ServiceException
-	 */
-	public static final int SERVICEEXCEPTION=1;
-	/**
-	 * internally used to indicate the type of exception being stored is a PolicyException
-	 */
-	public static final int POLICYEXCEPTION=2;
+	private static final long serialVersionUID = -4594109872052136844L;	
 	
 	/**
 	 * instance of a ServiceException
@@ -23,18 +14,10 @@ public class RequestError implements java.io.Serializable {
 	private String clientCorrelator=null;
 	
 	/**
-	 * instance of a ServiceException
+	 * instance of a Exception
 	 */
-	private ServiceException serviceException=null;
-	/** 
-	 * instance of a PolicyException
-	 */
-	private PolicyException policyException=null;
+	private ServiceException exception=null;
 	
-	/**
-	 * the type of exception being stored
-	 */
-	private int exceptionType=0;
 
 	/**
 	 * HTTP response code
@@ -49,17 +32,12 @@ public class RequestError implements java.io.Serializable {
 	/**
 	 * return the serviceException instance
 	 */
-	public ServiceException getServiceException() { return serviceException; }
+	public ServiceException getException() { return exception; }
 	/**
 	 * set the serviceException instance
 	 */
-	public void setServiceException(ServiceException serviceException) { this.serviceException=serviceException; exceptionType=SERVICEEXCEPTION; }
+	public void setException(ServiceException exception) { this.exception=exception;  }
 	
-	/**
-	 * get the type of the exception
-	 */
-	@JsonIgnore
-	public int getExceptionType() { return exceptionType; }
 
 	/**
 	 * get the HTTP response code
@@ -67,20 +45,6 @@ public class RequestError implements java.io.Serializable {
 	@JsonIgnore
 	public int getHttpResponseCode() { return httpResponseCode; }
 	
-	/**
-	 * return the policyException instance
-	 */
-	public PolicyException getPolicyException() { return policyException; }
-	/**
-	 * set the policyException instance
-	 */
-	public void setPolicyException(PolicyException policyException) { this.policyException=policyException; exceptionType=POLICYEXCEPTION; }
-
-	/**
-	 * set the type of the exception
-	 */
-	@JsonIgnore
-	public void setExceptionType(int n) { exceptionType=n; }
 
 	/**
 	 * set the HTTP response code
@@ -96,19 +60,11 @@ public class RequestError implements java.io.Serializable {
 	 * @param text
 	 * @param variables
 	 */
-	public RequestError(int type, int httpResponseCode, String messageId, String clientCorrelator, String text, String... variables) {
-		if (type==SERVICEEXCEPTION) {
-			serviceException=new ServiceException();
-			serviceException.setMessageId(messageId);
-			serviceException.setText(text);
-			serviceException.setVariables(variables);
-		} else if (type==POLICYEXCEPTION) {
-			policyException=new PolicyException();
-			policyException.setMessageId(messageId);
-			policyException.setText(text);
-			policyException.setVariables(variables);			
-		}
-		exceptionType=type;
+	public RequestError(int type, int httpResponseCode, String messageId, String clientCorrelator, String text, String... variables) {		
+		this.exception = new ServiceException();
+        this.exception.setMessageId(messageId);
+        this.exception.setText(text);
+        this.exception.setVariables(variables);		
 		this.clientCorrelator=clientCorrelator;
 		this.httpResponseCode = httpResponseCode;
 	}
@@ -128,44 +84,25 @@ public class RequestError implements java.io.Serializable {
 			buffer.append("clientCorrelator=");
 			buffer.append(clientCorrelator);
 		}
-		if (serviceException!=null) {
+		if (exception!=null) {
 			buffer.append("serviceException = {");
 			buffer.append("messageId = ");
-			buffer.append(serviceException.getMessageId());
+			buffer.append(exception.getMessageId());
 			buffer.append(", text = ");
-			buffer.append(serviceException.getText());
+			buffer.append(exception.getText());
 			buffer.append(", variables = ");
-			if (serviceException.getVariables()!=null) {
+			if (exception.getVariables()!=null) {
 				buffer.append("{");
-				for (int i=0; i<serviceException.getVariables().length; i++) {
+				for (int i=0; i<exception.getVariables().length; i++) {
 					buffer.append("[");
 					buffer.append(i);
 					buffer.append("] = ");
-					buffer.append(serviceException.getVariables()[i]);
+					buffer.append(exception.getVariables()[i]);
 				}
 				buffer.append("}");
 			}
 			buffer.append("}");
-		}
-		if (policyException!=null) {
-			buffer.append("policyException = {");
-			buffer.append("messageId = ");
-			buffer.append(policyException.getMessageId());
-			buffer.append(", text = ");
-			buffer.append(policyException.getText());
-			buffer.append(", variables = ");
-			if (policyException.getVariables()!=null) {
-				buffer.append("{");
-				for (int i=0; i<policyException.getVariables().length; i++) {
-					buffer.append("[");
-					buffer.append(i);
-					buffer.append("] = ");
-					buffer.append(policyException.getVariables()[i]);
-				}
-				buffer.append("}");
-			}
-			buffer.append("}");
-		}
+		}		
 
 		return buffer.toString();		
 	}
