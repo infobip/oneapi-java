@@ -1,0 +1,1 @@
+ you can copy them to a new empty Java source file, and replace all the uppercase strings as necessary. The code examples with notification push are valid servlet codes, but you'll need to configure your Tomcat instance.

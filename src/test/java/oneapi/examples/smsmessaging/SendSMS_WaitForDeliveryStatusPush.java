@@ -67,7 +67,6 @@ public class SendSMS_WaitForDeliveryStatusPush {
 
 		// example:prepare-message-with-notify-url
 		SMSRequest smsRequest = new SMSRequest(SENDER, MESSAGE, DESTINATION);
-		// The url where the delivery notification will MESSAGE pushed:
 		smsRequest.setNotifyURL(NOTIFY_URL); 
 		// ----------------------------------------------------------------------------------------------------
 

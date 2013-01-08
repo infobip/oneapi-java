@@ -1,5 +1,6 @@
 package oneapi.examples.smsmessaging;
 
+import java.util.List;
 import org.apache.log4j.BasicConfigurator;
 
 import oneapi.PropertyLoader;
@@ -50,18 +51,24 @@ public class SendSMS_QueryDeliveryStatus {
 		// ----------------------------------------------------------------------------------------------------
 
 		// example:send-message
-		// Store request id because we can later query for the delivery status with it:
 		SendMessageResult sendMessageResult = smsClient.getSMSMessagingClient().sendSMS(smsRequest);
+		// ----------------------------------------------------------------------------------------------------
+		
+        // example:send-message-client-correlator
+		// The client correlator is a unique identifier of this api call:
+		String clientCorrelator = sendMessageResult.getClientCorrelator();
 		// ----------------------------------------------------------------------------------------------------
 
 		// Few seconds later we can check for the sending status   
 		Thread.sleep(10000);
 
 		// example:query-for-delivery-status
-		DeliveryInfoList deliveryInfoList = smsClient.getSMSMessagingClient().queryDeliveryStatus(SENDER, sendMessageResult.getClientCorrelator());
-		String deliveryStatus = deliveryInfoList.getDeliveryInfo().get(0).getDeliveryStatus();
+		DeliveryInfoList deliveryInfoList = smsClient.getSMSMessagingClient().queryDeliveryStatus(SENDER, clientCorrelator);
+        List<DeliveryInfoList.DeliveryInfo> deliveryInfos = deliveryInfoList.getDeliveryInfo();
+        for (DeliveryInfoList.DeliveryInfo deliveryInfo : deliveryInfos) {
+            System.out.println("message for "+deliveryInfo.getAddress()+" has delivery status "+deliveryInfo.getDeliveryStatus());
+        }        
 		// ----------------------------------------------------------------------------------------------------
-		System.out.println(deliveryStatus);
 		
 	}
 }

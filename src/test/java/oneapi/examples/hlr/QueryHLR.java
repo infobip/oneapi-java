@@ -41,8 +41,20 @@ public class QueryHLR {
 
 		// example:retrieve-roaming-status
 		Roaming roaming = smsClient.getHLRClient().queryHLR(DESTINATION);
+        System.out.println("HLR result:");
+        System.out.println("servingMccMnc: "+roaming.getServingMccMnc()); 
+        System.out.println("address: "+roaming.getAddress()); 
+        System.out.println("currentRoaming: "+roaming.getCurrentRoaming()); 
+        System.out.println("resourceURL: "+roaming.getResourceURL()); 
+        System.out.println("retrievalStatus: "+roaming.getRetrievalStatus()); 
+        System.out.println("callbackData: "+roaming.getCallbackData()); 
+        System.out.println("extendedData: "+roaming.getExtendedData()); 
+        System.out.println("IMSI: "+roaming.getExtendedData().getImsi()); 
+        System.out.println("destinationAddres: "+roaming.getExtendedData().getDestinationAddress()); 
+        System.out.println("originalNetworkPrefix: "+roaming.getExtendedData().getOriginalNetworkPrefix()); 
+        System.out.println("portedNetworkPrefix: "+roaming.getExtendedData().getPortedNetworkPrefix()); 
 		// ----------------------------------------------------------------------------------------------------
-		System.out.println(roaming);
+
 
 	}
 }

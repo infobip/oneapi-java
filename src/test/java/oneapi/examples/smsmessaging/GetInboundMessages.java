@@ -5,6 +5,7 @@ import org.apache.log4j.BasicConfigurator;
 import oneapi.PropertyLoader;
 import oneapi.client.impl.SMSClient;
 import oneapi.config.Configuration;
+import oneapi.model.common.InboundSMSMessage;
 import oneapi.model.common.InboundSMSMessageList;
 
 /**
@@ -42,7 +43,16 @@ public class GetInboundMessages {
 
 		// example:retrieve-inbound-messages
 		InboundSMSMessageList inboundSMSMessageList =  smsClient.getSMSMessagingClient().getInboundMessages();
+        InboundSMSMessage[] inboundSMSMessages = inboundSMSMessageList.getInboundSMSMessage();
+        for (InboundSMSMessage inboundSMSMessage : inboundSMSMessages) {
+            System.out.println(inboundSMSMessage.getDateTime());
+            System.out.println(inboundSMSMessage.getDestinationAddress());
+            System.out.println(inboundSMSMessage.getMessageId());
+            System.out.println(inboundSMSMessage.getMessage());
+            System.out.println(inboundSMSMessage.getResourceURL());
+            System.out.println(inboundSMSMessage.getSenderAddress());
+        }
 		// ---------------------------------------------------------------------------------------------------- 
-		System.out.println(inboundSMSMessageList);
+		
 	}
 }
