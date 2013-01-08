@@ -90,7 +90,7 @@ public class OneAPIServerSimulator implements Runnable {
 		return Integer.valueOf(contentLength);
 	}
 
-	private String getRequest( Socket connection ) throws IOException {
+	 private String getRequest( Socket connection ) throws IOException {
 		InputStream in = connection.getInputStream();
 		StringBuilder request = new StringBuilder();
 		int i;

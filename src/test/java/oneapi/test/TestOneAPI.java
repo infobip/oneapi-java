@@ -15,6 +15,7 @@ import oneapi.model.common.InboundSMSMessageList;
 import oneapi.model.common.ResourceReferenceWrapper;
 import oneapi.model.common.DeliveryInfoList.DeliveryInfo;
 import oneapi.model.common.DeliveryReceiptSubscription.CallbackReference;
+import org.apache.log4j.BasicConfigurator;
 
 import org.junit.AfterClass;
 import org.junit.Test;
@@ -23,8 +24,8 @@ import org.junit.BeforeClass;
 
 public class TestOneAPI {
 	
-	public static final int SERVERPORT = 8081;
-	public static final String URL = "http://localhost:8081";
+	public static final int SERVERPORT = 9765;
+	public static final String URL = "http://localhost:"+SERVERPORT;
 	public static final String ONEAPI_VERSION = "1";
 	public static final String USERNAME = "simple";
 	public static final String PASSWORD = "simple";
@@ -51,7 +52,8 @@ public class TestOneAPI {
 		new Thread(server).start();
 		
 		// initialize client using OneAPIConfig
-		client = new SMSClient(createOneAPIConfig());		
+		client = new SMSClient(createOneAPIConfig());
+        BasicConfigurator.configure();
     }
 
     @AfterClass
@@ -75,7 +77,7 @@ public class TestOneAPI {
 		}
 		
     	Assert.assertNotNull(response);
-    	Assert.assertEquals(GetIdFromResourceUrl(resourceReferenceWrapper.getResourceReference().getResourceURL()), response);	 	
+        Assert.assertEquals(resourceReferenceWrapper.getResourceReference().getResourceURL(), response.getResourceReference().getResourceURL());	 	
     	// compare posted message parameters with the reference parameters
     	Assert.assertEquals("senderAddress=TestSender&address=1111&message=TestMessageText", server.getPostRequest());
     }
@@ -96,7 +98,7 @@ public class TestOneAPI {
 		}
 		
 		Assert.assertNotNull(response);   	
-		Assert.assertEquals(GetIdFromResourceUrl(resourceReferenceWrapper.getResourceReference().getResourceURL()), response);	 	
+		Assert.assertEquals(resourceReferenceWrapper.getResourceReference().getResourceURL(), response.getResourceReference().getResourceURL());	 	
     	// compare posted message parameters with the reference parameters
     	Assert.assertEquals("senderAddress=TestSender&address=2222&address=3333&address=4444&address=5555&message=TestMessageText&clientCorrelator=TestClientCorrelator&notifyURL=http%3A%2F%2FTestNotifyUrl&senderName=TestSenderName&callbackData=TestCallbackData", server.getPostRequest());
     }
@@ -124,7 +126,7 @@ public class TestOneAPI {
     	Assert.assertEquals(deliveryInfoList.getResourceURL(), response.getResourceURL());  	   
     	Assert.assertEquals(deliveryInfoList.getDeliveryInfo().get(0).getAddress(), response.getDeliveryInfo().get(0).getAddress());  	
     	Assert.assertEquals(deliveryInfoList.getDeliveryInfo().get(0).getDeliveryStatus(), response.getDeliveryInfo().get(0).getDeliveryStatus());  	
-    }
+     }
       
     @Test
     public void subscribeToDeliveryNotificationsWithoutOptionalParams() { 	
@@ -162,15 +164,6 @@ public class TestOneAPI {
     	Assert.assertEquals(GetIdFromResourceUrl(deliveryReceiptSubscription.getResourceURL()), response);	 		 	  	 	
     	// compare posted subscription parameters with the reference parameters
     	Assert.assertEquals("senderAddress=TestSender&notifyURL=http%3A%2F%2FTestNotifyUrl&criteria=TestCriteria&clientCorrelator=TestClientCorrelator&callbackData=TestCallbackData", server.getPostRequest()); 	
-    }
-    
-    @Test
-    public void cancelDeliveryNotifications() { 	
-		try {
-			client.getSMSMessagingClient().removeDeliveryNotificationsSubscription(SUBSCRIPTION_ID);
-		} catch (RequestException e) {
-			Assert.fail("Error occured while trying to cancel delivery notifications. Err: " + e.getMessage());
-		}
     }
     
     @Test
@@ -241,16 +234,6 @@ public class TestOneAPI {
     	Assert.assertEquals("destinationAddress=TestDestination&notifyURL=http%3A%2F%2FTestNotifyUrl&criteria=TestCriteria&notificationFormat=TestNotificationFormat&clientCorrelator=TestClientCorrelator&callbackData=TestCallbackData", server.getPostRequest()); 	
     }
       
-    @Test
-    public void cancelReceiptNotifications() { 	
-    	int response = 0;	
-		try {
-			client.getSMSMessagingClient().removeInboundMessagesSubscription(SUBSCRIPTION_ID);
-		} catch (RequestException e) {
-			Assert.fail("Error occured while trying to receipt notificationss. Err: " + e.getMessage());
-		}	
-		Assert.assertNotNull(response);   	
-    }
     
     @Test
     public void getDLRSubscriptions() {
