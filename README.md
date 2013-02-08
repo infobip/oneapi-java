@@ -1,4 +1,4 @@
-OneApi java client
+OneApi Java client
 ============================
 
 Basic messaging example
@@ -19,14 +19,16 @@ Prepare the message:
 
 Send the message:
 
-    // Store request id because we can later query for the delivery status with it:
     SendMessageResult sendMessageResult = smsClient.getSMSMessagingClient().sendSMS(smsRequest);
 
 
 Later you can query for the delivery status of the message:
 
-    DeliveryInfoList deliveryInfoList = smsClient.getSMSMessagingClient().queryDeliveryStatus(SENDER, sendMessageResult.getClientCorrelator());
-    String deliveryStatus = deliveryInfoList.getDeliveryInfo().get(0).getDeliveryStatus();
+    DeliveryInfoList deliveryInfoList = smsClient.getSMSMessagingClient().queryDeliveryStatus(SENDER, clientCorrelator);
+          List<DeliveryInfoList.DeliveryInfo> deliveryInfos = deliveryInfoList.getDeliveryInfo();
+          for (DeliveryInfoList.DeliveryInfo deliveryInfo : deliveryInfos) {
+              System.out.println("message for "+deliveryInfo.getAddress()+" has delivery status "+deliveryInfo.getDeliveryStatus());
+          }
 
 
 Possible statuses are: **DeliveredToTerminal**, **DeliveryUncertain**, **DeliveryImpossible**, **MessageWaiting** and **DeliveredToNetwork**.
@@ -37,7 +39,6 @@ Messaging with notification push example
 Same as with the standard messaging example, but when preparing your message:
 
     SMSRequest smsRequest = new SMSRequest(SENDER, MESSAGE, DESTINATION);
-    // The url where the delivery notification will MESSAGE pushed:
     smsRequest.setNotifyURL(NOTIFY_URL);
 
 
@@ -46,7 +47,7 @@ When the delivery notification is pushed to your server as a HTTP POST request, 
     DeliveryInfoNotification deliveryInfoNotification = smsClient.getSMSMessagingClient().convertJsonToDeliveryInfoNotification(JSON);
 
 
-HLR example
+Number context example
 -----------------------
 
 Initialize and login the data connection client:
@@ -55,12 +56,24 @@ Initialize and login the data connection client:
     SMSClient smsClient = new SMSClient(configuration);
 
 
-Retrieve the roaming status (HLR):
+Retrieve the roaming status (Number context):
 
     Roaming roaming = smsClient.getHLRClient().queryHLR(DESTINATION);
+          System.out.println("HLR result:");
+          System.out.println("servingMccMnc: "+roaming.getServingMccMnc()); 
+          System.out.println("address: "+roaming.getAddress()); 
+          System.out.println("currentRoaming: "+roaming.getCurrentRoaming()); 
+          System.out.println("resourceURL: "+roaming.getResourceURL()); 
+          System.out.println("retrievalStatus: "+roaming.getRetrievalStatus()); 
+          System.out.println("callbackData: "+roaming.getCallbackData()); 
+          System.out.println("extendedData: "+roaming.getExtendedData()); 
+          System.out.println("IMSI: "+roaming.getExtendedData().getImsi()); 
+          System.out.println("destinationAddres: "+roaming.getExtendedData().getDestinationAddress()); 
+          System.out.println("originalNetworkPrefix: "+roaming.getExtendedData().getOriginalNetworkPrefix()); 
+          System.out.println("portedNetworkPrefix: "+roaming.getExtendedData().getPortedNetworkPrefix());
 
 
-HLR with notification push example
+Number context with notification push example
 -----------------------
 
 Similar to the previous example, but this time you must set the notification url where the result will be pushed:
@@ -79,6 +92,15 @@ Retrieve inbound messages example
 With the existing sms client (see the basic messaging example to see how to start it):
 
     InboundSMSMessageList inboundSMSMessageList =  smsClient.getSMSMessagingClient().getInboundMessages();
+          InboundSMSMessage[] inboundSMSMessages = inboundSMSMessageList.getInboundSMSMessage();
+          for (InboundSMSMessage inboundSMSMessage : inboundSMSMessages) {
+              System.out.println(inboundSMSMessage.getDateTime());
+              System.out.println(inboundSMSMessage.getDestinationAddress());
+              System.out.println(inboundSMSMessage.getMessageId());
+              System.out.println(inboundSMSMessage.getMessage());
+              System.out.println(inboundSMSMessage.getResourceURL());
+              System.out.println(inboundSMSMessage.getSenderAddress());
+          }
 
 
 Inbound message push example
