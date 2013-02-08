@@ -1,4 +1,4 @@
-OneApi java client
+OneApi Java client
 ============================
 
 Basic messaging example
@@ -46,7 +46,7 @@ When the delivery notification is pushed to your server as a HTTP POST request, 
     DeliveryInfoNotification deliveryInfoNotification = smsClient.getSMSMessagingClient().convertJsonToDeliveryInfoNotification(JSON);
 
 
-HLR example
+Number Context example
 -----------------------
 
 Initialize and login the data connection client:
@@ -55,12 +55,12 @@ Initialize and login the data connection client:
     SMSClient smsClient = new SMSClient(configuration);
 
 
-Retrieve the roaming status (HLR):
+Retrieve the roaming status (Number Context):
 
     Roaming roaming = smsClient.getHLRClient().queryHLR(DESTINATION);
 
 
-HLR with notification push example
+Number Context with notification push example
 -----------------------
 
 Similar to the previous example, but this time you must set the notification url where the result will be pushed:
