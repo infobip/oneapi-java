@@ -47,7 +47,7 @@ When the delivery notification is pushed to your server as a HTTP POST request, 
     DeliveryInfoNotification deliveryInfoNotification = smsClient.getSMSMessagingClient().convertJsonToDeliveryInfoNotification(JSON);
 
 
-Number context example
+Number Context example
 -----------------------
 
 Initialize and login the data connection client:
@@ -56,7 +56,7 @@ Initialize and login the data connection client:
     SMSClient smsClient = new SMSClient(configuration);
 
 
-Retrieve the roaming status (Number context):
+Retrieve the roaming status (Number Context):
 
     Roaming roaming = smsClient.getHLRClient().queryHLR(DESTINATION);
           System.out.println("HLR result:");
@@ -73,7 +73,7 @@ Retrieve the roaming status (Number context):
           System.out.println("portedNetworkPrefix: "+roaming.getExtendedData().getPortedNetworkPrefix());
 
 
-Number context with notification push example
+Number Context with notification push example
 -----------------------
 
 Similar to the previous example, but this time you must set the notification url where the result will be pushed:

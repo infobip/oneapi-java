@@ -8,3 +8,5 @@ tags
 .project
 .settings/*
 example*.properties
+README.html
+QUICKSTART.md
