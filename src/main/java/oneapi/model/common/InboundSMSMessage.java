@@ -41,6 +41,16 @@ public class InboundSMSMessage implements Serializable {
 	 */
 	private int moSessionId = 0;
 
+	private String moResponseKey;
+
+	private String callbackData;
+
+	private double price;
+
+	public InboundSMSMessage() {
+		super();
+	}
+	
 	/**
 	 * return the date/time that the SMS message was sent.
 	 */
@@ -147,31 +157,28 @@ public class InboundSMSMessage implements Serializable {
 		this.moSessionId = moSessionId;
 	}
 
-	/**
-	 * default constructor
-	 */
-	public InboundSMSMessage() {
-
+	public String getMoResponseKey() {
+		return moResponseKey;
 	}
 
-	/**
-	 * utility constructor to create an InboundMessage class with all fields set
-	 * 
-	 * @param dateTime
-	 * @param destinationAddress
-	 * @param messageId
-	 * @param message
-	 * @param resourceURL
-	 * @param senderAddress
-	 */
-	public InboundSMSMessage(Date dateTime, String destinationAddress, String messageId, String message, String resourceURL,
-			String senderAddress) {
-		this.dateTime = dateTime;
-		this.destinationAddress = destinationAddress;
-		this.messageId = messageId;
-		this.message = message;
-		this.resourceURL = resourceURL;
-		this.senderAddress = senderAddress;
+	public void setMoResponseKey(String moResponseKey) {
+		this.moResponseKey = moResponseKey;
+	}
+
+	public String getCallbackData() {
+		return callbackData;
+	}
+
+	public void setCallbackData(String callbackData) {
+		this.callbackData = callbackData;
+	}
+
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
 	}
 
 	/**
@@ -184,6 +191,10 @@ public class InboundSMSMessage implements Serializable {
 				+ ", destinationAddress=" + destinationAddress + ", messageId="
 				+ messageId + ", message=" + message + ", resourceURL="
 				+ resourceURL + ", senderAddress=" + senderAddress
-				+ ", moSessionId=" + moSessionId + "}";
+				+ ", moSessionId=" + moSessionId 
+				+ ", moResponseKey=" + moResponseKey 
+				+ ", callbackData=" + callbackData 
+				+ ", price=" + price 
+				+ "}";
 	}
 }

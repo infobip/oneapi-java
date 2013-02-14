@@ -121,7 +121,6 @@ public class InboundSMSMessageList implements java.io.Serializable {
 				+ ", numberOfMessagesInThisBatch="
 				+ numberOfMessagesInThisBatch + ", resourceURL=" + resourceURL
 				+ ", totalNumberOfPendingMessages="
-				+ totalNumberOfPendingMessages + ", callbackData="
-				+ callbackData + "}";
+				+ totalNumberOfPendingMessages + "}";
 	}
 }
