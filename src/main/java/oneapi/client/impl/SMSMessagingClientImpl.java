@@ -12,6 +12,7 @@ import oneapi.listener.InboundMessageNotificationsListener;
 import oneapi.listener.ResponseListener;
 import oneapi.model.DeliveryInfoNotification;
 import oneapi.model.DeliveryReportList;
+import oneapi.model.MoNumberType;
 import oneapi.model.RequestData;
 import oneapi.model.RequestData.Method;
 import oneapi.model.SMSRequest;
@@ -303,6 +304,17 @@ public class SMSMessagingClientImpl extends OneAPIBaseClientImpl implements SMSM
 
         RequestData requestData = new RequestData(urlBuilder.toString(), Method.DELETE);
         executeMethod(requestData); 
+    }
+    
+    /**
+     * Get MO Number Types
+     */
+    @Override
+    public MoNumberType[] getMoNumberTypes() {
+    	StringBuilder urlBuilder = new StringBuilder(SMS_MESSAGING_INBOUND_URL_BASE).append("/numberTypes");
+    
+    	RequestData requestData = new RequestData(urlBuilder.toString(), Method.GET, "moNoTypes");
+    	return executeMethod(requestData, MoNumberType[].class);	
     }
   
     /**

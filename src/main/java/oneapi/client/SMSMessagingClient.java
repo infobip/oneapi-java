@@ -142,9 +142,14 @@ public interface SMSMessagingClient {
 	 * Stop subscribing to message receipt notifications for all your received SMS                       
 	 * @param subscriptionId (mandatory) contains the subscriptionId of a previously created SMS message receipt subscription
 	 */
-	void removeInboundMessagesSubscription(String subscriptionId);
+    void removeInboundMessagesSubscription(String subscriptionId);
 
-	  /**
+    /**
+     * Get MO Number Types
+     */
+    MoNumberType[] getMoNumberTypes();
+
+    /**
      * Retrieve delivery reports
      * @param limit
      * @return DeliveryReportList
