@@ -12,7 +12,7 @@ import oneapi.model.MoNumberType;
 /**
  * To run this example follow these 3 steps:
  *
- *  1.) Download 'OneApi Java library' - available at github.com/parseco
+ *  1.) Download 'OneApi Java library' - available at github.com/infobip
  *
  *  2.) Open 'examples.GetMoNumberTypes' class to edit where you should populate the following fields: 
  *		'USERNAME'
