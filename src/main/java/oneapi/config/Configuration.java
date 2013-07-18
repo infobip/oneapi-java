@@ -20,7 +20,7 @@ public class Configuration  {
     private static final String CONFIG_FILE_SYSTEM_PROPERTY = "sms.client.config";
 
     private Authentication authentication = new Authentication();
-	private String apiUrl = "https://api.parseco.com";
+	private String apiUrl = "https://oneapi.infobip.com";
 	private String versionOneAPISMS = "1";
 	private int inboundMessagesRetrievingInterval = 5000;
 	private int dlrRetrievingInterval = 5000;

@@ -7,7 +7,7 @@ import oneapi.model.RoamingNotification;
 /**
  * To run this example follow these 3 steps:
  *
- *  1.) Download 'OneApi Java library' - available at github.com/parseco
+ *  1.) Download 'OneApi Java library' - available at github.com/infobip
  *
  *  2.) Open 'examples.ConvertJsonToHLRNotificationExample' class    
  *		

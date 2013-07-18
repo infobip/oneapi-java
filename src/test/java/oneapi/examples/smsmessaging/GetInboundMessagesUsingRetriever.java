@@ -11,7 +11,7 @@ import oneapi.model.common.InboundSMSMessageList;
 /**
  * To run this example follow these 3 steps:
  *
- *  1.) Download 'OneApi Java library' - available at www.github.com/parseco
+ *  1.) Download 'OneApi Java library' - available at www.github.com/infobip
  *
  *  2.) Open 'examples.GetInboundMessagesUsingRetriever' class to edit where you should populate the following fields: 
  *		'USERNAME'
