@@ -75,7 +75,7 @@ public class TestOneAPI {
 		}
 		
     	Assert.assertNotNull(response);
-    	Assert.assertEquals(GetIdFromResourceUrl(resourceReferenceWrapper.getResourceReference().getResourceURL()), response);	 	
+    	Assert.assertEquals(resourceReferenceWrapper.getResourceReference().getResourceURL(), response.getResourceReference().getResourceURL());
     	// compare posted message parameters with the reference parameters
     	Assert.assertEquals("senderAddress=TestSender&address=1111&message=TestMessageText", server.getPostRequest());
     }
@@ -96,7 +96,7 @@ public class TestOneAPI {
 		}
 		
 		Assert.assertNotNull(response);   	
-		Assert.assertEquals(GetIdFromResourceUrl(resourceReferenceWrapper.getResourceReference().getResourceURL()), response);	 	
+		Assert.assertEquals(resourceReferenceWrapper.getResourceReference().getResourceURL(), response.getResourceReference().getResourceURL());
     	// compare posted message parameters with the reference parameters
     	Assert.assertEquals("senderAddress=TestSender&address=2222&address=3333&address=4444&address=5555&message=TestMessageText&clientCorrelator=TestClientCorrelator&notifyURL=http%3A%2F%2FTestNotifyUrl&senderName=TestSenderName&callbackData=TestCallbackData", server.getPostRequest());
     }
