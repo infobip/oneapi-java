@@ -9,7 +9,7 @@
     <includeBaseDirectory>false</includeBaseDirectory>
     <files>
         <file>
-            <source>target/${project.artifactId}-${project.version}-with-dependencies.jar</source>
+            <source>target/${project.artifactId}-${project.version}.jar</source>
             <outputDirectory>/</outputDirectory>
             <destName>${project.artifactId}-${project.version}.jar</destName>
         </file>
