@@ -7,7 +7,7 @@
     <description>OneAPI Java Client</description>
     <groupId>oneapi</groupId>
     <artifactId>oneapi-java</artifactId>
-    <version>0.1.2-SNAPSHOT</version>
+    <version>0.1.3-SNAPSHOT</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

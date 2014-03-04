@@ -30,7 +30,7 @@ public class CustomerProfileClientImpl extends OneAPIBaseClientImpl implements C
 	@Override
 	public LoginResponse login() {
 		LoginRequest loginRequest = new LoginRequest(getConfiguration().getAuthentication().getUsername(), getConfiguration().getAuthentication().getPassword());	
-		RequestData requestData = new RequestData(CUSTOMER_PROFILE_URL_BASE + "/login", Method.POST, "login", loginRequest, URL_ENCODED_CONTENT_TYPE);
+		RequestData requestData = new RequestData(CUSTOMER_PROFILE_URL_BASE + "/login", Method.POST, "login", loginRequest, JSON_CONTENT_TYPE);
 		LoginResponse response = executeMethod(requestData, LoginResponse.class);
 		fireOnLogin(response);
 		return response;
