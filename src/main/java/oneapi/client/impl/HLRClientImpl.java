@@ -124,7 +124,7 @@ public class HLRClientImpl extends OneAPIBaseClientImpl implements HLRClient {
 	 */
 	@Override
 	public String subscribeToHLRDeliveryNotifications(SubscribeToHLRDeliveryNotificationsRequest subscribeToHLRDeliveryNotificationsRequest) {
-		RequestData requestData = new RequestData(HLR_SUBSCRIPTION_URL_BASE, Method.POST, "deliveryReceiptSubscription", subscribeToHLRDeliveryNotificationsRequest, URL_ENCODED_CONTENT_TYPE);
+		RequestData requestData = new RequestData(HLR_SUBSCRIPTION_URL_BASE, Method.POST, "deliveryReceiptSubscription", subscribeToHLRDeliveryNotificationsRequest, JSON_CONTENT_TYPE);
 		DeliveryReceiptSubscription deliveryReceiptSubscription = executeMethod(requestData, DeliveryReceiptSubscription.class);
 		return getIdFromResourceUrl(deliveryReceiptSubscription.getResourceURL()); 
 	}

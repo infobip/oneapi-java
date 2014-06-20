@@ -13,6 +13,8 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import com.fasterxml.jackson.core.io.JsonStringEncoder;
 import oneapi.config.Configuration;
 import oneapi.exception.RequestException;
 import oneapi.listener.ResponseListener;
@@ -258,7 +260,7 @@ public class OneAPIBaseClientImpl {
 		if (requestData.getContentType().length() != 0) {
 			requestBuilder.addHeader("Content-Type", requestData.getContentType());
 		}
-	
+
 		try {
 			//Set Authorization header
 			Authentication authentication = configuration.getAuthentication();			
@@ -286,10 +288,9 @@ public class OneAPIBaseClientImpl {
 			if (requestData.getFormParams() != null) {
 				if (requestData.getContentType().equals(URL_ENCODED_CONTENT_TYPE)) {
 					requestBuilder.setBody(formEncodeParams(requestData.getFormParams()));
-
 				} else if (requestData.getContentType().equals(JSON_CONTENT_TYPE)) {
 					String json = getObjectMapper().writeValueAsString(requestData.getFormParams());
-					requestBuilder.setBody(json);
+                    requestBuilder.setBody(JsonStringEncoder.getInstance().encodeAsUTF8(json));
 				}
 			}
 
@@ -297,7 +298,7 @@ public class OneAPIBaseClientImpl {
 			getAsyncHttpClient().executeRequest(requestBuilder.build(), new AsyncCompletionHandler() {
 				@Override
 				public Response onCompleted(Response response) {
-					try {
+                    try {
 						T jsonObject = deserialize(response, clazz, requestData.getRootElement());
 						responseListener.onGotResponse(jsonObject, null);
 					} catch (Exception e) {
@@ -347,7 +348,6 @@ public class OneAPIBaseClientImpl {
 	 * Deserialize response
 	 * @param connection
 	 * @param clazz
-	 * @param requiredStatus
 	 * @param rootElement
 	 * @return T 
 	 * @throws RequestException
@@ -374,7 +374,6 @@ public class OneAPIBaseClientImpl {
 	 * Deserialize response
 	 * @param response
 	 * @param clazz
-	 * @param requiredStatus
 	 * @param rootElement
 	 * @return T
 	 * @throws IOException
@@ -460,7 +459,6 @@ public class OneAPIBaseClientImpl {
 	/**
 	 * Check if response status code is valid
 	 * @param connection
-	 * @param requiredStatus
 	 */
 	private void validateResponse(HttpURLConnection connection) {
 		int responseCode = getResponseCode(connection);

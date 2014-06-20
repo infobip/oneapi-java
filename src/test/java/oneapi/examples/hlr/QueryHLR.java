@@ -26,7 +26,7 @@ public class QueryHLR {
 
 	private static final String USERNAME = PropertyLoader.loadProperty("example.properties", "username");
 	private static final String PASSWORD = PropertyLoader.loadProperty("example.properties", "password");
-	private static String DESTINATION = PropertyLoader.loadProperty("example.properties", "destination");;
+	private static String DESTINATION = PropertyLoader.loadProperty("example.properties", "destination");
 
 	public static void main(String[] args) {
 

@@ -25,7 +25,7 @@ public class USSDClientImpl extends OneAPIBaseClientImpl implements USSDClient {
 	public InboundSMSMessage sendMessage(String address, String message) {
 		RequestData requestData = new RequestData(USSD_URL_BASE, Method.POST);
 		requestData.setFormParams(new USSDRequest(address, message));
-		requestData.setContentType(URL_ENCODED_CONTENT_TYPE);
+        requestData.setContentType(JSON_CONTENT_TYPE);
 		return executeMethod(requestData, InboundSMSMessage.class);
 	}
 
@@ -38,7 +38,7 @@ public class USSDClientImpl extends OneAPIBaseClientImpl implements USSDClient {
 	public void stopSession(String address, String message) {
 		RequestData requestData = new RequestData(USSD_URL_BASE, Method.POST);
 		requestData.setFormParams(new USSDRequest(address, message, true));
-		requestData.setContentType(URL_ENCODED_CONTENT_TYPE);
+		requestData.setContentType(JSON_CONTENT_TYPE);
 	    executeMethod(requestData);
 	}
 }

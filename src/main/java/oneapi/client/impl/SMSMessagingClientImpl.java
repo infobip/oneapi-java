@@ -60,8 +60,8 @@ public class SMSMessagingClientImpl extends OneAPIBaseClientImpl implements SMSM
         StringBuilder urlBuilder = new StringBuilder(SMS_MESSAGING_OUTBOUND_URL_BASE).append("/");
         urlBuilder.append(encodeURLParam(smsRequest.getSenderAddress()));
         urlBuilder.append("/requests");
-        
-        RequestData requestData = new RequestData(urlBuilder.toString(), Method.POST, null, smsRequest, URL_ENCODED_CONTENT_TYPE);
+
+        RequestData requestData = new RequestData(urlBuilder.toString(), Method.POST, null, smsRequest, JSON_CONTENT_TYPE);
         return executeMethod(requestData, SendMessageResult.class);
     }
     
@@ -76,7 +76,7 @@ public class SMSMessagingClientImpl extends OneAPIBaseClientImpl implements SMSM
         urlBuilder.append(encodeURLParam(smsRequest.getSenderAddress()));
         urlBuilder.append("/requests");
  
-        RequestData requestData = new RequestData(urlBuilder.toString(), Method.POST, null, smsRequest, URL_ENCODED_CONTENT_TYPE);        
+        RequestData requestData = new RequestData(urlBuilder.toString(), Method.POST, null, smsRequest, JSON_CONTENT_TYPE);
         executeMethodAsync(requestData, SendMessageResult.class, responseListener);
     }
 
@@ -139,7 +139,7 @@ public class SMSMessagingClientImpl extends OneAPIBaseClientImpl implements SMSM
         }
         urlBuilder.append("subscriptions");
 
-        RequestData requestData = new RequestData(urlBuilder.toString(), Method.POST, "deliveryReceiptSubscription", subscribeToDeliveryNotificationsRequest, URL_ENCODED_CONTENT_TYPE);
+        RequestData requestData = new RequestData(urlBuilder.toString(), Method.POST, "deliveryReceiptSubscription", subscribeToDeliveryNotificationsRequest, JSON_CONTENT_TYPE);
         DeliveryReceiptSubscription deliveryReceiptSubscription = executeMethod(requestData, DeliveryReceiptSubscription.class);
         return getIdFromResourceUrl(deliveryReceiptSubscription.getResourceURL()); 
     }
@@ -263,7 +263,7 @@ public class SMSMessagingClientImpl extends OneAPIBaseClientImpl implements SMSM
      */
     @Override
     public String subscribeToInboundMessagesNotifications(SubscribeToInboundMessagesRequest subscribeToInboundMessagesRequest) {
-    	RequestData requestData = new RequestData(SMS_MESSAGING_INBOUND_URL_BASE + "/subscriptions", Method.POST, "resourceReference", subscribeToInboundMessagesRequest, URL_ENCODED_CONTENT_TYPE);
+    	RequestData requestData = new RequestData(SMS_MESSAGING_INBOUND_URL_BASE + "/subscriptions", Method.POST, "resourceReference", subscribeToInboundMessagesRequest, JSON_CONTENT_TYPE);
     	ResourceReference resourceReference = executeMethod(requestData, ResourceReference.class);
         return getIdFromResourceUrl(resourceReference.getResourceURL()); 
     }

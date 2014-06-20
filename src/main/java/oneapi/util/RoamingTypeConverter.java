@@ -50,7 +50,6 @@ public class RoamingTypeConverter {
 	 * Compares roaming country to ported country. If fails then compares roaming country to original country.
 	 * Note that ported country is more important than original country.
 	 *  
-	 * @param hlrData
 	 * @return null if cannot compare countries
 	 */
 	private Boolean isInternationalRoaming() {
@@ -77,7 +76,6 @@ public class RoamingTypeConverter {
 	 * Compares roaming network to ported network. If it fails then compares roaming network to original network.
 	 * Note that ported network is more important than original network.
 	 * 
-	 * @param hlrData
 	 * @return null if cannot compare networks
 	 */
 	private Boolean isDomesticRoaming() {

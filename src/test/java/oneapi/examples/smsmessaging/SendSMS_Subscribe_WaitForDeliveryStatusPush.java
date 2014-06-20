@@ -38,7 +38,7 @@ public class SendSMS_Subscribe_WaitForDeliveryStatusPush {
 	private static final String PASSWORD = PropertyLoader.loadProperty("example.properties", "password");
 	private static String SENDER = PropertyLoader.loadProperty("example.properties", "sender");
 	private static final String DESTINATION = PropertyLoader.loadProperty("example.properties", "destination");
-	private static final String MESSAGE = "Hello"; 
+	private static final String MESSAGE = PropertyLoader.loadProperty("example.properties", "message");
 	private static String NOTIFY_URL = "http://127.0.0.1:3000/"; // 3000=Default port for 'Delivery Info Notifications' server simulator
 	private static String CRITERIA = "SomeCriteria";
 

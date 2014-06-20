@@ -8,6 +8,7 @@ public class SMSRequest {
 	private String notifyURL = null;
 	private String senderName = null;
 	private String callbackData = null;
+    private Language language = null;
 		
     public SMSRequest() {
 	}
@@ -86,7 +87,7 @@ public class SMSRequest {
 
 	/**
 	 * (mandatory) contains the message text to send
-	 * @param messageText
+	 * @param message
 	 */
 	public void setMessage(String message) {
 		this.message = message;
@@ -155,4 +156,24 @@ public class SMSRequest {
 	public String getCallbackData() {
 		return callbackData;
 	}
+
+    /**
+     * (optional) if using Turkish, Spanish or Portuguese language.
+     * Be aware thar NLI information is defined in User Data Header (UDH), which reduces the available message length by 5 characters.
+     *
+     * @see <a href="http://en.wikipedia.org/wiki/GSM_03.38">http://en.wikipedia.org/wiki/GSM_03.38</a>
+     *
+     * @return language
+     */
+    public Language getLanguage() {
+        return language;
+    }
+
+    /**
+     * (optional) is NLI information
+     * @param language
+     */
+    public void setLanguage(Language language) {
+        this.language = language;
+    }
 }

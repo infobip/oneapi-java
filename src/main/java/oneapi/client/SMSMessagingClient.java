@@ -24,7 +24,7 @@ public interface SMSMessagingClient {
 
 	/**
      * Send an SMS asynchronously over OneAPI to one or more mobile terminals using the customized 'SMSRequest' object
-     * @param sms (mandatory) object containing data needed to be filled in order to send the SMS
+     * @param smsRequest (mandatory) object containing data needed to be filled in order to send the SMS
      * @param responseListener (mandatory) method to call after receiving sent SMS response
      */   
     void sendSMSAsync(SMSRequest smsRequest, final ResponseListener<SendMessageResult> responseListener);
@@ -94,7 +94,6 @@ public interface SMSMessagingClient {
 	 * Retrieve SMS messages sent to your Web application 
 	 * @param  maxBatchSize (mandatory) is the maximum number of messages to get in this request
 	 * @return InboundSMSMessageList
-	 * @throws InboundMessagesException 
 	 */
 	InboundSMSMessageList getInboundMessages(int maxBatchSize);
 	

@@ -28,7 +28,7 @@ public class QueryDeliveryStatusAsync {
 	private static final String USERNAME = PropertyLoader.loadProperty("example.properties", "username");
 	private static final String PASSWORD = PropertyLoader.loadProperty("example.properties", "password");
 	private static String SENDER = PropertyLoader.loadProperty("example.properties", "sender");
-	private static final String REQUEST_ID = "FILL REQUEST ID!!!"; 
+	private static final String REQUEST_ID = "FILL REQUEST ID!!!";
 
 	public static void main(String[] args) {
 

@@ -45,6 +45,19 @@ When the delivery notification is pushed to your server as a HTTP POST request, 
 
     DeliveryInfoNotification deliveryInfoNotification = smsClient.getSMSMessagingClient().convertJsonToDeliveryInfoNotification(JSON);
 
+Sending message with language specific characters example
+-----------------------------------------------
+
+If you want to send message with special characters, this is how you prepare your message:
+
+	SMSRequest smsRequest = new SMSRequest(SENDER, MESSAGE, DESTINATION);
+    // Create Language object with specific language code, use single shift table and use locking shift table for specific language as parameters
+    Language language = new Language(LanguageCode.TR, true, false);
+    // Set language
+    smsRequest.setLanguage(language);
+
+Currently supported languages (with their language codes) are: `Spanish - "SP"`, `Portuguese - "PT"`, `Turkish - "TR"`.
+
 
 Number Context example
 -----------------------

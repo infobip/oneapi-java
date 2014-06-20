@@ -35,7 +35,7 @@ public class SendSMS_GetDeliveryReportsUsingRetriever {
 	private static final String PASSWORD = PropertyLoader.loadProperty("example.properties", "password");
 	private static String SENDER = PropertyLoader.loadProperty("example.properties", "sender");
 	private static final String DESTINATION = PropertyLoader.loadProperty("example.properties", "destination");
-	private static final String MESSAGE = "Hello"; 
+	private static final String MESSAGE = PropertyLoader.loadProperty("example.properties", "message");
 
 	public static void main(String[] args) throws Exception {
 

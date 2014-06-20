@@ -31,22 +31,23 @@ public class SendSMS_GetDeliveryReports {
 	private static final String PASSWORD = PropertyLoader.loadProperty("example.properties", "password");
 	private static String SENDER = PropertyLoader.loadProperty("example.properties", "sender");
 	private static final String DESTINATION = PropertyLoader.loadProperty("example.properties", "destination");
-	private static final String MESSAGE = "Hello"; 
+	private static final String MESSAGE = PropertyLoader.loadProperty("example.properties", "message");
 
 	public static void main(String[] args) throws Exception {
 
 		// Configure logger
 		BasicConfigurator.configure();
-		
-		
+
 		// Initialize Configuration object 
 		Configuration configuration = new Configuration(USERNAME, PASSWORD);
 
 		// Initialize SMSClient using the Configuration object
 		SMSClient smsClient = new SMSClient(configuration);
 
-		// Send SMS 
-		smsClient.getSMSMessagingClient().sendSMS(new SMSRequest(SENDER, MESSAGE, DESTINATION));
+		// Send SMS
+        SMSRequest smsRequest = new SMSRequest(SENDER, MESSAGE, DESTINATION);
+
+		smsClient.getSMSMessagingClient().sendSMS(smsRequest);
 
 		// Wait for 30 seconds to give enought time for the message to be delivered
 		Thread.sleep(30000);
