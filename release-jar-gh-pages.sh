@@ -4,7 +4,7 @@ export PS4="`tput setaf 3`>>> `tput sgr0`"      # output lines as executed in co
 set -x                                          # verbose output (print each line as it is executed)
 set -e                                          # stop at first error
 
-mvn clean install 
+mvn clean install
 mkdir -p temp
 cd temp
 
@@ -31,12 +31,14 @@ git push origin --delete gh-pages
 git checkout -f --orphan gh-pages
 rm -rf *
 cp -R ../oneapi-java-new-gh-pages/* ./
-git add --all
-git commit -m "Initial commit. Version $newjar."
 
-# replace link in file and push it to origin
+# replace link in file
 # hardcoded line 26 in index.html!!!!!
 sed -i '26s/.*/<li><a href="https:\/\/github.com\/infobip\/oneapi-java\/blob\/gh-pages\/$newjar?raw=true">Download <strong>compiled JAR File<\/strong><\/a><\/li>/' index.html
+
+# git commit & push changes
+git add --all
+git commit -m "Initial commit. Version $newjar."
 git push origin gh-pages
 
 # cleanup
