@@ -3,23 +3,42 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <name>OneAPI Java Client</name>
-    <description>OneAPI Java Client</description>
-    <groupId>oneapi</groupId>
+    <name>Infobip OneAPI Client</name>
+    <description>API client in Java for Infobip's OneAPI (https://developer.infobip.com/api).</description>
+    <groupId>org.infobip.oneapi</groupId>
     <artifactId>oneapi-java</artifactId>
-    <version>0.1.4-SNAPSHOT</version>
+    <version>0.0.1-SNAPSHOT</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <BUILD_NUMBER>1</BUILD_NUMBER>
     </properties>
 
+    <distributionManagement>
+        <repository>
+            <id>ossrh-releases</id>
+            <name>SonatypeReleases</name>
+            <url>https://oss.sonatype.org/content/repositories/releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>ossrh-snapshots</id>
+            <name>SonatypeSnapshots</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+    <scm>
+        <url>https://github.com/infobip/oneapi-java.git</url>
+        <connection>scm:git:git://github.com/infobip/oneapi-java.git</connection>
+        <developerConnection>scm:git:git@github.com:infobip/oneapi-java.git</developerConnection>
+    </scm>
+
     <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.3.2</version>
+                <version>2.5.1</version>
                 <configuration>
                     <source>1.6</source>
                     <target>1.6</target>
@@ -28,7 +47,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>2.3.1</version>
+                <version>2.4</version>
                 <executions>
                     <execution>
                         <goals>
@@ -53,7 +72,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>2.1.2</version>
+                <version>2.2.1</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
@@ -102,52 +121,62 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.3</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
     <dependencies>
         <dependency>
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
-            <version>1.4</version>
+            <version>1.6</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>1.6.1</version>
+            <version>1.7.7</version>
             <scope>compile</scope>
         </dependency>
        <dependency>  
     	   <groupId>org.slf4j</groupId>  
    		   <artifactId>slf4j-log4j12</artifactId>  
-           <version>1.7.2</version> 
+           <version>1.7.5</version>
             <scope>compile</scope> 
 		</dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.0.5</version>
+            <version>2.4.0</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
-            <version>2.0.5</version>
+            <version>2.4.0</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
-            <version>2.0.5</version>
+            <version>2.4.0</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.10</version>
+            <version>4.11</version>
             <scope>test</scope>
         </dependency>
         <dependency>  
     	  <groupId>com.ning</groupId>  
     	  <artifactId>async-http-client</artifactId>  
-  		  <version>1.7.1</version>  
+  		  <version>1.8.12</version>
 		</dependency> 
     </dependencies>
 </project>
