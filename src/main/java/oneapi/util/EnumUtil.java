@@ -88,9 +88,6 @@ public final class EnumUtil implements Serializable {
 	 * To get O(1) performace {@link EnumMapper} should be used which can return enumeration constant for specified value in constant time.
 	 * <br>
 	 *      
-	 * @param <T>
-	 * @param enumClass
-	 * @return
 	 */
 	public static <T extends IEnumIntValue> EnumMapper<T> enumMapper(Class<T> enumClass) {
 		return new EnumMapper<T>(enumClass);

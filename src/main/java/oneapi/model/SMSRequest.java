@@ -55,7 +55,6 @@ public class SMSRequest {
 
 	/**
 	 * (mandatory) is the address to whom a responding SMS may be sent
-	 * @param senderAddress
 	 */
 	public void setSenderAddress(String senderAddress) {
 		this.senderAddress = senderAddress;
@@ -71,7 +70,6 @@ public class SMSRequest {
 
 	/**
 	 * (mandatory) contains one address for end user ID to send to 
-	 * @return recipientsAddress
 	 */
 	public void setAddress(String[] address) {
 		this.address = address;
@@ -79,7 +77,6 @@ public class SMSRequest {
 
 	/**
 	 * (mandatory) contains the message text to send
-	 * @return
 	 */
 	public String getMessage() {
 		return message;
@@ -87,7 +84,6 @@ public class SMSRequest {
 
 	/**
 	 * (mandatory) contains the message text to send
-	 * @param message
 	 */
 	public void setMessage(String message) {
 		this.message = message;
@@ -103,7 +99,6 @@ public class SMSRequest {
 
 	/**
 	 * (optional) uniquely identifies this create MMS request. If there is a communication failure during the request, using the same clientCorrelator when retrying the request allows the operator to avoid sending the same MMS twice.
-	 * @param clientCorrelator
 	 */
 	public void setClientCorrelator(String clientCorrelator) {
 		this.clientCorrelator = clientCorrelator;
@@ -119,7 +114,6 @@ public class SMSRequest {
 
 	/**
 	 * (optional) is the URL to which you would like a notification of delivery sent
-	 * @param notifyURL
 	 */
 	public void setNotifyURL(String notifyURL) {
 		this.notifyURL = notifyURL;
@@ -135,7 +129,6 @@ public class SMSRequest {
 
 	/**
 	 * (optional) is the name to appear on the user's terminal as the sender of the message
-	 * @param senderName
 	 */
 	public void setSenderName(String senderName) {
 		this.senderName = senderName;
@@ -143,7 +136,6 @@ public class SMSRequest {
 
 	/**
 	 * (optional) will be passed back to the notifyURL location, so you can use it to identify the message the receipt relates to (or any other useful data, such as a function name)
-	 * @param callbackData
 	 */
 	public void setCallbackData(String callbackData) {
 		this.callbackData = callbackData;
@@ -171,7 +163,6 @@ public class SMSRequest {
 
     /**
      * (optional) is NLI information
-     * @param language
      */
     public void setLanguage(Language language) {
         this.language = language;

@@ -56,11 +56,8 @@ public class CustomerProfileClientImpl extends OneAPIBaseClientImpl implements C
 	}
 
 	@Override
-	public CustomerProfile getCustomerProfileByUserId(int id) {	
-		StringBuilder urlBuilder = new StringBuilder(CUSTOMER_PROFILE_URL_BASE).append("/");
-		urlBuilder.append(encodeURLParam(String.valueOf(id)));
-
-		RequestData requestData = new RequestData(urlBuilder.toString(), Method.GET);
+	public CustomerProfile getCustomerProfileByUserId(int id) {
+		RequestData requestData = new RequestData(CUSTOMER_PROFILE_URL_BASE + "/" + encodeURLParam(String.valueOf(id)), Method.GET);
 		return executeMethod(requestData, CustomerProfile.class);
 	}
 	
@@ -98,7 +95,6 @@ public class CustomerProfileClientImpl extends OneAPIBaseClientImpl implements C
 
 	/**
 	 * Fire on Login done
-	 * @param response
 	 */
 	private void fireOnLogin(LoginResponse response) {
 		if (loginListenersList != null) {

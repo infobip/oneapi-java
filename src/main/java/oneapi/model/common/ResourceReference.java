@@ -30,9 +30,6 @@ public class ResourceReference {
 	 * generate a textual representation of the ResourceReference 
 	 */
 	public String toString() {
-		StringBuffer buffer=new StringBuffer();
-		buffer.append("resourceURL = ");
-		buffer.append(resourceURL);
-		return buffer.toString();
+		return "resourceURL = " + resourceURL;
 	}
 }

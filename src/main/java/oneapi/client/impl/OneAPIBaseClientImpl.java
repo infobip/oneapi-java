@@ -53,7 +53,6 @@ public class OneAPIBaseClientImpl {
 
 	/**
 	 * Initialize OneAPIClientBase
-	 * @param configuration
 	 */
 	protected OneAPIBaseClientImpl(Configuration configuration) {
 		this.configuration = configuration;
@@ -69,7 +68,6 @@ public class OneAPIBaseClientImpl {
 	
 	/**
 	 * Get asynchronous http client
-	 * @return
 	 */
 	private AsyncHttpClient getAsyncHttpClient() {
 		if (asyncHttpClient == null) {
@@ -92,9 +90,6 @@ public class OneAPIBaseClientImpl {
 
 	/**
 	 * Execute method and deserialize response json
-	 * @param requestData
-	 * @param clazz
-	 * @return T
 	 */
 	protected <T> T executeMethod(RequestData requestData, Class<T> clazz) {
 		HttpURLConnection connection = sendOneAPIRequest(requestData);
@@ -103,7 +98,6 @@ public class OneAPIBaseClientImpl {
 
 	/**
 	 * Execute method and validate response 
-	 * @param requestData
 	 */
 	protected void executeMethod(RequestData requestData)
 	{
@@ -113,9 +107,6 @@ public class OneAPIBaseClientImpl {
 
 	/**
 	 * Execute method asynchronously and deserialize response json
-	 * @param requestData
-	 * @param clazz
-	 * @param responseListener
 	 */
 	protected <T> void executeMethodAsync(RequestData requestData, Class<T> clazz, ResponseListener<T> responseListener) {
 		sendOneAPIRequestAsync(requestData, clazz, responseListener);     
@@ -123,8 +114,6 @@ public class OneAPIBaseClientImpl {
 	
 	/**
 	 * Convert json string to specific object
-	 * @param jsonBytes
-	 * @param clazz
 	 * @return T
 	 */
 	protected <T> T convertJSONToObject(byte[] jsonBytes, Class<T> clazz) {
@@ -133,14 +122,11 @@ public class OneAPIBaseClientImpl {
 
 	/**
 	 * Convert json string to specific object 
-	 * @param jsonBytes
-	 * @param clazz
-	 * @param rootElement
 	 * @return T
 	 */
 	protected <T> T convertJSONToObject(byte[] jsonBytes, Class<T> clazz, String rootElement) {
 		try {
-			if(null != rootElement && "" != rootElement) {
+			if(null != rootElement && !"".equals(rootElement)) {
 				JsonNode node = getObjectMapper().reader().readTree(new ByteArrayInputStream(jsonBytes)).get(rootElement);
 				return getObjectMapper().readValue(node.toString(), clazz);
 			} else {
@@ -153,8 +139,6 @@ public class OneAPIBaseClientImpl {
 	
 	/**
 	 * Extract Id from resource url
-	 * @param resourceUrl
-	 * @return
 	 */
 	protected String getIdFromResourceUrl(String resourceUrl) 
 	{
@@ -173,7 +157,6 @@ public class OneAPIBaseClientImpl {
 
 	/**
 	 * Encode URL parameter
-	 * @param param
 	 * @return String - encoded parameter
 	 */
 	protected String encodeURLParam(String param) {
@@ -186,7 +169,6 @@ public class OneAPIBaseClientImpl {
 
 	/**
 	 * Send OneAPI request
-	 * @param requestData
 	 * @throws RequestException
 	 */
 	private HttpURLConnection sendOneAPIRequest(RequestData requestData) {
@@ -209,9 +191,13 @@ public class OneAPIBaseClientImpl {
 
 			//Set Content Type
 			if ((requestData.getContentType() != null) && (requestData.getContentType().length() != 0)) {
-				connection.setRequestProperty("Content-Type", requestData.getContentType());
+				if (connection != null) {
+					connection.setRequestProperty("Content-Type", requestData.getContentType());
+				}
 			}
-			connection.setRequestProperty("accept", "*/*");
+			if (connection != null) {
+				connection.setRequestProperty("accept", "*/*");
+			}
 			connection.setRequestProperty("User-Agent", "OneApi-Java-".concat(SMSClient.VERSION));
 
 			//Set Request Method
@@ -240,9 +226,6 @@ public class OneAPIBaseClientImpl {
 
 	/**
 	 * Send OneAPI request asynchronously
-	 * @param requestData
-	 * @param clazz
-	 * @param responseListener
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private <T> void sendOneAPIRequestAsync(final RequestData requestData, final Class<T> clazz, final ResponseListener<T> responseListener) {
@@ -321,10 +304,6 @@ public class OneAPIBaseClientImpl {
 
 	/**
 	 * Setup http connection with custom authorization
-	 * @param url
-	 * @param authorizationScheme
-	 * @param authHeaderValue
-	 * @return
 	 * @throws MalformedURLException
 	 * @throws IOException
 	 */
@@ -346,10 +325,7 @@ public class OneAPIBaseClientImpl {
 
 	/**
 	 * Deserialize response
-	 * @param connection
-	 * @param clazz
-	 * @param rootElement
-	 * @return T 
+	 * @return T
 	 * @throws RequestException
 	 */
 	private <T> T deserialize(HttpURLConnection connection, Class<T> clazz, String rootElement) {
@@ -372,9 +348,6 @@ public class OneAPIBaseClientImpl {
 
 	/**
 	 * Deserialize response
-	 * @param response
-	 * @param clazz
-	 * @param rootElement
 	 * @return T
 	 * @throws IOException
 	 */
@@ -393,10 +366,6 @@ public class OneAPIBaseClientImpl {
 
 	/**
 	 * Deserialize input stream
-	 * @param inputStream
-	 * @param contentEncoding
-	 * @param clazz
-	 * @param rootElement
 	 * @return T
 	 * @throws IOException 
 	 */
@@ -408,8 +377,6 @@ public class OneAPIBaseClientImpl {
 
 	/**
 	 * Read connection input stream bytes
-	 * @param inputStream
-	 * @param contentEncoding
 	 * @return byte[]
 	 * @throws IOException
 	 */
@@ -434,7 +401,7 @@ public class OneAPIBaseClientImpl {
 
 		String errorText = "Unexpected error occured.";
 		String messageId = "";
-		byte[] bytes = new byte[0];
+		byte[] bytes;
 		try {
 			bytes = read(errorStream, contentEncoding);
 			RequestError errorResponse = convertJSONToObject(bytes, RequestError.class, "requestError");
@@ -458,7 +425,6 @@ public class OneAPIBaseClientImpl {
 
 	/**
 	 * Check if response status code is valid
-	 * @param connection
 	 */
 	private void validateResponse(HttpURLConnection connection) {
 		int responseCode = getResponseCode(connection);
@@ -471,7 +437,6 @@ public class OneAPIBaseClientImpl {
 	
 	/**
 	 * Encode specific object parameters 
-	 * @param formParams
 	 * @return String
 	 * @throws IOException
 	 */
@@ -510,10 +475,6 @@ public class OneAPIBaseClientImpl {
 
 	/**
 	 * Encode specific parameter and append it to the string builder 
-	 * @param sb
-	 * @param key
-	 * @param value
-	 * @param paramCounter
 	 * @throws UnsupportedEncodingException
 	 */
 	private void appendEncodedParam(StringBuilder sb, String key, Object value, int paramCounter) throws UnsupportedEncodingException {
@@ -546,8 +507,6 @@ public class OneAPIBaseClientImpl {
 
 	/**
 	 * Get http connection response status code
-	 * @param connection
-	 * @return
 	 */
 	private int getResponseCode(HttpURLConnection connection) {
 		try {
@@ -559,8 +518,6 @@ public class OneAPIBaseClientImpl {
 
 	/**
 	 * Extract content encoding from the content type
-	 * @param contentType
-	 * @return
 	 */
 	private String getContentEncoding(String contentType) {
 		String contentEncoding = "";

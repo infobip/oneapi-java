@@ -17,8 +17,6 @@ public class USSDClientImpl extends OneAPIBaseClientImpl implements USSDClient {
 
 	/**
 	 * Send an USSD over OneAPI to one mobile terminal '
-	 * @param address
-	 * @param message
 	 * @return InboundSMSMessage
 	 */
 	@Override
@@ -31,8 +29,6 @@ public class USSDClientImpl extends OneAPIBaseClientImpl implements USSDClient {
 
 	/**
 	 * Stop USSD session
-	 * @param address
-	 * @param message
 	 */
 	@Override
 	public void stopSession(String address, String message) {

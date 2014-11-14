@@ -3,11 +3,69 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <name>Infobip OneAPI Client</name>
-    <description>API client in Java for Infobip's OneAPI (https://developer.infobip.com/api).</description>
     <groupId>org.infobip.oneapi</groupId>
     <artifactId>oneapi-java</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
+
+    <name>Infobip OneAPI Client</name>
+    <description>API client in Java for Infobip's OneAPI (https://developer.infobip.com/api).</description>
+    <url>https://developer.infobip.com/libraries</url>
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+            <comments>A business-friendly OSS license</comments>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <id>nmaric</id>
+            <name>Nikola Maric</name>
+            <email>nikola.maric@infobip.org</email>
+            <organization>Infobip Ltd.</organization>
+            <organizationUrl>https://infobip.com</organizationUrl>
+            <roles>
+                <role>architect</role>
+                <role>developer</role>
+            </roles>
+            <timezone>+1</timezone>
+        </developer>
+        <developer>
+            <id>nmenkovic</id>
+            <name>Nevena Menkovic</name>
+            <email>nevena.menkovic@infobip.org</email>
+            <organization>Infobip Ltd.</organization>
+            <organizationUrl>https://infobip.com</organizationUrl>
+            <roles>
+                <role>developer</role>
+            </roles>
+            <timezone>+1</timezone>
+        </developer>
+        <developer>
+            <id>mlukovic</id>
+            <name>Marko Lukovic</name>
+            <email>marko.lukovic@infobip.org</email>
+            <organization>Infobip Ltd.</organization>
+            <organizationUrl>https://infobip.com</organizationUrl>
+            <roles>
+                <role>developer</role>
+            </roles>
+            <timezone>+1</timezone>
+        </developer>
+        <developer>
+            <id>mdivljan</id>
+            <name>Milica Divljan</name>
+            <email>milica.divljan@infobip.org</email>
+            <organization>Infobip Ltd.</organization>
+            <organizationUrl>https://infobip.com</organizationUrl>
+            <roles>
+                <role>developer</role>
+            </roles>
+            <timezone>+1</timezone>
+        </developer>
+    </developers>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -108,10 +166,13 @@
                 </configuration>
                 <executions>
                     <execution>
-                        <id>make-assembly</id> <!-- this is used for inheritance merges -->
-                        <phase>package</phase> <!-- append to the packaging phase. -->
+                        <id>make-assembly</id>
+                        <!-- this is used for inheritance merges -->
+                        <phase>package</phase>
+                        <!-- append to the packaging phase. -->
                         <goals>
-                            <goal>single</goal> <!-- goals == mojos -->
+                            <goal>single</goal>
+                            <!-- goals == mojos -->
                         </goals>
                         <configuration>
                             <descriptors>
@@ -120,16 +181,6 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.sonatype.plugins</groupId>
-                <artifactId>nexus-staging-maven-plugin</artifactId>
-                <version>1.6.3</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <serverId>ossrh</serverId>
-                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                </configuration>
             </plugin>
         </plugins>
     </build>
@@ -176,12 +227,12 @@
             <version>1.7.7</version>
             <scope>compile</scope>
         </dependency>
-       <dependency>  
-    	   <groupId>org.slf4j</groupId>  
-   		   <artifactId>slf4j-log4j12</artifactId>  
-           <version>1.7.5</version>
-            <scope>compile</scope> 
-		</dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.5</version>
+            <scope>compile</scope>
+        </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
@@ -203,11 +254,11 @@
             <version>4.11</version>
             <scope>test</scope>
         </dependency>
-        <dependency>  
-    	  <groupId>com.ning</groupId>  
-    	  <artifactId>async-http-client</artifactId>  
-  		  <version>1.8.12</version>
-		</dependency> 
+        <dependency>
+            <groupId>com.ning</groupId>
+            <artifactId>async-http-client</artifactId>
+            <version>1.8.12</version>
+        </dependency>
     </dependencies>
 </project>
  

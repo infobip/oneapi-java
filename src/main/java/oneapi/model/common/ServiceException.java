@@ -53,9 +53,6 @@ public class ServiceException implements java.io.Serializable {
 	
 	/**
 	 * utility constructor to create a ServiceException object with all fields set
-	 * @param messageId
-	 * @param text
-	 * @param variables
 	 */
 	public ServiceException(String messageId, String text, String[] variables) {
 		this.messageId=messageId;

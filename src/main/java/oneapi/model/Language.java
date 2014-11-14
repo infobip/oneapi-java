@@ -21,7 +21,6 @@ public class Language {
 
     /**
      * Initialize Language with languageCode as only parameter.
-     * @param languageCode
      */
     public Language(LanguageCode languageCode) {
         this.languageCode = languageCode;
@@ -30,9 +29,6 @@ public class Language {
     /**
      * Initialize Language with languageCode, useSingleShift and useLockingShift as parameters.
      *
-     * @param languageCode
-     * @param useSingleShift
-     * @param useLockingShift
      */
     public Language(LanguageCode languageCode, boolean useSingleShift, boolean useLockingShift) {
         this.languageCode = languageCode;
@@ -70,7 +66,6 @@ public class Language {
     /**
      * Set use locking shift
      *
-     * @param useLockingShift
      */
     public void setUseLockingShift(boolean useLockingShift) {
         this.useLockingShift = useLockingShift;
@@ -88,7 +83,6 @@ public class Language {
     /**
      * Set use single shift
      *
-     * @param useSingleShift
      */
     public void setUseSingleShift(boolean useSingleShift) {
         this.useSingleShift = useSingleShift;

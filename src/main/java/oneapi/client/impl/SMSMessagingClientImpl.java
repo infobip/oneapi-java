@@ -57,11 +57,7 @@ public class SMSMessagingClientImpl extends OneAPIBaseClientImpl implements SMSM
      */
     @Override
     public SendMessageResult sendSMS(SMSRequest smsRequest){
-        StringBuilder urlBuilder = new StringBuilder(SMS_MESSAGING_OUTBOUND_URL_BASE).append("/");
-        urlBuilder.append(encodeURLParam(smsRequest.getSenderAddress()));
-        urlBuilder.append("/requests");
-
-        RequestData requestData = new RequestData(urlBuilder.toString(), Method.POST, null, smsRequest, JSON_CONTENT_TYPE);
+        RequestData requestData = new RequestData(SMS_MESSAGING_OUTBOUND_URL_BASE + "/" + encodeURLParam(smsRequest.getSenderAddress()) + "/requests", Method.POST, null, smsRequest, JSON_CONTENT_TYPE);
         return executeMethod(requestData, SendMessageResult.class);
     }
     
@@ -72,11 +68,7 @@ public class SMSMessagingClientImpl extends OneAPIBaseClientImpl implements SMSM
      */   
    
 	public void sendSMSAsync(SMSRequest smsRequest, final ResponseListener<SendMessageResult> responseListener) {
-        StringBuilder urlBuilder = new StringBuilder(SMS_MESSAGING_OUTBOUND_URL_BASE).append("/");
-        urlBuilder.append(encodeURLParam(smsRequest.getSenderAddress()));
-        urlBuilder.append("/requests");
- 
-        RequestData requestData = new RequestData(urlBuilder.toString(), Method.POST, null, smsRequest, JSON_CONTENT_TYPE);
+        RequestData requestData = new RequestData(SMS_MESSAGING_OUTBOUND_URL_BASE + "/" + encodeURLParam(smsRequest.getSenderAddress()) + "/requests", Method.POST, null, smsRequest, JSON_CONTENT_TYPE);
         executeMethodAsync(requestData, SendMessageResult.class, responseListener);
     }
 
@@ -88,13 +80,7 @@ public class SMSMessagingClientImpl extends OneAPIBaseClientImpl implements SMSM
      */
     @Override
     public DeliveryInfoList queryDeliveryStatus(String senderAddress, String requestId) {
-        StringBuilder urlBuilder = new StringBuilder(SMS_MESSAGING_OUTBOUND_URL_BASE).append("/");
-        urlBuilder.append(encodeURLParam(senderAddress));
-        urlBuilder.append("/requests/");
-        urlBuilder.append(encodeURLParam(requestId));
-        urlBuilder.append("/deliveryInfos");
-
-        RequestData requestData = new RequestData(urlBuilder.toString(), Method.GET, "deliveryInfoList");
+        RequestData requestData = new RequestData(SMS_MESSAGING_OUTBOUND_URL_BASE + "/" + encodeURLParam(senderAddress) + "/requests/" + encodeURLParam(requestId) + "/deliveryInfos", Method.GET, "deliveryInfoList");
         return executeMethod(requestData, DeliveryInfoList.class);
     }
     
@@ -117,7 +103,6 @@ public class SMSMessagingClientImpl extends OneAPIBaseClientImpl implements SMSM
 
     /**
      * Convert JSON to Delivery Info Notification </summary>
-     * @param json
      * @return DeliveryInfoNotification
      */
     public DeliveryInfoNotification convertJsonToDeliveryInfoNotification(String json)
@@ -146,7 +131,6 @@ public class SMSMessagingClientImpl extends OneAPIBaseClientImpl implements SMSM
     
     /**
      * Get delivery notifications subscriptions by sender address
-     * @param senderAddress
      * @return DeliveryReportSubscription[]
      */
     @Override
@@ -161,7 +145,6 @@ public class SMSMessagingClientImpl extends OneAPIBaseClientImpl implements SMSM
 
     /**
      * Get delivery notifications subscriptions by subscription id
-     * @param subscriptionId
      * @return DeliveryReportSubscription
      */
     @Override
@@ -248,7 +231,6 @@ public class SMSMessagingClientImpl extends OneAPIBaseClientImpl implements SMSM
     
     /**
      * Convert JSON to Inbound SMS Message Notification
-     * @param json
      * @return InboundSMSMessageList
      */
     public InboundSMSMessageList convertJsonToInboundSMSMessageNotificationExample(String json)
@@ -274,13 +256,7 @@ public class SMSMessagingClientImpl extends OneAPIBaseClientImpl implements SMSM
      */
     @Override
     public MoSubscription[] getInboundMessagesNotificationsSubscriptions(int page, int pageSize) {
-    	StringBuilder urlBuilder = new StringBuilder(SMS_MESSAGING_INBOUND_URL_BASE).append("/subscriptions");
-    	urlBuilder.append("?page="); 
-    	urlBuilder.append(encodeURLParam(String.valueOf(page)));
-    	urlBuilder.append("&pageSize="); 
-    	urlBuilder.append(encodeURLParam(String.valueOf(pageSize)));
-
-    	RequestData requestData = new RequestData(urlBuilder.toString(), Method.GET, "subscriptions");
+        RequestData requestData = new RequestData(SMS_MESSAGING_INBOUND_URL_BASE + "/subscriptions" + "?page=" + encodeURLParam(String.valueOf(page)) + "&pageSize=" + encodeURLParam(String.valueOf(pageSize)), Method.GET, "subscriptions");
     	return executeMethod(requestData, MoSubscription[].class);	
     }
     
@@ -319,7 +295,6 @@ public class SMSMessagingClientImpl extends OneAPIBaseClientImpl implements SMSM
   
     /**
      * Get delivery reports
-     * @param limit
      * @return DeliveryReport[]
      */
     @Override
@@ -334,7 +309,6 @@ public class SMSMessagingClientImpl extends OneAPIBaseClientImpl implements SMSM
     
     /**
      * Get delivery reports asynchronously
-     * @param limit
      * @param responseListener (mandatory) method to call after receiving delivery reports
      */
 	public void getDeliveryReportsAsync(int limit, final ResponseListener<DeliveryReportList> responseListener)
@@ -366,8 +340,6 @@ public class SMSMessagingClientImpl extends OneAPIBaseClientImpl implements SMSM
 
     /**
      * Get delivery reports by Request Id
-     * @param requestId
-     * @param limit
      * @return DeliveryReportList
      */
     @Override
@@ -384,7 +356,6 @@ public class SMSMessagingClientImpl extends OneAPIBaseClientImpl implements SMSM
     
     /**
      * Get delivery reports by Request Id
-     * @param requestId
      * @return DeliveryReportList
      */
     @Override
@@ -498,7 +469,6 @@ public class SMSMessagingClientImpl extends OneAPIBaseClientImpl implements SMSM
 
     /**
      * Add OneAPI PUSH 'INBOUND Messages' Notifications listener and start push server simulator
-     * @param listener
      */
     public void addPushInboundMessageListener(InboundMessageNotificationsListener listener)
     {

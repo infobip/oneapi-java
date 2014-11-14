@@ -12,8 +12,6 @@ public class TestJsonProvider {
 
 	/**
 	 * Basically a try/catch block for jackson's ObjectMapper jsonMapper
-	 * @param o
-	 * @return
 	 */
 	public static String convertToJson(Object o) {
 		try {
@@ -26,9 +24,6 @@ public class TestJsonProvider {
 	/**
 	 * Puts the object into a map under the key rootJsonTag and returns that map.
 	 * Suitable for placing a list of objects into one root JSON object.
-	 * @param rootJsonTag
-	 * @param objectToWrap
-	 * @return
 	 */
 	public static Map<String, Object> getEntityWithRoot(String rootJsonTag, Object objectToWrap) {
 		Map<String, Object> wrapper = new HashMap<String, Object>(2);

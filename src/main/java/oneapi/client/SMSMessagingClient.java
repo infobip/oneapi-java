@@ -60,14 +60,12 @@ public interface SMSMessagingClient {
 
 	/**
 	 * Retrieve delivery notifications subscriptions by sender address
-	 * @param senderAddress
 	 * @return DeliveryReportSubscription[]
 	 */
 	DeliveryReportSubscription[] getDeliveryNotificationsSubscriptionsBySender(String senderAddress);
 
 	/**
 	 * Retrieve delivery notifications subscriptions by subscription id
-	 * @param subscriptionId
 	 * @return DeliveryReportSubscription
 	 */
 	DeliveryReportSubscription getDeliveryNotificationsSubscriptionById(String subscriptionId);
@@ -112,7 +110,6 @@ public interface SMSMessagingClient {
     
 	/**
      * Convert JSON to Inbound SMS Message Notification
-     * @param json
      * @return InboundSMSMessageList
      */
     InboundSMSMessageList convertJsonToInboundSMSMessageNotificationExample(String json);
@@ -150,14 +147,12 @@ public interface SMSMessagingClient {
 
     /**
      * Retrieve delivery reports
-     * @param limit
      * @return DeliveryReportList
      */
 	DeliveryReportList getDeliveryReports(int limit);
 	
     /**
      * Get delivery reports asynchronously
-     * @param limit
      * @param responseListener (mandatory) method to call after receiving delivery reports
      */
     void getDeliveryReportsAsync(int limit, ResponseListener<DeliveryReportList> responseListener);
@@ -176,15 +171,12 @@ public interface SMSMessagingClient {
 
 	 /**
      * Retrieve delivery reports by Request Id
-     * @param requestId
-     * @param limit
      * @return DeliveryReportList
      */
     DeliveryReportList getDeliveryReportsByRequestId(String requestId, int limit);
 	
 	/**
 	 * Retrieve delivery reports by Request Id
-	 * @param requestId
 	 * @return DeliveryReportList
 	 */
     DeliveryReportList getDeliveryReportsByRequestId(String requestId);
@@ -230,7 +222,6 @@ public interface SMSMessagingClient {
     
     /**
      * Add OneAPI PUSH 'INBOUND Messages' Notifications listener and start push server simulator
-     * @param listener
      */
     void addPushInboundMessageListener(InboundMessageNotificationsListener listener);
     

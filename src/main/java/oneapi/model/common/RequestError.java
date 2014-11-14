@@ -90,11 +90,6 @@ public class RequestError implements java.io.Serializable {
 
 	/**
 	 * utility constructor to create an RequestError instance with all fields set
-	 * @param type
-	 * @param httpResponseCode
-	 * @param messageId
-	 * @param text
-	 * @param variables
 	 */
 	public RequestError(int type, int httpResponseCode, String messageId, String clientCorrelator, String text, String... variables) {
 		if (type==SERVICEEXCEPTION) {
