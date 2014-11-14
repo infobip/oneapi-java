@@ -42,7 +42,7 @@ public interface HLRClient {
 	 void queryHLRAsync(String address, ResponseListener<Roaming> responseListener);
 
 	/**
-	 * Convert JSON to HLR Notification </summary>
+	 * Convert JSON to HLR Notification
 	 * @return RoamingNotification
 	 */
 	RoamingNotification convertJsonToHLRNotificationExample(String json);
@@ -73,7 +73,6 @@ public interface HLRClient {
 
 	/**
 	 * Returns HLR Notifications PUSH Listeners list
-	 * @return List<HLRNotificationsListener>
 	 */
 	List<HLRNotificationsListener> getHLRPushNotificationListeners();
 

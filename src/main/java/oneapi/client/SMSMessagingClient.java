@@ -46,8 +46,7 @@ public interface SMSMessagingClient {
 	 void queryDeliveryStatusAsync(String senderAddress, String requestId, ResponseListener<DeliveryInfoList> responseListener);
 	
 	 /**
-     * Convert JSON to Delivery Info Notification </summary>
-     * @param json
+     * Convert JSON to Delivery Info Notification
      * @return DeliveryInfoNotification
      */
     DeliveryInfoNotification convertJsonToDeliveryInfoNotification(String json);
@@ -227,13 +226,11 @@ public interface SMSMessagingClient {
     
     /**
      * Returns Delivery Status Notifications PUSH Listeners list 
-     * @return List<DeliveryStatusNotificationsListener>
      */
     List<DeliveryStatusNotificationsListener> getDeliveryStatusNotificationPushListeners();
     
     /**
      * Returns INBOUND Message Notifications PUSH Listeners list
-     * @return List<InboundMessageNotificationsListener>
      */
     List<InboundMessageNotificationsListener> getInboundMessagePushListeners();
     

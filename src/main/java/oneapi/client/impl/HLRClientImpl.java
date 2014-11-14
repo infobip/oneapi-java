@@ -31,15 +31,15 @@ public class HLRClientImpl extends OneAPIBaseClientImpl implements HLRClient {
     /**
      * Query the customer’s roaming status for a single network-connected mobile device and get HLR to the specified notify url
      *
-     * @param address          (mandatory) mobile device number being queried
-     * @param notifyURL        (mandatory) URL to receive the roaming status asynchronously
+     * @param address         (mandatory) mobile device number being queried
+     * @param notifyURL       (mandatory) URL to receive the roaming status asynchronously
      * @param clientCorrelator (optional) Active only if notifyURL is specified, otherwise ignored. Uniquely identifies this request. If there is a communication failure during the request, using the same clientCorrelator when retrying the request helps the operator to avoid call the same request twice.
-     * @param callbackData     (optional) Active only if notifyURL is specified, otherwise ignored. This is custom data to pass back in notification to notifyURL, so you can use it to identify the request or any other useful data, such as a function name.
+     * @param callbackData    (optional) Active only if notifyURL is specified, otherwise ignored. This is custom data to pass back in notification to notifyURL, so you can use it to identify the request or any other useful data, such as a function name.
      */
     @Override
     public void queryHLR(String address, String notifyURL, String clientCorrelator, String callbackData) {
         if (notifyURL == null || notifyURL.length() == 0) {
-            throw new RequestException("'notifiyURL' parmeter is mandatory.");
+            throw new RequestException("'notifyURL' parameter is mandatory.");
         }
 
         StringBuilder urlBuilder = new StringBuilder(HLR_URL_BASE);
@@ -99,9 +99,8 @@ public class HLRClientImpl extends OneAPIBaseClientImpl implements HLRClient {
     }
 
     /**
-     * Convert JSON to HLR Notification </summary>
+     * Convert JSON to HLR Notification
      *
-     * @param json
      * @return RoamingNotification
      */
     public RoamingNotification convertJsonToHLRNotificationExample(String json) {
@@ -111,7 +110,6 @@ public class HLRClientImpl extends OneAPIBaseClientImpl implements HLRClient {
     /**
      * Start subscribing to HLR delivery notifications over OneAPI
      *
-     * @param subscribeToHLRDeliveryNotificationsRequest
      * @return String subscriptionId
      */
     @Override
@@ -124,7 +122,6 @@ public class HLRClientImpl extends OneAPIBaseClientImpl implements HLRClient {
     /**
      * Get HLR delivery notifications subscriptions by subscription id
      *
-     * @param subscriptionId
      * @return DeliveryReportSubscription[]
      */
     @Override
@@ -146,8 +143,6 @@ public class HLRClientImpl extends OneAPIBaseClientImpl implements HLRClient {
 
     /**
      * Add OneAPI PUSH 'HLR' Notifications listener and start push server simulator
-     *
-     * @param listener
      */
     public void addPushHLRNotificationsListener(HLRNotificationsListener listener) {
         if (listener == null) {
@@ -169,8 +164,6 @@ public class HLRClientImpl extends OneAPIBaseClientImpl implements HLRClient {
 
     /**
      * Returns HLR Notifications PUSH Listeners list
-     *
-     * @return List<HLRNotificationsListener>
      */
     public List<HLRNotificationsListener> getHLRPushNotificationListeners() {
         return hlrPushListenerList;

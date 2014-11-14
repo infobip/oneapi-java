@@ -16,6 +16,7 @@ public class RoamingTypeConverter {
 	 * Note that HlrResponseData can have some (or all) properties that are empty (equals null).
 	 * @return RoamingType enum value
 	 */
+	@SuppressWarnings({"PointlessBooleanExpression", "ConstantConditions"})
 	public RoamingType convert() {
 		
 		if (hlrData.getNumberInRoaming() != null) {
@@ -111,6 +112,6 @@ public class RoamingTypeConverter {
 	private Boolean compare (Integer a, Integer b) {
 		if (a == null || b == null)
 			return null;
-		return (a == b);
+		return (a.equals(b));
 	}
 }

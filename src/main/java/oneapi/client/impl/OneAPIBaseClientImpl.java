@@ -197,8 +197,8 @@ public class OneAPIBaseClientImpl {
 			}
 			if (connection != null) {
 				connection.setRequestProperty("accept", "*/*");
+				connection.setRequestProperty("User-Agent", "OneApi-Java-".concat(SMSClient.VERSION));
 			}
-			connection.setRequestProperty("User-Agent", "OneApi-Java-".concat(SMSClient.VERSION));
 
 			//Set Request Method
 			connection.setRequestMethod(requestData.getRequestMethod().toString());
