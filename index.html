@@ -1,0 +1,157 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Oneapi-java by Infobip</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>oneapi-java</h1>
+        <p>oneapi-java</p>
+
+        <p class="view"><a href="https://github.com/infobip/oneapi-java">View the Project on GitHub <small>infobip/oneapi-java</small></a></p>
+
+        <ul>
+          <li><a href="https://github.com/infobip/oneapi-java/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/infobip/oneapi-java/tarball/master">Download <strong>TAR Ball</strong></a></li>
+<li><a href="https://github.com/infobip/oneapi-java/blob/gh-pages/oneapi-java-0.0.2-SNAPSHOT.jar?raw=true">Download <strong>compiled JAR File</strong></a></li>
+          <li><a href="https://github.com/infobip/oneapi-java">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1><a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Infobip OneAPI Java library</h1>
+
+<p>Infobip OneAPI Java library is a maven artifact which can be used to consume "Infobip OneAPI" HTTP API. You can also download current version .jar from this page.</p>
+
+<br />
+
+<h1>
+<a name="user-content-oneapi-java-client" class="anchor" href="#oneapi-java-client" aria-hidden="true"><span class="octicon octicon-link"></span></a>OneApi Java client</h1>
+
+<h2>
+<a name="user-content-basic-messaging-example" class="anchor" href="#basic-messaging-example" aria-hidden="true"><span class="octicon octicon-link"></span></a>Basic messaging example</h2>
+
+<p>First initialize the messaging client using your username and password:</p>
+
+<pre><code>Configuration configuration = new Configuration(USERNAME, PASSWORD);
+SMSClient smsClient = new SMSClient(configuration);
+</code></pre>
+
+<p>An exception will be thrown if your username and/or password are incorrect.</p>
+
+<p>Prepare the message:</p>
+
+<pre><code>SMSRequest smsRequest = new SMSRequest(SENDER, MESSAGE, DESTINATION);
+</code></pre>
+
+<p>Send the message:</p>
+
+<pre><code>// Store request id because we can later query for the delivery status with it:
+SendMessageResult sendMessageResult = smsClient.getSMSMessagingClient().sendSMS(smsRequest);
+</code></pre>
+
+<p>Later you can query for the delivery status of the message:</p>
+
+<pre><code>DeliveryInfoList deliveryInfoList = smsClient.getSMSMessagingClient().queryDeliveryStatus(SENDER, sendMessageResult.getClientCorrelator());
+String deliveryStatus = deliveryInfoList.getDeliveryInfo().get(0).getDeliveryStatus();
+</code></pre>
+
+<p>Possible statuses are: <strong>DeliveredToTerminal</strong>, <strong>DeliveryUncertain</strong>, <strong>DeliveryImpossible</strong>, <strong>MessageWaiting</strong> and <strong>DeliveredToNetwork</strong>.</p>
+
+<h2>
+<a name="user-content-messaging-with-notification-push-example" class="anchor" href="#messaging-with-notification-push-example" aria-hidden="true"><span class="octicon octicon-link"></span></a>Messaging with notification push example</h2>
+
+<p>Same as with the standard messaging example, but when preparing your message:</p>
+
+<pre><code>SMSRequest smsRequest = new SMSRequest(SENDER, MESSAGE, DESTINATION);
+// The url where the delivery notification will MESSAGE pushed:
+smsRequest.setNotifyURL(NOTIFY_URL);
+</code></pre>
+
+<p>When the delivery notification is pushed to your server as a HTTP POST request, you must process the body of the message with the following code:</p>
+
+<pre><code>DeliveryInfoNotification deliveryInfoNotification = smsClient.getSMSMessagingClient().convertJsonToDeliveryInfoNotification(JSON);
+</code></pre>
+
+<h2>
+<a name="user-content-sending-message-with-language-specific-characters-example" class="anchor" href="#sending-message-with-language-specific-characters-example" aria-hidden="true"><span class="octicon octicon-link"></span></a>Sending message with language specific characters example</h2>
+
+<p>If you want to send message with special characters, this is how you prepare your message:</p>
+
+<pre><code>SMSRequest smsRequest = new SMSRequest(SENDER, MESSAGE, DESTINATION);
+// Create Language object with specific language code, use single shift table and use locking shift table for specific language as parameters
+Language language = new Language(LanguageCode.TR, true, false);
+// Set language
+smsRequest.setLanguage(language);
+</code></pre>
+
+<p>Currently supported languages (with their language codes) are: <code>Spanish - "SP"</code>, <code>Portuguese - "PT"</code>, <code>Turkish - "TR"</code>.</p>
+
+<h2>
+<a name="user-content-number-context-example" class="anchor" href="#number-context-example" aria-hidden="true"><span class="octicon octicon-link"></span></a>Number Context example</h2>
+
+<p>Initialize and login the data connection client:</p>
+
+<pre><code>Configuration configuration = new Configuration(USERNAME, PASSWORD);
+SMSClient smsClient = new SMSClient(configuration);
+</code></pre>
+
+<p>Retrieve the roaming status (Number Context):</p>
+
+<pre><code>Roaming roaming = smsClient.getHLRClient().queryHLR(DESTINATION);
+</code></pre>
+
+<h2>
+<a name="user-content-number-context-with-notification-push-example" class="anchor" href="#number-context-with-notification-push-example" aria-hidden="true"><span class="octicon octicon-link"></span></a>Number Context with notification push example</h2>
+
+<p>Similar to the previous example, but this time you must set the notification url where the result will be pushed:</p>
+
+<pre><code>smsClient.getHLRClient().queryHLR(DESTINATION, NOTIFY_URL);
+</code></pre>
+
+<p>When the roaming status notification is pushed to your server as a HTTP POST request, you must process the body of the message with the following code:</p>
+
+<pre><code>RoamingNotification roamingNotification = smsClient.getHLRClient().convertJsonToHLRNotificationExample(JSON);
+</code></pre>
+
+<h2>
+<a name="user-content-retrieve-inbound-messages-example" class="anchor" href="#retrieve-inbound-messages-example" aria-hidden="true"><span class="octicon octicon-link"></span></a>Retrieve inbound messages example</h2>
+
+<p>With the existing sms client (see the basic messaging example to see how to start it):</p>
+
+<pre><code>InboundSMSMessageList inboundSMSMessageList =  smsClient.getSMSMessagingClient().getInboundMessages();
+</code></pre>
+
+<h2>
+<a name="user-content-inbound-message-push-example" class="anchor" href="#inbound-message-push-example" aria-hidden="true"><span class="octicon octicon-link"></span></a>Inbound message push example</h2>
+
+<p>The subscription to recive inbound messages can be set up on our site.
+When the inbound message notification is pushed to your server as a HTTP POST request, you must process the body of the message with the following code:</p>
+
+<pre><code>InboundSMSMessageList inboundSMSMessageList = smsClient.getSMSMessagingClient().convertJsonToInboundSMSMessageNotificationExample(JSON);
+</code></pre>
+
+<h2>
+<a name="user-content-license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
+
+<p>This library is licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License, Version 2.0</a></p>
+
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/infobip">infobip</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+
+  </body>
+</html>
