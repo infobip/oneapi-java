@@ -34,7 +34,8 @@ cp -R ../oneapi-java-new-gh-pages/* ./
 
 # replace link in file
 # hardcoded line 26 in index.html!!!!!
-sed -i '26s/.*/<li><a href="https:\/\/github.com\/infobip\/oneapi-java\/blob\/gh-pages\/$newjar?raw=true">Download <strong>compiled JAR File<\/strong><\/a><\/li>/' index.html
+replacement="<li><a href=\"https:\/\/github.com\/infobip\/oneapi-java\/blob\/gh-pages\/$newjar?raw=true\">Download <strong>JAR File<\/strong><\/a><\/li>"
+sed -i "26s/.*/$replacement/" index.html
 
 # git commit & push changes
 git add --all
