@@ -58,8 +58,8 @@ public class DeliveryReportRetriever {
 		}
 
 		private void fireReportRetrieved(DeliveryReportList deliveryReportList, List<DeliveryReportListener> listeners, Throwable error) {
-			for (int i=0; i<listeners.size(); i++) {				
-				listeners.get(i).onDeliveryReportReceived(deliveryReportList, error);		
+			for (DeliveryReportListener listener : listeners) {
+				listener.onDeliveryReportReceived(deliveryReportList, error);
 			}
 		}
 	}

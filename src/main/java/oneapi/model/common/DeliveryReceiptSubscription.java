@@ -33,12 +33,10 @@ public class DeliveryReceiptSubscription implements Serializable {
 		
 		/**
 		 * set the user data field that will be sent along with the callback notification
-		 * @param callbackData
 		 */
 		public void setCallbackData(String callbackData) { this.callbackData=callbackData; }
 		/**
 		 * set the URL for the page / service to send the notification to
-		 * @param notifyURL
 		 */
 		public void setNotifyURL(String notifyURL) { this.notifyURL=notifyURL; }
 		
@@ -51,8 +49,6 @@ public class DeliveryReceiptSubscription implements Serializable {
 		
 		/**
 		 * alternate constructor setting both callbackData and notifyURL
-		 * @param callbackData
-		 * @param notifyURL
 		 */
 		public CallbackReference(String callbackData, String notifyURL) {
 			this.callbackData=callbackData;
@@ -80,7 +76,6 @@ public class DeliveryReceiptSubscription implements Serializable {
 	public CallbackReference getCallbackReference() { return callbackReference; }
 	/**
 	 * set the reference to the inner callbackReference class. This is called internally to set the contents according to the JSON response.
-	 * @param callbackReference
 	 */
 	public void setCallbackReference(CallbackReference callbackReference) { this.callbackReference=callbackReference; }
 	
@@ -94,7 +89,6 @@ public class DeliveryReceiptSubscription implements Serializable {
 	public String getResourceURL() { return resourceURL; }
 	/**
 	 * set resourceURL, the URL uniquely identifying a successful request to subscribe to SMS delivery receipt subscriptions. This is called internally to set the contents according to the JSON response.
-	 * @param resourceURL
 	 */
 	public void setResourceURL(String resourceURL) { this.resourceURL=resourceURL; }
 	

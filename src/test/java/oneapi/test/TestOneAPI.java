@@ -24,8 +24,8 @@ import org.junit.BeforeClass;
 
 public class TestOneAPI {
 
-    public static final int SERVERPORT = 8081;
-    public static final String URL = "http://localhost:8081";
+    public static final int SERVERPORT = 8080;
+    public static final String URL = "http://localhost:8080";
     public static final String ONEAPI_VERSION = "1";
     public static final String USERNAME = "simple";
     public static final String PASSWORD = "simple";

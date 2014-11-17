@@ -42,22 +42,19 @@ public interface HLRClient {
 	 void queryHLRAsync(String address, ResponseListener<Roaming> responseListener);
 
 	/**
-	 * Convert JSON to HLR Notification </summary>
-	 * @param json
+	 * Convert JSON to HLR Notification
 	 * @return RoamingNotification
 	 */
 	RoamingNotification convertJsonToHLRNotificationExample(String json);
 
 	/**
 	 * Start subscribing to HLR delivery notifications over OneAPI         
-	 * @param subscribeToHLRDeliveryNotificationsRequest
 	 * @return  String subscriptionId
 	 */
 	String subscribeToHLRDeliveryNotifications(SubscribeToHLRDeliveryNotificationsRequest subscribeToHLRDeliveryNotificationsRequest);
 
 	/**
 	 * Get HLR delivery notifications subscriptions by subscription id
-	 * @param subscriptionId
 	 * @return DeliveryReportSubscription[]
 	 */
 	DeliveryReportSubscription[] getHLRDeliveryNotificationsSubscriptionsById(String subscriptionId);
@@ -71,13 +68,11 @@ public interface HLRClient {
 
 	/**
 	 * Add OneAPI PUSH 'HLR' Notifications listener and start push server simulator
-	 * @param listener
 	 */
 	void addPushHLRNotificationsListener(HLRNotificationsListener listener);
 
 	/**
 	 * Returns HLR Notifications PUSH Listeners list
-	 * @return List<HLRNotificationsListener>
 	 */
 	List<HLRNotificationsListener> getHLRPushNotificationListeners();
 

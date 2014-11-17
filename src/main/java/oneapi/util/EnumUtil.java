@@ -88,9 +88,6 @@ public final class EnumUtil implements Serializable {
 	 * To get O(1) performace {@link EnumMapper} should be used which can return enumeration constant for specified value in constant time.
 	 * <br>
 	 *      
-	 * @param <T>
-	 * @param enumClass
-	 * @return
 	 */
 	public static <T extends IEnumIntValue> EnumMapper<T> enumMapper(Class<T> enumClass) {
 		return new EnumMapper<T>(enumClass);
@@ -137,9 +134,9 @@ public final class EnumUtil implements Serializable {
 		 * Looks up enumeration constant for specified value.
 		 *  
 		 * @param value for which to return enumeration constant
-		 * @return <li>enum constant : which has specified value associated - if multiple constants have same value, 
-		 *                             constant with lower ordinal is returned</li> 
-		 * 		   <li>null : if no int value is associated with specified enumeration constant</li>
+		 * @return enum constant : which has specified value associated - if multiple constants have same value,
+		 *                             constant with lower ordinal is returned
+		 * 		   null : if no int value is associated with specified enumeration constant
 		 */
 		public T enumFor(int value) {
 			return valueToEnumMap.get(value);

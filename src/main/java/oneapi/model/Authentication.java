@@ -27,8 +27,8 @@ public class Authentication {
 	
 	/**
 	 * Initialize 'BASIC' Authentication (to use 'IBSSO' Authentication you need to call 'CustomerProfileClient.login()' method after client initialization)
-	 * @param username
-	 * @param password
+	 * @param username username
+	 * @param password password
 	 */
 	public Authentication(String username, String password) {
 		this.username = username;
@@ -37,7 +37,7 @@ public class Authentication {
 	
 	/**
 	 * Initialize 'OAUTH' Authentication
-	 * @param accessToken
+	 * @param accessToken accessToken
 	 */
 	public Authentication(String accessToken) {
 		this.accessToken = accessToken;
@@ -69,7 +69,7 @@ public class Authentication {
 	
 	/**
 	 * Set Authentication user name
-	 * @param username
+	 * @param username username
 	 */
 	public void setUsername(String username) {
 		this.username = username;
@@ -85,7 +85,7 @@ public class Authentication {
 	
 	/**
 	 *  Set Authentication password
-	 * @param password
+	 * @param password password
 	 */
 	public void setPassword(String password) {
 		this.password = password;
@@ -101,7 +101,7 @@ public class Authentication {
 	
 	/**
 	 * Set 'IBSSO' Authentication Access Token
-	 * @param accessToken
+	 * @param accessToken accessToken
 	 */
 	public void setAccessToken(String accessToken) {
 		this.accessToken = accessToken;
@@ -118,7 +118,7 @@ public class Authentication {
 
 	/**
 	 * Set 'IBBSSO' Token
-	 * @param ibssoToken
+	 * @param ibssoToken Infobip Single-Sign-On Token
 	 */
 	@JsonIgnore
 	public void setIbssoToken(String ibssoToken) {

@@ -16,6 +16,7 @@ public class RoamingTypeConverter {
 	 * Note that HlrResponseData can have some (or all) properties that are empty (equals null).
 	 * @return RoamingType enum value
 	 */
+	@SuppressWarnings({"PointlessBooleanExpression", "ConstantConditions"})
 	public RoamingType convert() {
 		
 		if (hlrData.getNumberInRoaming() != null) {
@@ -29,7 +30,7 @@ public class RoamingTypeConverter {
 		Boolean isInternationalRoaming = isInternationalRoaming();
 		if (isInternationalRoaming == null) {
 			return RoamingType.UNKNOWN;
-		} else if (isInternationalRoaming.booleanValue()) {
+		} else if (isInternationalRoaming) {
 			return RoamingType.INTERNATIONAL_ROAMING;
 		}
 
@@ -98,8 +99,6 @@ public class RoamingTypeConverter {
 
 	/**
 	 * Compares stings a and b. Returns null if not comparable. Returns true is a and b are equal.
-	 * @param a
-	 * @param b
 	 */
 	private Boolean compare (String a, String b) {
 		if (a == null || b == null)
@@ -109,12 +108,10 @@ public class RoamingTypeConverter {
 
 	/**
 	 * Compares integers a and b. Returns null if not comparable. Returns true is a and b are equal.
-	 * @param a
-	 * @param b
 	 */
 	private Boolean compare (Integer a, Integer b) {
 		if (a == null || b == null)
 			return null;
-		return (a == b);
+		return (a.equals(b));
 	}
 }

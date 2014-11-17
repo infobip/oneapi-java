@@ -60,8 +60,8 @@ import oneapi.model.common.InboundSMSMessageList;
 		}
 	
 		private void fireMessageRetrieved(InboundSMSMessageList smsMessageList, List<InboundMessageListener> listeners, Throwable error) {
-			for (int i=0; i<listeners.size(); i++) {
-				listeners.get(i).onMessageRetrieved(smsMessageList, error);
+			for (InboundMessageListener listener : listeners) {
+				listener.onMessageRetrieved(smsMessageList, error);
 			}
 		}
 	}

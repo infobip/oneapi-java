@@ -51,7 +51,6 @@ public class SubscribeToDeliveryNotificationsRequest {
 
 	/**
 	 * (mandatory) is the address from which SMS messages are being sent. Do not URL encode this value prior to passing to this function
-	 * @param senderAddress
 	 */
 	public void setSenderAddress(String senderAddress) {
 		this.senderAddress = senderAddress;
@@ -67,7 +66,6 @@ public class SubscribeToDeliveryNotificationsRequest {
 
 	/**
 	 * (mandatory) is the URL to which you would like a notification of delivery sent
-	 * @param notifyURL
 	 */
 	public void setNotifyURL(String notifyURL) {
 		this.notifyURL = notifyURL;
@@ -83,7 +81,6 @@ public class SubscribeToDeliveryNotificationsRequest {
 
 	/**
 	 * criteria (optional) Text in the message to help you route the notification to a specific application. For example you may ask users to ‘text GIGPICS to 12345′ for your rock concert photos application. This text is matched against the first word, as defined as the initial characters after discarding any leading Whitespace and ending with a Whitespace or end of the string. The matching shall be case-insensitive.
-	 * @param criteria
 	 */
 	public void setCriteria(String criteria) {
 		this.criteria = criteria;
@@ -99,7 +96,6 @@ public class SubscribeToDeliveryNotificationsRequest {
 
 	/**
 	 * (optional) optional) uniquely identifies this subscription request. If there is a communication failure during the request, using the same clientCorrelator when retrying the request allows the operator to avoid setting up the same subscription twice
-	 * @param clientCorrelator
 	 */
 	public void setClientCorrelator(String clientCorrelator) {
 		this.clientCorrelator = clientCorrelator;
@@ -107,7 +103,6 @@ public class SubscribeToDeliveryNotificationsRequest {
 
 	/**
 	 * (optional) will be passed back to the notifyURL location, so you can use it to identify the message the delivery receipt relates to (or any other useful data, such as a function name)
-	 * @param callbackData
 	 */
 	public void setCallbackData(String callbackData) {
 		this.callbackData = callbackData;

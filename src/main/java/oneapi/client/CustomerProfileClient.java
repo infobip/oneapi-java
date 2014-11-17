@@ -20,14 +20,12 @@ public interface CustomerProfileClient {
 	
 	/**
 	 * Gets logged user customer profile 
-	 * @param id
 	 * @return CustomerProfile
 	 */
 	CustomerProfile getCustomerProfile();
 
 	/**
 	 * Gets customer profile for specific userId
-	 * @param id
 	 * @return CustomerProfile
 	 */
 	CustomerProfile getCustomerProfileByUserId(int id);

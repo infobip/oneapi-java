@@ -61,8 +61,6 @@ public class DeliveryInfoList implements java.io.Serializable {
 		
 		/**
 		 * utility constructor to create a DeliveryInfo instance with all fields set
-		 * @param address
-		 * @param deliveryStatus
 		 */
 		public DeliveryInfo(String address, String deliveryStatus, String messageId, String clientCorrelator ) {
 			this.address=address;

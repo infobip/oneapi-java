@@ -55,7 +55,6 @@ public class SubscribeToInboundMessagesRequest {
 
     /**
      * (mandatory) is the address/ MSISDN, or code agreed with the operator, to which people may send an SMS to your application
-     * @param destinationAddress
      */
     public void setDestinationAddress(String destinationAddress) {
         this.destinationAddress = destinationAddress;
@@ -71,7 +70,6 @@ public class SubscribeToInboundMessagesRequest {
 
     /**
      * (mandatory) is the URL to which you would like a notification of message receipts sent
-     * @param notifyURL
      */
     public void setNotifyURL(String notifyURL) {
         this.notifyURL = notifyURL;
@@ -87,7 +85,6 @@ public class SubscribeToInboundMessagesRequest {
 
     /**
      * (optional) is case-insensitve text to match against the first word of the message, ignoring any leading whitespace. This allows you to reuse a short code among various applications, each of which can register their own subscription with different criteria
-     * @param criteria
      */
     public void setCriteria(String criteria) {
         this.criteria = criteria;
@@ -103,7 +100,6 @@ public class SubscribeToInboundMessagesRequest {
 
     /**
      * (optional) is the content type that notifications will be sent in Đ for OneAPI v1.0 only JSON is supported
-     * @param notificationFormat
      */
     public void setNotificationFormat(String notificationFormat) {
         this.notificationFormat = notificationFormat;
@@ -119,7 +115,6 @@ public class SubscribeToInboundMessagesRequest {
 
     /**
      * (optional) uniquely identifies this create subscription request. If there is a communication failure during the request, using the same clientCorrelator when retrying the request allows the operator to avoid creating a duplicate subscription
-     * @param clientCorrelator
      */
     public void setClientCorrelator(String clientCorrelator) {
         this.clientCorrelator = clientCorrelator;
@@ -127,7 +122,6 @@ public class SubscribeToInboundMessagesRequest {
 
     /**
      * (optional) is a function name or other data that you would like included when the POST is sent to your application
-     * @param callbackData
      */
     public void setCallbackData(String callbackData) {
         this.callbackData = callbackData;

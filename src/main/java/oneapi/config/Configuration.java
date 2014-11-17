@@ -141,7 +141,6 @@ public class Configuration  {
 
 	/**
 	 * Object containing 'OneAPI' Authentication data
-	 * @param value
 	 */
 	public void setAuthentication(Authentication value) {
 		this.authentication = value;
@@ -157,7 +156,6 @@ public class Configuration  {
 
 	/**
 	 * Base URL containing host name and port of the OneAPI SMS server
-	 * @param apiUrl
 	 */
 	public void setApiUrl(String apiUrl) {
 		this.apiUrl = apiUrl;
@@ -173,7 +171,6 @@ public class Configuration  {
 
 	/**
 	 * Version of OneAPI SMS you are accessing (the default is the latest version supported by that server)
-	 * @param versionOneAPISMS
 	 */
 	public void setVersionOneAPISMS(String versionOneAPISMS) {
 		this.versionOneAPISMS = versionOneAPISMS;
@@ -189,7 +186,6 @@ public class Configuration  {
 
 	/**
 	 * Interval to automatically pool inbounds messages in milliseconds	
-	 * @param inboundMessagesRetrievingInterval
 	 */
 	public void setInboundMessagesRetrievingInterval(int inboundMessagesRetrievingInterval) {
 		this.inboundMessagesRetrievingInterval = inboundMessagesRetrievingInterval;
@@ -205,7 +201,6 @@ public class Configuration  {
 
 	/**
 	 * Interval to automatically pool delivery reports in milliseconds	
-	 * @param dlrRetrievingInterval
 	 */
 	public void setDlrRetrievingInterval(int dlrRetrievingInterval) {
 		this.dlrRetrievingInterval = dlrRetrievingInterval;
@@ -221,7 +216,6 @@ public class Configuration  {
 
 	/**
 	 * Delivery Notification Status Push server port (default = 3000)
-	 * @param dlrStatusPushServerSimulatorPort
 	 */
 	public void setDlrStatusPushServerSimulatorPort(int dlrStatusPushServerSimulatorPort) {
 		this.dlrStatusPushServerSimulatorPort = dlrStatusPushServerSimulatorPort;
@@ -237,7 +231,6 @@ public class Configuration  {
 
 	/**
 	 * Inbound Messages Notifications Push server port (default = 3001)
-	 * @param inboundMessagesPushServerSimulatorPort
 	 */
 	public void setInboundMessagesPushServerSimulatorPort(
 			int inboundMessagesPushServerSimulatorPort) {
@@ -254,7 +247,6 @@ public class Configuration  {
 
 	/**
 	 * HLR Notifications Push server port (default = 3002)
-	 * @param hlrPushServerSimulatorPort
 	 */
 	public void setHlrPushServerSimulatorPort(int hlrPushServerSimulatorPort) {
 		this.hlrPushServerSimulatorPort = hlrPushServerSimulatorPort;
