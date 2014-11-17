@@ -5,7 +5,7 @@
 
     <groupId>org.infobip.oneapi</groupId>
     <artifactId>oneapi-java</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.2-SNAPSHOT</version>
 
     <name>Infobip OneAPI Client</name>
     <description>API client in Java for Infobip's OneAPI (https://developer.infobip.com/api).</description>
